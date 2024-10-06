@@ -18,10 +18,10 @@
     <img src="assets/icons/icon.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Plataforma Web/Desktop Planet3</h3>
+  <h3 align="center">Vintage Club</h3>
 
   <p align="center">
-    Modelo padrão da plataforma para aplicações web utilizada pela Planet3 em seus projetos
+    Rede social voltada ao público apaixonado por antigomobilismo
     <br />
     <a href="#"><strong>Explore the docs »</strong></a>
     <br />
@@ -69,14 +69,9 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-Esta plataforma tem como obetivo montar uma aplicação cliente replicando o estilo "desktop", incluindo desde uma área de trabalho personalizável, onde o usuário poderá trocar seu papel de parede, incluir atalhaos dos módulos do sistema que mais utiliza. Esta área de trabalho também será onde se abrirão as janelas dos módulos do sistema, lembrando em muito um ambiente "Windows". A grande vantagem é a portabilidade do sistema, pois como se trata de uma aplicação web, ele roda completamente no browser do cliente, não necessitando nenhuma instalação prévia na náquina do usuário, virtualizando completamente seu ambiente de trabalho.
-Nossa plataforma também é pensada em modo mobile, portanto a informação do cliente estará em suas mãos a um clique de distância
-Outra vantagem é o uso de Cloud Computing, onde a grande maioria das transações efetuadas pelo cliente serão executadas em um srvidor na nuvem, não sendo necessário o usio de um grande servidor no cliente e nem máquinas clientes muito poderosas.
+Esta plataforma tem como obetivo montar uma rede social onde as pessoas apaixonadas pelo tema do antigomobilismo possa se encontrar. A idéia é criar várias seções voltadas aos mais diversos assuntos, alem de posts onde os usuários poderão participar de discussões. 
 
-Vantagens:
-* Sistema Multi Plataforma. Não importa o sistema operacional da máquina cliente, basta um browser com comexão a internet com o JS ligado
-* Processamento na Nuvem. Qualquer máquina, por mais antiga que seja, consegue rodar o sistema, já que a grande quantidade de processamento fica a conta do servidor que esta rodando na nuvem
-* Mobilidade. Abra o sistema em qualquer lugar, não precisa de instalação nem de servidor no cliente
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -176,7 +171,7 @@ See the [open issues](https://github.com/othneildrew/Best-README-Template/issues
 <!-- CONTRIBUTING -->
 ## Contribuições
 
-Este projeto foi inteiramente criado e desenvolvido por Tales Cembraneli Dantas, https://github.com/talesCPV.
+Este projeto foi inteiramente criado e desenvolvido por Tales Cembraneli Dantas, https://github.com/talesCPV e Gilberto Paschoal Filho
 
 Se você deseja fazer parte deste projeto, por favor entre em contato comigo pelo whatsapp +5512997113793
 Obrigado
