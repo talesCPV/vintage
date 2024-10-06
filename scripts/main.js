@@ -212,3 +212,29 @@ function getVal(fds){
 
     return [field,signal,value]
 }
+
+/* ENVIO DE EMAIL */
+
+function sendMail(message){
+
+    const data = new URLSearchParams()
+        data.append("message", message)
+
+    const myRequest = new Request("backend/sendMail.php",{
+        method : "POST",
+        body : data
+    });
+
+    return new Promise((resolve,reject) =>{
+        fetch(myRequest)
+        .then(function (response){
+            if (response.status === 200) { 
+                resolve(response.text())  
+                alert('Email enviado com sucesso!!! assim que possível entraremos em contato.')      
+            } else { 
+                alert('Houve um erro no servidor, favor tentar mais tarde ou encaminhar um email para contato@planet3.com.br.') 
+                reject(new Error("Houve algum erro na comunicação com o servidor"));
+            } 
+        });
+    }); 
+}
