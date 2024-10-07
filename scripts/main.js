@@ -215,10 +215,12 @@ function getVal(fds){
 
 /* ENVIO DE EMAIL */
 
-function sendMail(message){
+function sendMail(subject,message,email){
 
     const data = new URLSearchParams()
+        data.append("subject", subject)
         data.append("message", message)
+        data.append("email", email)
 
     const myRequest = new Request("backend/sendMail.php",{
         method : "POST",
@@ -230,9 +232,9 @@ function sendMail(message){
         .then(function (response){
             if (response.status === 200) { 
                 resolve(response.text())  
-                alert('Email enviado com sucesso!!! assim que possível entraremos em contato.')      
+//                alert('Email enviado com sucesso!!! assim que possível entraremos em contato.')      
             } else { 
-                alert('Houve um erro no servidor, favor tentar mais tarde ou encaminhar um email para contato@planet3.com.br.') 
+//                alert('Houve um erro no servidor, favor tentar mais tarde ou encaminhar um email para contato@planet3.com.br.') 
                 reject(new Error("Houve algum erro na comunicação com o servidor"));
             } 
         });

@@ -21,8 +21,8 @@
                 <input type="text" id="edtEmail" placeholder="Email" onkeyup="validaEmail(this)">
             </div>
             <div class="inline">
-                <input type="password" id="edtPass" placeholder="Senha">
-                <input type="password" id="edtConfirm" placeholder="Confirme sua senha">
+                <input type="text" id="edtSenha" placeholder="Senha">
+                <input type="text" id="edtRepSenha" placeholder="Confirme sua senha">
             </div>
             <div class="line">
                 <button id="btnNewUser" class="btn-out">Cadastre-se</button>
@@ -33,8 +33,33 @@
 </template>
 <script>
 
+    function newUser(){
 
+        const params = new Object
+            params.nome = document.querySelector('#edtNome').value.trim()
+            params.sobrenome = document.querySelector('#edtSobrenome').value.trim()
+            params.email = document.querySelector('#edtEmail').value.trim()
+            params.pass = document.querySelector('#edtSenha').value.trim()
 
+        const myPromisse = queryDB(params,'USR-4');
+        myPromisse.then((resolve)=>{
+            const message = `<H1>SEU CADASTRO ESTA QUASE CONCLUÍDO</H1><br>
+            <a href="https://localhost/vintage/backend/authUser.php?email=${params.email}"> CLIQUE AQUI PARA CONFIRMAR SEU EMAIL</a>` 
+            sendMail('Seja bem vindo ao Vintage Club',message,params.email)
+            alert('Um email de ativação de sua conta foi enviado para sua caixa de entrada.')
+            closeModal('out_newUser')
+        })
+    }
 
+    document.querySelector('#btnNewUser').addEventListener('click',()=>{
+        if(checkField(['edtNome','edtEmail','edtSenha']) && checkRepass(['edtSenha','edtRepSenha']) ){
+            if(validaEmail(document.querySelector('#edtEmail'))){
+                newUser()
+            }else{
+                alert('Email inválido')
+                document.querySelector('#edtEmail').focus()
+            }
+        }
+    })
 
 </script>

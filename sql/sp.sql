@@ -83,13 +83,24 @@ DELIMITER $$
 		IN Isenha varchar(30)
     )
 	BEGIN    
-		SET @has_user = (SELECT COUNT(*) FROM tb_usuario WHERE email = Iemail);
+		SET @has_user = (SELECT COUNT(*) FROM tb_usuario WHERE email COLLATE utf8_general_ci = Iemail = Iemail COLLATE utf8_general_ci = Iemail);
 		IF(@has_user = 0)THEN
 			INSERT INTO tb_usuario (email,hash,access,nome,sobrenome)VALUES(Iemail,SHA2(CONCAT(Iemail, Isenha), 256),1,Inome,Isobrenome);
             SELECT 1 AS ok;
 		ELSE 
 			SELECT 0 AS ok;
         END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE IF EXISTS sp_authUser;
+DELIMITER $$
+	CREATE PROCEDURE sp_authUser(
+		IN Iemail varchar(80)
+    )
+	BEGIN    
+		UPDATE tb_usuario SET auth=1 WHERE email COLLATE utf8_general_ci = Iemail COLLATE utf8_general_ci;
+        SELECT COUNT(*) AS auth FROM tb_usuario WHERE email COLLATE utf8_general_ci = Iemail COLLATE utf8_general_ci;
 	END $$
 DELIMITER ;
 

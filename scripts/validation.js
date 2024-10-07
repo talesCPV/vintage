@@ -29,14 +29,16 @@ function checkField(fields){
 }
 
 function checkRepass(fields){
-    const check = document.getElementById(fields[0]).value
+    const check = document.querySelector('#'+fields[0]).value
+
     for(let i=1; i<fields.length; i++){
-        if(document.getElementById(fields[i]).value != check){
+        if(document.querySelector('#'+fields[i]).value != check){
             alert('Por favor, repita a senha digitada.')
             document.getElementById(fields[i]).focus()
             return false
         }
     }
+   
     return true
 }
 

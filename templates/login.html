@@ -254,7 +254,12 @@
                     localStorage.setItem("access",json[0].access)
                     localStorage.setItem("nome",json[0].nome)
                     localStorage.setItem("email",json[0].email)
-                    openHTML('dashboard.html','main-screen')
+                    if(json[0].auth == 1){
+                        openHTML('dashboard.html','main-screen')
+                    }else{
+                        alert('Este cadastro ainda não foi concluído, favor verificar seu email e clicar no link de autorização.')
+                    }
+
 //                    document.documentElement.requestFullscreen();
                 }else{
                     alert('Usuário ou Senha inválido!')

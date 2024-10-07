@@ -7,7 +7,7 @@ CREATE TABLE tb_usuario (
     hash varchar(64) NOT NULL,
     nome varchar(30) NOT NULL DEFAULT "",
     sobrenome varchar(80) NOT NULL DEFAULT "",
-    token varchar(64) DEFAULT NULL,
+    auth boolean DEFAULT 0,
     access int(11) DEFAULT -1,
 	UNIQUE KEY (hash),
 	UNIQUE KEY (email),
