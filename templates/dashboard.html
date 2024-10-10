@@ -12,10 +12,97 @@
             background-position: center;
         }        
 
-        #content-screen{
-            margin-top: 80px;
+        .content-screen{
+/*            margin-top: 80px;*/
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+/*            top: -80px;*/
+            position: absolute;
+
         }
 
+/* POSTS */        
+
+        .post{
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            background-color: #f0f8ffd6;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .post-head, .post-head-left, .post-head-rigth{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .post-head-img{
+            width: 40px;
+            height: 40px;
+            background-color: #00000059;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .post-text{
+            text-align: justify;
+        }
+
+        .btnSubscribe{
+            background-color: #000000bd;
+            color: #FFFFFF;
+            padding: 0 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            height: 30px;
+            margin: auto;
+        }
+
+        .btnSubscribe:hover{
+            cursor: pointer;
+            background-color: #00000087;
+        }
+
+        .btnMore{
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .post-time{
+            display: flex;
+            justify-content: end;
+        }
+
+        .post-social, .post-social  div{
+            display: flex;
+            gap: 10px;
+            padding: 0 10px;
+        }
+
+        .post-social  div:hover{
+            background-color: rgba(0, 0, 0, 0.274);
+            color: #FFFFFF;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        @media all and (max-width : 768px) {
+            .post{
+                width: unset;
+            }
+        }
+
+/* END POSTS */
         #mail-badge-lbl{
             position: absolute;
             top: 15px;
@@ -48,13 +135,72 @@
                 <span class="item-description">Logout</span>
             </label>
         </div>
+
     </nav>
 
+    <div id="content-screen" class="content-screen">
 
+        <div class="post">
+            <div class="post-head">
+                <div class="post-head-left">
+                    <img class="post-head-img" src="assets/icons/user_default.png" alt="">
+                    <div class="post-head-name">Tales C. Dantas</div>
+                </div>
+                <div class="post-head-rigth">
+                    <div class="btnSubscribe">Subscribe</div>
+                    <div class="btnMore">...</div>
+                </div>
+            </div>
+            <div class="post-text">
+                Lorem ipsum dolor sit amet. Id voluptas harum et ullam corrupti et doloremque rerum vel ipsa natus vel adipisci nisi. Et incidunt molestiae et ducimus incidunt in nostrum reiciendis ut veniam quia ea impedit perferendis in facere voluptatem 33 alias eaque. 
+            </div>
+            <div class="post-time">
+                00:00 PM Oct-10,2024 - 200 Views
+            </div>
+            <div class="post-social">
+                <div class="post-social-chat">
+                    <span class="mdi mdi-chat-outline"></span>
+                    <p>50</p>
+                </div>
+                <div class="post-social-like">
+                    <span class="mdi mdi-thumb-up-outline"></span>
+                    <p>15</p>
+                </div>
+                            
+            </div>
+        </div>
 
+        <div class="post">
+            <div class="post-head">
+                <div class="post-head-left">
+                    <div class="post-head-img"></div>
+                    <div class="post-head-name">Tales C. Dantas</div>
+                </div>
+                <div class="post-head-rigth">
+                    <div class="btnSubscribe">Subscribe</div>
+                    <div class="btnMore">...</div>
+                </div>
+            </div>
+            <div class="post-text">
+                Lorem ipsum dolor sit amet. Id voluptas harum et ullam corrupti et doloremque rerum vel ipsa natus vel adipisci nisi. Et incidunt molestiae et ducimus incidunt in nostrum reiciendis ut veniam quia ea impedit perferendis in facere voluptatem 33 alias eaque. 
+            </div>
+            <div class="post-time">
+                00:00 PM Oct-10,2024 - 200 Views
+            </div>
+            <div class="post-social">
+                <div class="post-social-chat">
+                    <span class="mdi mdi-chat-outline"></span>
+                    <p>50</p>
+                </div>
+                <div class="post-social-like">
+                    <span class="mdi mdi-thumb-up-outline"></span>
+                    <p>15</p>
+                </div>
+                            
+            </div>
+        </div>
 
-
-    <div id="content-screen"></div>
+    </div>
     
 </template>
 <script>

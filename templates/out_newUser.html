@@ -43,7 +43,7 @@
 
         const myPromisse = queryDB(params,'USR-4');
         myPromisse.then((resolve)=>{
-            const message = `<H1>SEU CADASTRO ESTA QUASE CONCLUÍDO</H1><br>
+            const message = `<H1>SEU CADASTRO ESTA QUASE CONCLUIDO</H1><br>
             <a href="https://localhost/vintage/backend/authUser.php?email=${params.email}"> CLIQUE AQUI PARA CONFIRMAR SEU EMAIL</a>` 
             sendMail('Seja bem vindo ao Vintage Club',message,params.email)
             alert('Um email de ativação de sua conta foi enviado para sua caixa de entrada.')

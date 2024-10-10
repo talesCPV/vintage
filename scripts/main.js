@@ -222,7 +222,7 @@ function sendMail(subject,message,email){
         data.append("message", message)
         data.append("email", email)
 
-    const myRequest = new Request("backend/sendMail.php",{
+    const myRequest = new Request("backend/phpMail.php",{
         method : "POST",
         body : data
     });

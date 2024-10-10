@@ -12,11 +12,16 @@
         <input type="text" id="edtEmail" placeholder="Email" onkeyup="validaEmail(this)">
     </div>
     <div class="line">
-        <button id="btnLink" class="btn-out">Enviar link para login</button>
+        <button id="btnLink" class="btn-out" >Enviar link para login</button>
     </div>
+
+
 
 </template>
 <script>
+
+//    grecaptcha.execute();
+
 
     document.querySelector('#btnLink').addEventListener('click',()=>{
         sendMail('Teste de Email PHP Mailer','Corpo do email...','tales@planet3.com.br')
