@@ -47,3 +47,57 @@ CREATE TABLE tb_calendario (
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 /* FIM PADRÃO */
+/* POSTS */
+
+ DROP TABLE IF EXISTS tb_post;
+CREATE TABLE tb_post(
+	id int(11) unsigned NOT NULL AUTO_INCREMENT,
+    id_user int(11) NOT NULL,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    texto varchar(255),
+    img boolean DEFAULT 0,
+    FOREIGN KEY (id) REFERENCES tb_usuario(id),
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_like;
+CREATE TABLE tb_like(
+    id_user int(11) NOT NULL,
+    id_post int(11) NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES tb_usuario(id),
+	FOREIGN KEY (id_post) REFERENCES tb_post(id),
+    PRIMARY KEY (id_user,id_post)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_view;
+CREATE TABLE tb_view(
+    id_user int(11) NOT NULL,
+    id_post int(11) NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES tb_usuario(id),
+	FOREIGN KEY (id_post) REFERENCES tb_post(id),
+    PRIMARY KEY (id_user,id_post)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_post_message;
+CREATE TABLE tb_post_message(
+    id_user int(11) NOT NULL,
+    id_post int(11) NOT NULL,
+	texto varchar(256) NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES tb_usuario(id),
+	FOREIGN KEY (id_post) REFERENCES tb_post(id),
+    PRIMARY KEY (id_user,id_post)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+/* FIM POSTS */
+/* SUBSCRIBE */
+
+ DROP TABLE IF EXISTS tb_follow;
+CREATE TABLE tb_follow(
+    id_user int(11) NOT NULL,
+    id_follow int(11) NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES tb_usuario(id),
+	FOREIGN KEY (id_follow) REFERENCES tb_usuario(id),
+    PRIMARY KEY (id_user,id_follow)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+/* FIM SUBSCRIBE */

@@ -1,0 +1,60 @@
+<template>
+    <style>
+        .new-post{
+            width: unset;
+        }
+
+        .post-pic{
+            display: flex;
+            justify-content: center;
+        }
+
+        #post-img, #up_file{
+            display: none;
+        }
+
+    </style>
+
+
+    <div class="post new-post">
+
+        <div class="post-head">
+            <div class="post-head-left">
+                <img class="post-head-img" src="assets/icons/user_default.png" alt="">
+                <div class="post-head-name">Tales C. Dantas</div>
+            </div>
+        </div>
+        <div class="post-pic">
+            <canvas id="post-img"></canvas>
+            <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg" class="only-view">  
+        </div>
+        <div class="post-text">
+            <textarea id="new-post-txt"></textarea>
+        </div>
+
+        <div class="post-head-rigth">
+            <label class="post-btn" for="up_file"><span class="mdi mdi-camera-plus"></span></label>
+            <div class="post-btn"><span class="mdi mdi-account-voice"></span></div>
+        </div>
+
+    </div>
+
+
+</template>
+<script>
+
+    const pageData = main_data.pst_post.data
+    const pageFunc = main_data.pst_post.func
+    const pageScreen = document.querySelector('#card-pst_post')
+
+    pageScreen.querySelector('#up_file').addEventListener('change',()=>{        
+        showFile('up_file','post-img')
+//        const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,`perfil.jpg`)
+//        up.then((resp)=>{
+//            console.log(resp)
+            pageScreen.querySelector('#post-img').style.display = 'block'
+//        })
+    })
+
+
+</script>

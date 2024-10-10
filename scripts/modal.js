@@ -28,6 +28,8 @@ async function openHTML(template='',where="content-screen",label="", data="",wid
                 }
                 if(where == "pop-up"){
                     newModal(label,body.innerHTML,width,page_name)
+                }else if(where == 'post'){
+                    newModal(label,body.innerHTML,width,page_name,'post')
                 }else{
                     const cont = body.innerHTML.replace('<h1>', `<span id="close-screen" onclick="document.querySelector('#imgLogo').click()">&times;</span><h1>`)                    
                     document.getElementById(where).innerHTML = cont;                    
@@ -49,7 +51,7 @@ async function openHTML(template='',where="content-screen",label="", data="",wid
     }
 }
 
-function newModal(title, content, width, id){
+function newModal(title, content, width, id,type='pop-up'){
 
     const offset = 15
     const mod_main = document.querySelector('#main-screen')
