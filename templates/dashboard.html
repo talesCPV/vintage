@@ -83,6 +83,11 @@
             justify-content: end;
         }
 
+        .post-img{
+            max-width: 100%;
+            border-radius: 15px;
+        }
+
         .post-social, .post-social  div{
             display: flex;
             gap: 10px;
@@ -100,6 +105,11 @@
             .post{
                 width: unset;
             }
+
+            .post-social, .post-time{
+                justify-content: center;
+            }
+
         }
 
 /* END POSTS */
@@ -173,7 +183,7 @@
         <div class="post">
             <div class="post-head">
                 <div class="post-head-left">
-                    <div class="post-head-img"></div>
+                    <img class="post-head-img" src="assets/icons/user_default.png" alt="">
                     <div class="post-head-name">Tales C. Dantas</div>
                 </div>
                 <div class="post-head-rigth">
@@ -184,6 +194,7 @@
             <div class="post-text">
                 Lorem ipsum dolor sit amet. Id voluptas harum et ullam corrupti et doloremque rerum vel ipsa natus vel adipisci nisi. Et incidunt molestiae et ducimus incidunt in nostrum reiciendis ut veniam quia ea impedit perferendis in facere voluptatem 33 alias eaque. 
             </div>
+                <img class="post-img" src="posts/img1.jpg" alt="">
             <div class="post-time">
                 00:00 PM Oct-10,2024 - 200 Views
             </div>
