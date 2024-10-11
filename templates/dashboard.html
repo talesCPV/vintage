@@ -4,7 +4,7 @@
         @import url("style/menu.css");     
         
         body{
-            background-image: url('assets/wallpaper_03.jpg');
+            background-image: url('assets/wallpapers/wallpaper_03.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -106,7 +106,7 @@
 
         @media all and (max-width : 768px) {
             .post{
-                width: unset;
+                width: 95%;
             }
 
             .post-social, .post-time{
@@ -178,8 +178,7 @@
                 <div class="post-social-like">
                     <span class="mdi mdi-thumb-up-outline"></span>
                     <p>15</p>
-                </div>
-                            
+                </div>         
             </div>
         </div>
 
@@ -223,6 +222,7 @@
     const pageData = main_data.dashboard.data
     const pageFunc = main_data.dashboard.func
     const styleSheet = document.styleSheets[0].cssRules[2].style
+    pageData.nome = localStorage.getItem('nome')
 
     getConfig('colors')
     .then((response)=>{
@@ -319,7 +319,8 @@
     back.then((resp)=>{
         const imgExist = JSON.parse(resp)
         const img = document.querySelector('#user_avatar')
-        img.src =  imgExist ? `assets/users/${localStorage.getItem('id_user')}/perfil.jpg` : 'assets/icons/user_default.png'
+        pageData.imgPerfil = imgExist ? `assets/users/${localStorage.getItem('id_user')}/perfil.jpg` : 'assets/icons/user_default.png'
+        img.src = pageData.imgPerfil
     }) 
 
 </script>

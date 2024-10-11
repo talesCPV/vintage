@@ -20,8 +20,8 @@
 
         <div class="post-head">
             <div class="post-head-left">
-                <img class="post-head-img" src="assets/icons/user_default.png" alt="">
-                <div class="post-head-name">Tales C. Dantas</div>
+                <img id="new-post-img" class="post-head-img" src="" alt="">
+                <div id="new-post-name" class="post-head-name"></div>
             </div>
         </div>
         <div class="post-pic">
@@ -29,12 +29,12 @@
             <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg" class="only-view">  
         </div>
         <div class="post-text">
-            <textarea id="new-post-txt"></textarea>
+            <textarea id="new-post-txt" maxlength="256"></textarea>
         </div>
 
         <div class="post-head-rigth">
             <label class="post-btn" for="up_file"><span class="mdi mdi-camera-plus"></span></label>
-            <div class="post-btn"><span class="mdi mdi-account-voice"></span></div>
+            <div id="btn-newPost" class="post-btn"><span class="mdi mdi-account-voice"></span></div>
         </div>
 
     </div>
@@ -46,6 +46,21 @@
     const pageData = main_data.pst_post.data
     const pageFunc = main_data.pst_post.func
     const pageScreen = document.querySelector('#card-pst_post')
+    const newReg = Object.keys(pageData).length == 0
+
+
+    function pageStart(){
+        pageScreen.querySelector('#new-post-img').src = main_data.dashboard.data.imgPerfil
+        pageScreen.querySelector('#new-post-name').innerHTML = main_data.dashboard.data.nome
+    }
+
+    pageScreen.querySelector('#btn-newPost').addEventListener('click',()=>{
+
+        const id = newReg ? 0 : pageData.id
+        const txt = pageScreen.querySelector('#new-post-txt').value.trim()
+
+        setPost(id,txt)
+    })
 
     pageScreen.querySelector('#up_file').addEventListener('change',()=>{        
         showFile('up_file','post-img')
@@ -56,5 +71,6 @@
 //        })
     })
 
+    pageStart()
 
 </script>

@@ -43,6 +43,11 @@
         "AGD-4" => 'CALL sp_view_aula_dada(@access,@hash,"x00","x01");',
 
 
+        /* POST */
+        
+        "PST-0" => 'CALL sp_view_post(@access,@hash,"x00",x01,x02);', // DATA,ID_START, ID_END
+        "PST-1" => 'CALL sp_set_post(@access,@hash,x00,"x01");', // ID, TEXTO
+
     );
 
 ?>

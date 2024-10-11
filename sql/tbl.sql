@@ -55,13 +55,13 @@ CREATE TABLE tb_post(
     id_user int(11) NOT NULL,
     data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     texto varchar(255),
-    img boolean DEFAULT 0,
+    edited boolean DEFAULT 0,
     FOREIGN KEY (id) REFERENCES tb_usuario(id),
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
- DROP TABLE IF EXISTS tb_like;
-CREATE TABLE tb_like(
+ DROP TABLE IF EXISTS tb_post_like;
+CREATE TABLE tb_post_like(
     id_user int(11) NOT NULL,
     id_post int(11) NOT NULL,
     FOREIGN KEY (id_user) REFERENCES tb_usuario(id),
@@ -69,8 +69,8 @@ CREATE TABLE tb_like(
     PRIMARY KEY (id_user,id_post)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
- DROP TABLE IF EXISTS tb_view;
-CREATE TABLE tb_view(
+ DROP TABLE IF EXISTS tb_post_view;
+CREATE TABLE tb_post_view(
     id_user int(11) NOT NULL,
     id_post int(11) NOT NULL,
     FOREIGN KEY (id_user) REFERENCES tb_usuario(id),

@@ -325,3 +325,56 @@ DELIMITER $$
 		SELECT id,email FROM tb_usuario WHERE id != @id_call ORDER BY email ASC;
 	END $$
 DELIMITER ;
+
+/* POSTS */
+
+ DROP PROCEDURE IF EXISTS sp_view_post;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_post(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Idate datetime,
+		IN Istart int(11) unsigned,
+		IN Iend int(11) unsigned
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			SELECT * FROM vw_post WHERE data_hora >= Idate ORDER BY data_hora LIMIT Istart,Iend;
+		END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE IF EXISTS sp_set_post;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_post(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid int(11),
+		IN Itexto varchar(255)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		SET @id_user =  (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@allow AND @id_user>0)THEN
+			IF(Itexto="#del")THEN
+				DELETE FROM tb_post_like WHERE id_post=Iid;
+				DELETE FROM tb_post_view WHERE id_post=Iid;
+				DELETE FROM tb_post_message WHERE id_post=Iid;
+				DELETE FROM tb_post WHERE id=Iid;
+                SELECT "DEL" AS resp;
+            ELSE			
+				IF(Iid=0)THEN
+					INSERT INTO tb_post (id_user,texto)
+                    VALUES(@id_user,Itexto);            
+					SELECT "NEW" AS resp;
+                ELSE
+					UPDATE tb_post SET edited=1, texto=Itexto WHERE id=Iid;
+					SELECT "UPD" AS resp;
+                END IF;
+            END IF;
+		ELSE
+			SELECT "NTH" AS resp;
+        END IF;
+	END $$
+DELIMITER ;
