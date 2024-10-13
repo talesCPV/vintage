@@ -6,3 +6,7 @@
 10/10/2024 20:07 admin@planet3.com.br : Menu Alterado (Posts, menu, pop-up, )
 10/10/2024 20:08 admin@planet3.com.br : Menu Alterado (Novo Post, pst_post.html, pop-up, Novo Post)
 10/10/2024 20:14 admin@planet3.com.br : Menu Alterado (Novo Post, pst_post.html, pop-up, Novo Post)
+12/10/2024 01:43 admin@planet3.com.br : Menu Incluido (Acervos)
+12/10/2024 01:44 admin@planet3.com.br : Menu Incluido (null)
+12/10/2024 01:44 admin@planet3.com.br : Menu Deletado (Acervos)
+12/10/2024 01:44 admin@planet3.com.br : Menu Alterado (Acervos, adm_acervo.html, pop-up, Acervos)

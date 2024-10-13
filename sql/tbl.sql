@@ -101,3 +101,37 @@ CREATE TABLE tb_follow(
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 /* FIM SUBSCRIBE */
+/* ACERVOS */
+
+ DROP TABLE IF EXISTS tb_acervo;
+CREATE TABLE tb_acervo(
+	id int(11) unsigned NOT NULL AUTO_INCREMENT,
+    id_owner int(11) NOT NULL,
+    nome varchar(30) NOT NULL,
+    UNIQUE KEY (nome),
+    FOREIGN KEY (id_owner) REFERENCES tb_usuario(id),
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+/* FIM ACERVOS */
+/* VEÍCULO */
+
+ DROP TABLE IF EXISTS tb_veiculo;
+CREATE TABLE tb_veiculo(
+	id int(11) unsigned NOT NULL AUTO_INCREMENT,
+    id_acervo int(11) NOT NULL,
+    nome varchar(50) NOT NULL,
+    ano int DEFAULT NULL,
+    modelo varchar(50) DEFAULT NULL,    
+    marca varchar(50) DEFAULT NULL,    
+    combustivel varchar(20) DEFAULT NULL,
+    configuracao varchar(15) DEFAULT NULL,
+    portas int DEFAULT NULL,    
+    lugares int DEFAULT NULL,    
+    porte varchar(15) DEFAULT NULL,
+	placa varchar(15) DEFAULT NULL,
+    procedencia varchar(25) DEFAULT NULL,
+    UNIQUE KEY (nome),
+    FOREIGN KEY (id_acervo) REFERENCES tb_acervo(id),
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

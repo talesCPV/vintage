@@ -13,4 +13,11 @@ CREATE VIEW vw_post AS
 		FROM tb_post AS PST
 		INNER JOIN tb_usuario AS USR
 		ON PST.id_user = USR.id;
-
+        
+/* ACERVO */ 
+DROP VIEW IF EXISTS vw_acervo;
+	CREATE VIEW vw_acervo AS
+        SELECT ACV.*, OWN.nome AS owner_name, OWN.sobrenome AS owner_surname, OWN.email
+        FROM tb_acervo AS ACV
+        INNER JOIN tb_usuario AS OWN
+        ON ACV.id_owner = OWN.id;

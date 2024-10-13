@@ -27,14 +27,6 @@
         "SYS-0"  => 'CALL sp_set_usr_perm_perf(@access,@hash,x00,"x01");', // ID, NOME
         "SYS-1"  => 'CALL sp_view_usr_perm_perf(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
 
-        /* ADMIN */
-        "ADM-0"  => 'CALL sp_view_clube(@access,@hash,"x00","x01","x02");', // FIELD, SIGNAL, VALUE
-        "ADM-1"  => 'CALL sp_set_clube(@access,@hash,x00,"x01","x02","x03","x04","x05","x06","x07");', // id,nome,rua,num,cidade,bairro,uf,cep
-        "ADM-2"  => 'CALL sp_view_aluno(@access,@hash,"x00","x01","x02");', // FIELD, SIGNAL, VALUE
-        "ADM-3"  => 'CALL sp_set_aluno(@access,@hash,x00,x01,"x02","x03","x04","x05","x06","x07","x08","x09","x10","x11","x12","x13");', // id,id_clube,nome,nasc,rua,num,cidade,bairro,uf,cep,data_adm,cel,ativo,obs
-        "ADM-4"  => 'CALL sp_view_aula(@hash);',
-        "ADM-5"  => 'CALL sp_set_aula(@access,@hash,x00,x01,"x02","x03","x04");', // id,id_clube,descricao,valor,obs
-
         /*AGENDA*/
         "AGD-0" => 'CALL sp_view_agenda(@hash);',
         "AGD-1" => 'CALL sp_set_agenda(@access,@hash,x00,x01,x02,x03,x04);', // id_aluno, id_aula, dia, hora, del
@@ -48,6 +40,14 @@
         "PST-0" => 'CALL sp_view_post(@access,@hash,"x00",x01,x02);', // DATA,ID_START, ID_END
         "PST-1" => 'CALL sp_set_post(@access,@hash,x00,"x01");', // ID, TEXTO
 
+        /* ACERVO */
+        "ACV-0" => 'CALL sp_view_acervo(@access,@hash,"x00");', // NOME
+        "ACV-1" => 'CALL sp_set_acervo(@access,@hash,x00,x01,"x02");', // ID,ID_OWNER,NOME
+
+        /* VEÍCULOS */
+        "VCL-0" => 'CALL sp_view_veiculo(@access,@hash,x00,"x01","x02","x03"));', // ID_ACERVO, FIELD, SIGNAL, VALUE
+        "VCL-1" => 'CALL sp_new_veiculo(@access,@hash,x00,"x01");', // id_acervo,nome
+        "VCL-2" => 'CALL sp_set_veiculo(@access,@hash,x00,x01,"x02","x03","x04","x05","x06","x07",x08,x09,"x10","x11","x11");', //id,id_acervo,nome,ano,modelo,marca,combustivel,configuracao,portas,lugares,porte,placa,procedencia
     );
 
 ?>

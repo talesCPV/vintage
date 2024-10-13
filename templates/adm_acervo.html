@@ -1,0 +1,77 @@
+<template>
+    <style>
+        .min-width{
+            width: 15px;
+            text-align: center;
+        }
+    </style>
+
+    <fieldset class="fds-busca acervo">
+        <legend>Filtro</legend>
+        <div class="inline">
+            <select id="cmbBusca">
+                <option value="nome" signal="LIKE">Nome</option>
+            </select>
+            <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-acervo')">
+            <button id="btnBusca-acervo" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+            <button id="btnNovo-acervo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+        </div>
+    </fieldset>
+
+    <table id="tblAcervo"></table>
+
+</template>
+<script>
+
+    const pageData = main_data.adm_acervo.data
+    const pageFunc = main_data.adm_acervo.func
+    const pageScreen = document.querySelector('#card-adm_acervo')
+    const newReg = Object.keys(pageData).length == 0
+    pageStart()
+
+    function pageStart(){
+        viewAcervo()
+
+
+    }
+
+    function viewAcervo(nome=''){
+        const params = new Object
+        params.nome = nome
+
+        queryDB(params,'ACV-0').then((resolve)=>{
+            const tbl = pageScreen.querySelector('#tblAcervo')
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
+            tbl.head('Cod.|min-width,Acervo,Dono')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'id|min-width,nome,owner_name','str,Upp,Upp')                
+            }    
+        })
+    }
+
+    function setAcervo(nome){
+        const params = new Object
+        params.id = newReg ? 0 : pageData.id
+        params.id_owner = newReg ? 0 : pageData.id_owner
+        params.nome = nome
+
+        queryDB(params,'ACV-1').then(()=>{
+            viewAcervo()
+        })
+    }
+
+    pageScreen.querySelector('#btnBusca-acervo').addEventListener('click',()=>{
+        viewAcervo(pageScreen.querySelector('#edtBusca').value.trim())
+    })
+
+    pageScreen.querySelector('#btnNovo-acervo').addEventListener('click',()=>{
+        setAcervo(prompt('Digite o nome no acervo.'))
+    })
+
+    pageScreen.querySelector('#tblAcervo').addEventListener('click',(e)=>{
+        data = e.target.parentNode.data       
+       openHTML('adm_view_acervo.html','pop-up',`Acervo - ${data.nome}`,data)
+    })
+
+</script>

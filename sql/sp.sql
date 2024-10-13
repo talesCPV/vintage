@@ -378,3 +378,126 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
+/* ACERVO */
+
+ DROP PROCEDURE IF EXISTS sp_view_acervo;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_acervo(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Inome varchar(30)
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			SELECT * FROM vw_acervo WHERE nome COLLATE utf8_general_ci LIKE CONCAT('%',Inome,'%') COLLATE utf8_general_ci ORDER BY nome;
+		END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE IF EXISTS sp_set_acervo;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_acervo(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid int(11),
+		IN Iid_owner int(11),
+		IN Inome varchar(30)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		SET @id_user =  (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@allow AND @id_user>0)THEN
+			IF(Inome="")THEN
+				DELETE FROM tb_acervo WHERE id=Iid;
+            ELSE			
+				IF(Iid=0)THEN
+					INSERT INTO tb_acervo (id_owner,nome)
+                    VALUES(@id_user,Inome);            
+                ELSE
+					UPDATE tb_acervo SET nome=Inome, id_owner=Iid_owner WHERE id=Iid;
+                END IF;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+/* VEÍCULO */
+ 
+  DROP PROCEDURE IF EXISTS sp_view_veiculo;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_veiculo(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_acervo int(11),
+		IN Ifield varchar(30),
+        IN Isignal varchar(4),
+		IN Ivalue varchar(50)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Iid_acervo=0)THEN
+				SET @quer =CONCAT('SELECT * FROM tb_veiculo WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
+            ELSE
+				SET @quer =CONCAT('SELECT * FROM tb_veiculo WHERE id_acervo=',Iid_acervo ,' AND ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
+            END IF;
+			PREPARE stmt1 FROM @quer;
+			EXECUTE stmt1;
+        END IF;
+	END $$
+DELIMITER ;
+ 
+   DROP PROCEDURE IF EXISTS sp_new_veiculo;
+DELIMITER $$
+	CREATE PROCEDURE sp_new_veiculo(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Iid_acervo int(11),
+		IN Inome varchar(30)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			INSERT INTO tb_veiculo (id_acervo,nome) VALUES (Iid_acervo,Inome);
+        END IF;
+	END $$
+DELIMITER ;
+ 
+  DROP PROCEDURE IF EXISTS sp_set_veiculo;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_veiculo(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid int(11),
+        IN Iid_acervo int(11),
+		IN Inome varchar(30),
+        IN Iano int,
+		IN Imodelo varchar(50),
+		IN Imarca varchar(50),
+		IN Icombustivel varchar(20),
+		IN Iconfiguracao varchar(15),
+		IN Iportas int,
+		IN Ilugares int,
+		IN Iporte varchar(15),
+		IN Iplaca varchar(15),
+		IN Iprocedencia varchar(25)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Inome="")THEN
+				DELETE FROM tb_veiculo WHERE id=Iid;
+            ELSE			
+				IF(Iid=0)THEN
+					INSERT INTO tb_veiculo (id_acervo,nome,ano,modelo,marca,combustivel,configuracao,portas,lugares,porte,placa,procedencia)
+                    VALUES(Iid_acervo,Inome,Iano,Imodelo,Imarca,Icombustivel,Iconfiguracao,Iportas,Ilugares,Iporte,Iplaca,Iprocedencia);            
+                ELSE
+					UPDATE tb_veiculo SET nome=Inome,ano=Iano,modelo=Imodelo,marca=Imarca,combustivel=Icombustivel,
+                    configuracao=Iconfiguracao,portas=Iportas,lugares=Ilugares,porte=Iporte,placa=Iplaca,procedencia=Iprocedencia
+                    WHERE id=Iid;
+                END IF;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;

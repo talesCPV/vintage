@@ -1,0 +1,90 @@
+<template>
+    <style></style>
+
+    <div>
+        <table id="tblAcervo"></table>
+    </div>
+
+    <div>
+
+        <fieldset class="fds-busca veiculo">
+            <legend>Filtro</legend>
+            <div class="inline">
+                <select id="cmbBusca">
+                    <option value="id" signal="LIKE">Código</option>
+                    <option value="nome" signal="LIKE" selected>Nome</option>
+                    <option value="ano" signal="LIKE">Ano</option>
+                    <option value="modelo" signal="LIKE">Modelo</option>
+                    <option value="marca" signal="LIKE">Marca</option>
+                    <option value="combustivel" signal="LIKE">Combustível</option>
+                    <option value="configuracao" signal="LIKE">Configuração</option>
+                    <option value="portas" signal="LIKE">Qtd. Portas</option>
+                    <option value="lugares" signal="LIKE">Qtd. Lugares</option>
+                    <option value="porte" signal="LIKE">Porte</option>
+                    <option value="placa" signal="LIKE">Placa</option>
+                    <option value="procedencia" signal="LIKE">País de Origem</option>
+                </select>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-veiculo')">
+                <button id="btnBusca-veiculo" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                <button id="btnNovo-veiculo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+            </div>
+        </fieldset>
+
+        <table id="tblVeiculo"></table>
+
+    </div>
+
+
+
+</template>
+<script>
+    const pageData = main_data.adm_view_acervo.data
+    const pageFunc = main_data.adm_view_acervo.func
+    const pageScreen = document.querySelector('#card-adm_view_acervo')
+
+    function pageStart(){
+        const tbl = pageScreen.querySelector('#tblAcervo')
+        tbl.head('Cod.|min-width,Acervo,Dono')
+        tbl.plot(pageData,'id|min-width,nome,owner_name','str,Upp,Upp')
+
+//        pageFunc.fillVeiculo()
+    }
+
+    pageFunc.fillVeiculo = ()=>{      
+        const tbl = pageScreen.querySelector('#tblVeiculo')
+        tbl.innerHTML = ''
+        const query = getVal('veiculo')
+        const params = new Object
+            params.id_acervo = pageData.id
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'VCL-0')
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'block' : 'none'
+            tbl.head('Cod.,Nome,Ano')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'id,nome,ano','str,Upp,Upp')                
+            }         
+        })
+    }
+
+    pageFunc.newVeiculo = (nome)=>{
+        const params = new Object
+            params.id_acervo = pageData.id
+            params.nome = nome
+        const myPromisse = queryDB(params,'VCL-1')
+        myPromisse.then((resolve)=>{
+            pageFunc.fillVeiculo()
+        })
+    }
+
+    pageScreen.querySelector('#btnNovo-veiculo').addEventListener('click',()=>{
+        pageFunc.newVeiculo(prompt('Digite o nome do veículo'))
+    })
+
+    pageStart()
+
+
+</script>
