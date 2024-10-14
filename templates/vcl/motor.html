@@ -1,11 +1,124 @@
 <template>
     <style></style>
 
-
-
+    <div class="inline">
+        <label for="edtAciona">Acionamento do Comando</label>
+        <input type="text" id="edtAciona" class="only-view" maxlength="20" disabled>
+        <label for="edtAli">Alimentação</label>
+        <input type="text" id="edtAli" class="only-view" maxlength="20" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtAsp">Aspiração</label>
+        <input type="text" id="edtAsp" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <label for="edtCod">Cód. do Motor</label>
+        <input type="text" id="edtCod" class="only-view" maxlength="20" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtCil">Cilindros</label>
+        <input type="text" id="edtCil" class="only-view" onkeyup="return valint(this)" disabled>
+        <label for="edtCdd">Cilindradas</label>
+        <input type="text" id="edtCdd" class="only-view" onkeyup="return valint(this)" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtCur">Curso do Pistão</label>
+        <input type="text" id="edtCur" class="only-view" onkeyup="return valFloat(this)" disabled>    
+        <label for="edtDiaCil">Diam. do Cilindro</label>
+        <input type="text" id="edtDiaCil" class="only-view" onkeyup="return valFloat(this)" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtComVal">Com. de Válvula</label>
+        <input type="text" id="edtComVal" class="only-view" maxlength="20" disabled>
+        <label for="edtDisp">Disposição</label>
+        <input type="text" id="edtDisp" class="only-view" maxlength="20" disabled>        
+    </div>    
+    <div class="inline">
+        <label for="edtInst">Instalação</label>
+        <input type="text" id="edtInst" class="only-view" maxlength="20" disabled>
+        <label for="edtPPot">Peso/Pot.</label>
+        <input type="text" id="edtPPot" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <label for="edtPTor">Peso/Torque</label>
+        <input type="text" id="edtPTor" class="only-view" onkeyup="return valFloat(this)" disabled>        
+    </div>    
+    <div class="inline">
+        <label for="edtPotEsp">Pot. Específica</label>
+        <input type="text" id="edtPotEsp" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <label for="edtPotMax">Pot Máx.</label>
+        <input type="text" id="edtPotMax" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <label for="edtRazComp">Razão de Comp.</label>
+        <input type="text" id="edtRazComp" class="only-view" onkeyup="return valFloat(this)" disabled>        
+    </div>
+    <div class="inline">
+        <label for="edtRPMMax">RPM Máx.</label>
+        <input type="text" id="edtRPMMax" class="only-view" onkeyup="return valint(this)" disabled>
+        <label for="edtRPMPotMax">RPM Pot. Max.</label>
+        <input type="text" id="edtRPMPotMax" class="only-view" onkeyup="return valint(this)" disabled>
+        <label for="edtRPMTorMax">RPM Torque Max..</label>
+        <input type="text" id="edtRPMTorMax" class="only-view" onkeyup="return valint(this)" disabled>        
+    </div>
+    <div class="inline">
+        <label for="edtTorEsp">Torque Esp.</label>
+        <input type="text" id="edtTorEsp" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <label for="edtTorMax">Torque Max.</label>
+        <input type="text" id="edtTorMax" class="only-view" onkeyup="return valFloat(this)" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtTuchos">Tuchos</label>
+        <input type="text" id="edtTuchos" class="only-view" maxlength="20" disabled>
+        <label for="edtValCil">Valv. p/ Cilindros</label>
+        <input type="text" id="edtValCil" class="only-view" onkeyup="return valint(this)" disabled>   
+    </div>       
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
 </template>
 <script>
-
+    const pageData = main_data.vcl_motor.data
+    const pageFunc = main_data.vcl_motor.func
+    const pageScreen = document.querySelector('#motor')
     
+    function pageStart(){
+        openFields(0)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+//        pageScreen.querySelector('#edtAcel').value = pageData.ace_0_100
+//        pageScreen.querySelector('#edtVel').value = pageData.vel_max
 
+    }
+
+    pageFunc.setDesemp = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.ace_0_100 = del ? 0 : pageScreen.querySelector('#edtAcel').value
+            params.vel_max = pageScreen.querySelector('#edtVel').value
+        const myPromisse = queryDB(params,'VCL-3')
+
+        myPromisse.then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+            closeModal('adm_view_veiculo')
+        })
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        if(checkField(['edtAcel']) ){
+            pageFunc.setDesemp()            
+        }
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+            pageFunc.setDesemp(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields()
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>

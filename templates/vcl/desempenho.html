@@ -1,11 +1,66 @@
 <template>
     <style></style>
 
-
-
+    <div class="inline">
+        <label for="edtAcel">Aceleração 0-100 km/h (seg)</label>
+        <input type="text" id="edtAcel" class="only-view" onkeyup="return valFloat(this)" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtVel">Velocidade Máx (km/h)</label>
+        <input type="text" id="edtVel" class="only-view" onkeyup="return valFloat(this)" disabled>
+    </div>
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
 </template>
 <script>
-
+    const pageData = main_data.vcl_desempenho.data
+    const pageFunc = main_data.vcl_desempenho.func
+    const pageScreen = document.querySelector('#desemp')
     
+    function pageStart(){
+        openFields(0)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#edtAcel').value = pageData.ace_0_100
+        pageScreen.querySelector('#edtVel').value = pageData.vel_max
 
+    }
+
+    pageFunc.setDesemp = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.ace_0_100 = del ? 0 : pageScreen.querySelector('#edtAcel').value
+            params.vel_max = pageScreen.querySelector('#edtVel').value
+        const myPromisse = queryDB(params,'VCL-3')
+
+        myPromisse.then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+            closeModal('adm_view_veiculo')
+        })
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        if(checkField(['edtAcel']) ){
+            pageFunc.setDesemp()            
+        }
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+            pageFunc.setDesemp(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields()
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>

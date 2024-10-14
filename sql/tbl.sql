@@ -150,26 +150,126 @@ CREATE TABLE tb_vcl_desempenho(
 	id_vcl int(11) unsigned NOT NULL,
 	ace_0_100 double DEFAULT NULL,
     vel_max double DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
     PRIMARY KEY (id_vcl)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
  DROP TABLE IF EXISTS tb_vcl_motor;
 CREATE TABLE tb_vcl_motor(
-	id_vcl int(11) unsigned NOT NULL,
+	id_vcl int(11) NOT NULL,
     aci_comando varchar(20) DEFAULT NULL,
-    aspiracao varchar(20) DEFAULT NULL,
     alimentacao varchar(20) DEFAULT NULL,
-    cilindros varchar(20) DEFAULT NULL,
-    cilindrada varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
-     varchar(20) DEFAULT NULL,
+    aspiracao double DEFAULT NULL,
+    cilindrada int DEFAULT NULL,
+    cilindros int DEFAULT NULL,
+    cod_motor varchar(20) DEFAULT NULL,
+    com_valvula varchar(20) DEFAULT NULL,
+    curso_pistao double DEFAULT NULL,
+    diam_cilindro double DEFAULT NULL,
+    disposicao varchar(20) DEFAULT NULL,
+    instalacao varchar(20) DEFAULT NULL,
+    peso_pot double DEFAULT NULL,
+    pot_max double DEFAULT NULL,
+    raz_compressao varchar(20) DEFAULT NULL,
+    rpm_max double DEFAULT NULL,
+    rpm_pot_max double DEFAULT NULL,
+    rpm_torque_max double DEFAULT NULL,
+    torque_esp varchar(20) DEFAULT NULL,
+    torque_max varchar(40) DEFAULT NULL,
+    tuchos varchar(20) DEFAULT NULL,
+    valv_cilindros int DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+ DROP TABLE IF EXISTS tb_vcl_transmissao;
+CREATE TABLE tb_vcl_transmissao(
+	id_vcl int(11) unsigned NOT NULL,
+	acoplamento varchar(20) DEFAULT NULL,
+    cambio varchar(20) DEFAULT NULL,
+    cod_cambio varchar(20) DEFAULT NULL,
+    marchas int DEFAULT NULL,
+    tracao varchar(20) DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_dimensao;
+CREATE TABLE tb_vcl_dimensao(
+	id_vcl int(11) unsigned NOT NULL,
+	altura double DEFAULT NULL,
+	bitola_diant double DEFAULT NULL,
+	bitola_tras double DEFAULT NULL,
+	carga_vol double DEFAULT NULL,
+	carga_peso double DEFAULT NULL,
+	comprimento double DEFAULT NULL,
+	entre_eixos double DEFAULT NULL,
+	largura double DEFAULT NULL,
+	peso double DEFAULT NULL,
+	tanque double DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_pneus;
+CREATE TABLE tb_vcl_pneus(
+	id_vcl int(11) unsigned NOT NULL,
+	alt_flanco double DEFAULT NULL,
+    dianteiro varchar(20) DEFAULT NULL,
+    traseiro varchar(20) DEFAULT NULL,
+    estepe varchar(20) DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_aerodinamica;
+CREATE TABLE tb_vcl_aerodinamica(
+	id_vcl int(11) unsigned NOT NULL,
+	area_front double DEFAULT NULL,
+    area_front_corrig double DEFAULT NULL,
+    coef_arrasto double DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_direcao;
+CREATE TABLE tb_vcl_direcao(
+	id_vcl int(11) unsigned NOT NULL,
+	assistencia varchar(20) DEFAULT NULL,
+    diam_giro double DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_suspensao;
+CREATE TABLE tb_vcl_suspensao(
+	id_vcl int(11) unsigned NOT NULL,
+	dianteira varchar(20) DEFAULT NULL,
+	traseira varchar(20) DEFAULT NULL,
+	elem_elastico varchar(20) DEFAULT NULL,
+    curso_diant double DEFAULT NULL,
+    curso_tras double DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_freios;
+CREATE TABLE tb_vcl_freios(
+	id_vcl int(11) unsigned NOT NULL,
+	dianteira varchar(20) DEFAULT NULL,
+	traseira varchar(20) DEFAULT NULL,
+	abs boolean DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_consumo;
+CREATE TABLE tb_vcl_consumo(
+	id_vcl int(11) unsigned NOT NULL,
+	autonomia_rod double DEFAULT NULL,
+	autonomia_urb double DEFAULT NULL,
+	consumo_rod double DEFAULT NULL,
+	consumo_urb double DEFAULT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
     PRIMARY KEY (id_vcl)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

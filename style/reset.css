@@ -124,7 +124,7 @@
     }
 
     .inline input, select, textarea{
-        width: 100%;
+        flex-grow: 1;
     }
 
     .inline input[type=checkbox]{
@@ -142,7 +142,7 @@
 
     .busca-itens{
         display: flex;
-        width: 100%;
+        flex-grow: 1;
     }
 
     .inline span{

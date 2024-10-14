@@ -438,9 +438,9 @@ DELIMITER $$
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
 			IF(Iid_acervo=0)THEN
-				SET @quer =CONCAT('SELECT * FROM tb_veiculo WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
+				SET @quer =CONCAT('SELECT * FROM vw_veiculos WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
             ELSE
-				SET @quer =CONCAT('SELECT * FROM tb_veiculo WHERE id_acervo=',Iid_acervo ,' AND ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
+				SET @quer =CONCAT('SELECT * FROM vw_veiculos WHERE id_acervo=',Iid_acervo ,' AND ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
             END IF;
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
@@ -546,6 +546,80 @@ DELIMITER $$
 					UPDATE tb_equipamento SET equip=Iequip, sessao=Isessao
                     WHERE id=Iid;
                 END IF;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_desempenho;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_desempenho(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Iace_0_100 double,
+		IN Ivel_max double
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);        
+		IF(@allow)THEN
+			IF(Iace_0_100<=0)THEN
+				DELETE FROM tb_vcl_desempenho WHERE id=Iid;
+            ELSE
+				INSERT INTO tb_vcl_desempenho (id_vcl,ace_0_100,vel_max)
+				VALUES(Iid_vcl,Iace_0_100,Ivel_max)
+				ON DUPLICATE KEY UPDATE
+				ace_0_100=Iace_0_100, vel_max=Ivel_max;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_motor;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_motor(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Iaci_comando varchar(20),
+		IN Ialimentacao varchar(20),
+		IN Iaspiracao double,
+		IN Icilindrada int,
+		IN Icilindros int,
+		IN Icod_motor varchar(20),
+		IN Icom_valvula varchar(20),
+		IN Icurso_pistao double,
+		IN Idiam_cilindro double,
+		IN Idisposicao varchar(20),
+		IN Iinstalacao varchar(20),
+		IN Ipeso_pot double,
+		IN Ipot_max double,
+		IN Iraz_compressao varchar(20),
+		IN Irpm_max double,
+		IN Irpm_pot_max double,
+		IN Irpm_torque_max double,
+		IN Itorque_esp varchar(20),
+		IN Itorque_max varchar(40),
+		IN Ituchos varchar(20),
+		IN Ivalv_cilindros int
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);        
+		IF(@allow)THEN
+			IF(Icilindros<=0)THEN
+				DELETE FROM tb_vcl_desempenho WHERE id=Iid;
+            ELSE
+				INSERT INTO tb_vcl_desempenho (id_vcl,aci_comando,alimentacao,aspiracao,cilindrada,cilindros,cod_motor,com_valvula,
+                curso_pistao,diam_cilindro,disposicao,instalacao,peso_pot,pot_max,raz_compressao,rpm_max,rpm_pot_max,rpm_torque_max,
+                torque_esp,torque_max,tuchos,valv_cilindros)
+				VALUES(Iid_vcl,Iaci_comando,Ialimentacao,Iaspiracao,Icilindrada,Icilindros,Icod_motor,Icom_valvula,
+                Icurso_pistao,Idiam_cilindro,Idisposicao,Iinstalacao,Ipeso_pot,Ipot_max,Iraz_compressao,Irpm_max,Irpm_pot_max,Irpm_torque_max,
+                Itorque_esp,Itorque_max,Ituchos,Ivalv_cilindros)
+				ON DUPLICATE KEY UPDATE
+				aci_comando=Iaci_comando,alimentacao=Ialimentacao,aspiracao=Iaspiracao,cilindrada=Icilindrada,cilindros=Icilindros,
+                cod_motor=Icod_motor,com_valvula=Icom_valvula,curso_pistao=Icurso_pistao,diam_cilindro=Idiam_cilindro,disposicao=Idisposicao,
+                instalacao=Iinstalacao,peso_pot=Ipeso_pot,pot_max=Ipot_max,raz_compressao=Iraz_compressao,rpm_max=Irpm_max,rpm_pot_max=Irpm_pot_max,
+                rpm_torque_max=Irpm_torque_max,torque_esp=Itorque_esp,torque_max=Itorque_max,tuchos=Ituchos,valv_cilindros=Ivalv_cilindros;
             END IF;
         END IF;
 	END $$

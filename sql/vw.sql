@@ -21,3 +21,140 @@ DROP VIEW IF EXISTS vw_acervo;
         FROM tb_acervo AS ACV
         INNER JOIN tb_usuario AS OWN
         ON ACV.id_owner = OWN.id;
+        
+/* VCL DESEMPENHO */
+ DROP VIEW IF EXISTS vw_vcl_desempenho;
+ 	CREATE VIEW vw_vcl_desempenho AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_desempenho AS CHD
+		ON CHD.id_vcl = VCL.id;
+
+SELECT * FROM vw_vcl_desempenho;
+
+/* VCL MOTOR */
+ DROP VIEW IF EXISTS vw_vcl_motor;
+ 	CREATE VIEW vw_vcl_motor AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_motor AS CHD
+		ON CHD.id_vcl = VCL.id;
+        
+SELECT * FROM vw_vcl_motor;        
+        
+/* VCL TRANSMISSÂO */
+ DROP VIEW IF EXISTS vw_vcl_transmissao;
+ 	CREATE VIEW vw_vcl_transmissao AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_transmissao AS CHD
+		ON CHD.id_vcl = VCL.id;
+        
+SELECT * FROM vw_vcl_transmissao;        
+        
+/* VCL DIMENSÂO */
+ DROP VIEW IF EXISTS vw_vcl_dimensao;
+ 	CREATE VIEW vw_vcl_dimensao AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_dimensao AS CHD
+		ON CHD.id_vcl = VCL.id;
+        
+SELECT * FROM vw_vcl_dimensao;
+        
+/* VCL PNEUS */
+ DROP VIEW IF EXISTS vw_vcl_pneus;
+ 	CREATE VIEW vw_vcl_pneus AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_pneus AS CHD
+		ON CHD.id_vcl = VCL.id;
+
+SELECT * FROM vw_vcl_pneus;
+
+/* VCL AERODINAMICA */
+ DROP VIEW IF EXISTS vw_vcl_aerodinamica;
+ 	CREATE VIEW vw_vcl_aerodinamica AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_aerodinamica AS CHD
+		ON CHD.id_vcl = VCL.id;    
+        
+SELECT * FROM vw_vcl_aerodinamica;
+        
+/* VCL DIREÇÃO */
+ DROP VIEW IF EXISTS vw_vcl_direcao;
+ 	CREATE VIEW vw_vcl_direcao AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_direcao AS CHD
+		ON CHD.id_vcl = VCL.id;   
+        
+SELECT * FROM vw_vcl_direcao;
+        
+/* VCL SUSPENSÃO */
+ DROP VIEW IF EXISTS vw_vcl_suspensao;
+ 	CREATE VIEW vw_vcl_suspensao AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_suspensao AS CHD
+		ON CHD.id_vcl = VCL.id; 
+        
+SELECT * FROM vw_vcl_suspensao;
+        
+/* VCL FREIOS */
+ DROP VIEW IF EXISTS vw_vcl_freios;
+ 	CREATE VIEW vw_vcl_freios AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_freios AS CHD
+		ON CHD.id_vcl = VCL.id;
+        
+SELECT * FROM vw_vcl_freios;
+        
+/* VCL CONSUMO */
+ DROP VIEW IF EXISTS vw_vcl_consumo;
+ 	CREATE VIEW vw_vcl_consumo AS
+		SELECT VCL.id, CHD.*
+		FROM tb_veiculo AS VCL
+		LEFT JOIN tb_vcl_consumo AS CHD
+		ON CHD.id_vcl = VCL.id;
+        
+SELECT * FROM vw_vcl_consumo;
+        
+/* VCL FREIOS */
+ DROP VIEW IF EXISTS vw_veiculos;
+ 	CREATE VIEW vw_veiculos AS
+		SELECT VCL.*,
+        DES.ace_0_100, DES.vel_max,
+        MOT.aci_comando,MOT.alimentacao,MOT.aspiracao,MOT.cilindrada,MOT.cilindros,MOT.cod_motor,MOT.com_valvula,MOT.curso_pistao,
+        MOT.diam_cilindro,MOT.disposicao,MOT.instalacao,MOT.peso_pot,MOT.pot_max,MOT.raz_compressao,MOT.rpm_max,MOT.rpm_pot_max,
+        MOT.rpm_torque_max,MOT.torque_esp,MOT.torque_max,MOT.tuchos,MOT.valv_cilindros,
+        TRM.acoplamento,TRM.cambio,TRM.cod_cambio,TRM.marchas,TRM.tracao,
+        DIM.altura,DIM.bitola_diant,DIM.bitola_tras,DIM.carga_vol,DIM.carga_peso,DIM.comprimento,DIM.entre_eixos,DIM.largura,DIM.peso,DIM.tanque,
+        PNU.alt_flanco,PNU.dianteiro,PNU.traseiro,PNU.estepe,
+        AER.area_front,AER.area_front_corrig,AER.coef_arrasto,
+        DIR.assistencia,DIR.diam_giro,
+        FRE.dianteira,FRE.traseira,FRE.abs,
+        COM.autonomia_rod,COM.autonomia_urb,COM.consumo_rod,COM.consumo_urb
+		FROM tb_veiculo AS VCL
+		INNER JOIN vw_vcl_desempenho AS DES
+		INNER JOIN vw_vcl_motor AS MOT
+		INNER JOIN vw_vcl_transmissao AS TRM
+		INNER JOIN vw_vcl_dimensao AS DIM
+		INNER JOIN vw_vcl_pneus AS PNU
+		INNER JOIN vw_vcl_aerodinamica AS AER
+		INNER JOIN vw_vcl_direcao AS DIR
+		INNER JOIN vw_vcl_freios AS FRE
+ 		INNER JOIN vw_vcl_consumo AS COM
+		ON DES.id = VCL.id
+		AND MOT.id = VCL.id
+		AND TRM.id = VCL.id
+		AND DIM.id = VCL.id
+		AND PNU.id = VCL.id
+		AND AER.id = VCL.id
+		AND DIR.id = VCL.id
+		AND FRE.id = VCL.id
+ 		AND COM.id = VCL.id;
+        
+SELECT * FROM vw_veiculos;
