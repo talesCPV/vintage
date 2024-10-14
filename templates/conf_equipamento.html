@@ -1,0 +1,77 @@
+<template>
+    <style>
+        .min-width{
+            width: 15px;
+            text-align: center;
+        }
+    </style>
+
+    <fieldset class="fds-busca equip">
+        <legend>Filtro</legend>
+        <div class="inline">
+            <label for="edtBusca">Nome</label>
+            <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-equip')">
+            <button id="btnBusca-equip" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+            <button id="btnNovo-equip" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+        </div>
+    </fieldset>
+
+    <table id="tblEquip"></table>
+
+</template>
+<script>
+
+    const pageData = main_data.conf_equipamento.data
+    const pageFunc = main_data.conf_equipamento.func
+    const pageScreen = document.querySelector('#card-conf_equipamento')
+    const newReg = Object.keys(pageData).length == 0
+    pageStart()
+
+    function pageStart(){
+        viewEquip()
+    }
+
+    function viewEquip(equip='',sessao=''){
+        const params = new Object
+        params.equip = equip
+        params.sessao = sessao
+
+        queryDB(params,'CONF-0').then((resolve)=>{
+            const tbl = pageScreen.querySelector('#tblEquip')
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
+            tbl.head('Nome,Sessão')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'equip,sessao','Upp,Upp')                
+            }    
+        })
+    }
+
+
+    pageScreen.querySelector('#btnBusca-equip').addEventListener('click',()=>{
+        viewEquip(pageScreen.querySelector('#edtBusca').value.trim())
+    })
+
+    pageScreen.querySelector('#btnNovo-equip').addEventListener('click',()=>{
+//        setEquip(prompt('Digite o nome no equipamento.'))
+    })
+
+    pageScreen.querySelector('#tblEquip').addEventListener('dblclick',(e)=>{
+        data = e.target.parentNode.data
+        if(confirm('Deseja deletar este equipamento?')){
+            setEquip(data.id,'','')
+        }
+    })
+
+    pageScreen.querySelector('#tblEquip').addEventListener('click',(e)=>{
+        data = e.target.parentNode.data
+        data.callback = viewEquip
+       openHTML('conf_view_equip.html','pop-up',`${data.equip}`,data)
+    })
+
+    pageScreen.querySelector('#btnNovo-equip').addEventListener('click',(e)=>{
+       openHTML('conf_view_equip.html','pop-up','Novo Equipamento',{'callback':viewEquip})
+    })
+    
+
+</script>

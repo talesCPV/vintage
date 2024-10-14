@@ -10,3 +10,8 @@
 12/10/2024 01:44 admin@planet3.com.br : Menu Incluido (null)
 12/10/2024 01:44 admin@planet3.com.br : Menu Deletado (Acervos)
 12/10/2024 01:44 admin@planet3.com.br : Menu Alterado (Acervos, adm_acervo.html, pop-up, Acervos)
+14/10/2024 14:25 admin@planet3.com.br : Menu Incluido (Config)
+14/10/2024 14:26 admin@planet3.com.br : Menu Alterado (Config, menu, pop-up, )
+14/10/2024 14:26 admin@planet3.com.br : Menu Incluido (Equipamentos)
+14/10/2024 14:28 admin@planet3.com.br : Menu Alterado (Equipamentos, conf_equipamentos.html, pop-up, Equipamentos)
+14/10/2024 14:29 admin@planet3.com.br : Menu Alterado (Equipamentos, conf_equipamento.html, pop-up, Equipamentos)

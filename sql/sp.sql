@@ -501,3 +501,52 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
+
+
+/* EQUIPAMENTO */
+
+  DROP PROCEDURE IF EXISTS sp_view_equip;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_equip(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iequip varchar(50),
+		IN Isessao varchar(20)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			SELECT * FROM tb_equipamento 
+            WHERE equip LIKE CONCAT('%',Iequip,'%') COLLATE utf8_general_ci 
+            AND sessao LIKE CONCAT('%',Isessao,'%') COLLATE utf8_general_ci
+            ORDER BY sessao,equip;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_equip;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_equip(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid int(11),
+		IN Iequip varchar(50),
+		IN Isessao varchar(20)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Iequip="")THEN
+				DELETE FROM tb_equipamento WHERE id=Iid;
+            ELSE			
+				IF(Iid=0)THEN
+					INSERT INTO tb_equipamento (equip,sessao)
+                    VALUES(Iequip,Isessao);            
+                ELSE
+					UPDATE tb_equipamento SET equip=Iequip, sessao=Isessao
+                    WHERE id=Iid;
+                END IF;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;

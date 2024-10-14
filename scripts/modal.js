@@ -37,7 +37,7 @@ async function openHTML(template='',where="content-screen",label="", data="",wid
 
                 closeMenu()
 
-                const new_obj = page_name
+                const new_obj = page_name.replaceAll('/','_')
 
                 main_data[new_obj] = new Object
                 main_data[new_obj].data = typeof(data) != 'object' ? new Object : data

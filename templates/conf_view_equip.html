@@ -1,0 +1,75 @@
+<template>
+    <style></style>
+    <fieldset>
+        <legend>Equipamento</legend>
+        <div class="inline">
+            <label for="edtEquip">Nome</label>
+            <input type="text" id="edtEquip" maxlength="50" class="only-view" disabled>
+        </div>
+        <div class="inline">
+            <label for="cmbSessao">Sessão</label>
+            <select id="cmbSessao" class="only-view" disabled>
+                <option value="CONFORTO">Conforto</option>
+                <option value="ENTRETERIMENTO">Entretenimento</option>
+                <option value="SEGURANÇA">Segurança</option>
+            </select>
+        </div>
+        <div class="line">
+            <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+            <button id="btnDel" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+            <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+        </div>
+    </fieldset>
+
+</template>
+<script>
+    
+    const pageData = main_data.conf_view_equip.data
+    const pageFunc = main_data.conf_view_equip.func
+    const pageScreen = document.querySelector('#card-conf_view_equip')
+    const newReg = Object.keys(pageData).length <= 1
+
+    function pageStart(){
+        pageScreen.querySelector('#btnEdit').disabled = newReg
+        openFields(newReg)
+        if(!newReg){
+            pageScreen.querySelector('#edtEquip').value = pageData.equip
+            pageScreen.querySelector('#cmbSessao').value = pageData.sessao
+        }
+    }
+
+    function setEquip(equip,sessao){
+        const params = new Object
+        params.id = newReg ? 0 : pageData.id
+        params.equip = equip
+        params.sessao = sessao
+
+        queryDB(params,'CONF-1').then(()=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+            closeModal('conf_view_equip')
+        })
+    }
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields()
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if(confirm('Deseja deletar este equipamento?')){
+            setEquip('','')
+        }
+    })
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        const equip = pageScreen.querySelector('#edtEquip').value.trim().toUpperCase()
+        const sessao = pageScreen.querySelector('#cmbSessao').value
+        setEquip(equip,sessao)
+    })
+
+    pageStart()
+
+</script>

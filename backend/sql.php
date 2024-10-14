@@ -34,6 +34,9 @@
         "AGD-3" => 'CALL sp_set_aula_dada(@access,@hash,x00,x01,"x02","x03",x04,x05);', // id_aluno,id_aula,data_hora,valor,pg,del
         "AGD-4" => 'CALL sp_view_aula_dada(@access,@hash,"x00","x01");',
 
+        /* CONFIGURAÇÔES */
+        "CONF-0" => 'CALL sp_view_equip(@access,@hash,"x00","x01");', // EQUIP,SESSAO
+        "CONF-1" => 'CALL sp_set_equip(@access,@hash,x00,"x01","x02");', // ID,EQUIP,SESSAO
 
         /* POST */
         

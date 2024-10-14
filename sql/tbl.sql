@@ -135,3 +135,41 @@ CREATE TABLE tb_veiculo(
     FOREIGN KEY (id_acervo) REFERENCES tb_acervo(id),
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_equipamento;
+CREATE TABLE tb_equipamento(
+	id int(11) unsigned NOT NULL AUTO_INCREMENT,
+    equip varchar(50) NOT NULL,    
+    sessao varchar(20) NOT NULL,
+    UNIQUE KEY (equip),
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_desempenho;
+CREATE TABLE tb_vcl_desempenho(
+	id_vcl int(11) unsigned NOT NULL,
+	ace_0_100 double DEFAULT NULL,
+    vel_max double DEFAULT NULL,
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_motor;
+CREATE TABLE tb_vcl_motor(
+	id_vcl int(11) unsigned NOT NULL,
+    aci_comando varchar(20) DEFAULT NULL,
+    aspiracao varchar(20) DEFAULT NULL,
+    alimentacao varchar(20) DEFAULT NULL,
+    cilindros varchar(20) DEFAULT NULL,
+    cilindrada varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+     varchar(20) DEFAULT NULL,
+
+    PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
