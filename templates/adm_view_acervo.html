@@ -29,7 +29,7 @@
                 <button id="btnNovo-veiculo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
             </div>
         </fieldset>
-
+        
         <table id="tblVeiculo"></table>
 
     </div>
@@ -47,7 +47,7 @@
         tbl.head('Cod.|min-width,Acervo,Dono')
         tbl.plot(pageData,'id|min-width,nome,owner_name','str,Upp,Upp')
 
-//        pageFunc.fillVeiculo()
+        pageFunc.fillVeiculo()
     }
 
     pageFunc.fillVeiculo = ()=>{      
@@ -62,7 +62,7 @@
         const myPromisse = queryDB(params,'VCL-0')
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
-            tbl.style.display = json.length > 0 ? 'block' : 'none'
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
             tbl.head('Cod.,Nome,Ano')
             for(let i=0; i<json.length;i++){
                 tbl.plot(json[i],'id,nome,ano','str,Upp,Upp')                
@@ -80,8 +80,18 @@
         })
     }
 
+    pageScreen.querySelector('#btnBusca-veiculo').addEventListener('click',()=>{
+        pageFunc.fillVeiculo()
+    })
+
     pageScreen.querySelector('#btnNovo-veiculo').addEventListener('click',()=>{
         pageFunc.newVeiculo(prompt('Digite o nome do veículo'))
+    })
+
+    pageScreen.querySelector('#tblVeiculo').addEventListener('click',(e)=>{
+        data = e.target.parentNode.data
+        data.callback = pageFunc.fillVeiculo      
+       openHTML('adm_view_veiculo.html','pop-up',`Veículo - ${data.nome}`,data)
     })
 
     pageStart()

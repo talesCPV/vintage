@@ -1,0 +1,183 @@
+<template>
+    <style></style>
+
+    <div class="tab-bar">
+        <div class="tab-item" id="tab-descricao" onclick="pictab(this)">Informações</div>        
+        <div class="tab-item" id="tab-desempenho" onclick="pictab(this)">Desempenho</div>
+        <div class="tab-item" id="tab-motor" onclick="pictab(this)">Motor</div>
+        <div class="tab-item" id="tab-transmissao" onclick="pictab(this)">Transmissão</div>
+        <div class="tab-item" id="tab-dimensoes" onclick="pictab(this)">Dimensões</div>
+        <div class="tab-item" id="tab-pneus" onclick="pictab(this)">Pneus</div>
+        <div class="tab-item" id="tab-aerodinamica" onclick="pictab(this)">Aerodinâmica</div>
+        <div class="tab-item" id="tab-direcao" onclick="pictab(this)">Direção</div>
+        <div class="tab-item" id="tab-freios" onclick="pictab(this)">Freios</div>
+        <div class="tab-item" id="tab-consumo" onclick="pictab(this)">Consumo</div>
+        <div class="tab-item" id="tab-imagens" onclick="pictab(this)">Fotos</div>
+    </div>
+    <div class="tab-screen">
+        <div id="descricao" class="tab">
+            <div class="inline">
+                <label for="edtNome">Nome</label>
+                <input type="text" id="edtNome" class="only-view" maxlength="50" disabled>
+                <label for="edtAno">Ano</label>
+                <input type="text" id="edtAno" class="only-view" maxlength="4" style="max-width: 80px;" disabled>
+            </div>
+            <div class="inline">
+                <label for="edtMarca">Marca</label>
+                <input type="text" id="edtMarca" class="only-view" maxlength="50" disabled>
+                <label for="edtModelo">Modelo</label>
+                <input type="text" id="edtModelo" class="only-view" maxlength="50" disabled>
+            </div>
+            <div class="inline">
+                <label for="cmbCombustivel">Combustível</label>
+                <select id="cmbCombustivel" class="only-view" disabled>
+                    <option value="GASOLINA">Gasolina</option>
+                    <option value="ALCOOL">Álcool</option>
+                    <option value="DIESEL">Diesel</option>
+                    <option value="FLEX">Flex</option>
+                    <option value="GÁS">GÁS</option>
+                    <option value="ELÉTRICO">Elétrico</option>
+                </select>
+                <label for="cmbTipo">Tipo</label>
+                <select id="cmbTipo" class="only-view" disabled>
+                    <option value="HATCH" selected>Hatch</option>
+                    <option value="SEDAN">Sedan</option>
+                    <option value="WAGON">Wagon</option>
+                    <option value="PICAPE">Picape</option>
+                    <option value="SUV">SUV</option>
+                    <option value="COUPÊ">Coupê</option>
+                    <option value="ROADSTER">Roadster</option>
+                    <option value="FASTBACK">Fastback</option>
+                    <option value="VAN">VAN</option>
+                    <option value="JEEP">Jeep</option>
+                    <option value="CAMINHÃO">Caminhão</option>
+                    <option value="MOTO">Moto</option>
+                    <option value="MINIVAN">Minivan</option>
+                </select>
+            </div>
+            <div class="inline">
+                <label for="edtPortas">Portas</label>
+                <input type="text" id="edtPortas" class="only-view" maxlength="2" onkeyup="return valInt(this)" disabled>
+                <label for="edtLugares">Lugares</label>
+                <input type="text" id="edtLugares" class="only-view" maxlength="3" onkeyup="return valInt(this)" disabled>
+                <label for="cmbPorte">Porte</label>
+                <select id="cmbPorte" class="only-view" disabled>
+                    <option value="PEQ">Pequeno</option>
+                    <option value="MED" selected>Médio</option>
+                    <option value="GND">Grande</option>
+                </select>
+            </div>
+            <div class="inline">
+                <label for="edtPlaca">Placa</label>
+                <input type="text" id="edtPlaca" class="only-view" maxlength="15" disabled>            
+                <label for="edtPais">País de Origem</label>
+                <input type="text" id="edtPais" class="only-view" maxlength="25" disabled>
+            </div>
+            <div class="line">
+                <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+                <button id="btnDel" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+                <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+            </div>
+        </div>        
+        <div id="desempenho" class="tab">
+            1
+        </div>
+        <div id="motor" class="tab">
+            2
+        </div>
+        <div id="transmissao" class="tab">
+            3
+        </div>
+        <div id="dimensoes" class="tab">
+            4
+        </div>
+        <div id="pneus" class="tab">
+            0
+        </div>
+        <div id="aerodinamica" class="tab">
+            5
+        </div>
+        <div id="direcao" class="tab">
+            6
+        </div>
+        <div id="freios" class="tab">
+            7
+        </div>
+        <div id="consumo" class="tab">
+            consumo
+        </div>
+        <div id="imagens" class="tab">
+            Fotos
+        </div>
+    </div>
+
+</template>
+<script>
+    const pageData = main_data.adm_view_veiculo.data
+    const pageFunc = main_data.adm_view_veiculo.func
+    const pageScreen = document.querySelector('#card-adm_view_veiculo')
+
+    function pageStart(){
+        pictab(pageScreen.querySelector('#tab-descricao'))
+        openFields(0)
+        pageScreen.querySelector('#edtNome').value = pageData.nome
+        pageScreen.querySelector('#edtAno').value = pageData.ano
+        pageScreen.querySelector('#edtMarca').value = pageData.marca
+        pageScreen.querySelector('#edtModelo').value = pageData.modelo
+        pageScreen.querySelector('#edtPortas').value = pageData.portas
+        pageScreen.querySelector('#edtLugares').value = pageData.lugares
+        pageScreen.querySelector('#cmbPorte').value = pageData.porte
+        pageScreen.querySelector('#cmbCombustivel').value = pageData.combustivel
+        pageScreen.querySelector('#cmbTipo').value = pageData.configuracao
+        pageScreen.querySelector('#edtPlaca').value = pageData.placa
+        pageScreen.querySelector('#edtPais').value = pageData.procedencia
+        pageScreen.querySelector('#btnEdit').disabled = 0
+    }
+//,,,,,,,,,,,,
+    pageFunc.setVeiculo = (del=0)=>{
+        const params = new Object;
+            params.id = pageData.id
+            params.id_acervo = pageData.id_acervo
+            params.nome = del ? '' : pageScreen.querySelector('#edtNome').value.trim()
+            params.ano = pageScreen.querySelector('#edtAno').value.trim().toUpperCase()
+            params.modelo = pageScreen.querySelector('#edtModelo').value.trim().toUpperCase()
+            params.marca = pageScreen.querySelector('#edtMarca').value.trim().toUpperCase()
+            params.combustivel = pageScreen.querySelector('#cmbCombustivel').value
+            params.configuracao = pageScreen.querySelector('#cmbTipo').value
+            params.portas = pageScreen.querySelector('#edtPortas').value
+            params.lugares = pageScreen.querySelector('#edtLugares').value
+            params.porte = pageScreen.querySelector('#cmbPorte').value
+            params.placa = pageScreen.querySelector('#edtPlaca').value.trim().toUpperCase()
+            params.procedencia = pageScreen.querySelector('#edtPais').value.trim().toUpperCase()
+        const myPromisse = queryDB(params,'VCL-2');
+
+        myPromisse.then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(`Comprador ${del ? 'Deletado ': novoComp ? 'Cadastrado ':'Editado '} ${JSON.stringify(params)}`)            
+            closeModal('adm_view_veiculo')
+        })
+        
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        if(checkField(['edtNome']) ){
+            pageFunc.setVeiculo()
+        }
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente deletar este Veículo?')) {
+            pageFunc.setVeiculo(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields()
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
+</script>

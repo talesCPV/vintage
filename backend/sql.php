@@ -45,7 +45,7 @@
         "ACV-1" => 'CALL sp_set_acervo(@access,@hash,x00,x01,"x02");', // ID,ID_OWNER,NOME
 
         /* VEÍCULOS */
-        "VCL-0" => 'CALL sp_view_veiculo(@access,@hash,x00,"x01","x02","x03"));', // ID_ACERVO, FIELD, SIGNAL, VALUE
+        "VCL-0" => 'CALL sp_view_veiculo(@access,@hash,x00,"x01","x02","x03");', // ID_ACERVO, FIELD, SIGNAL, VALUE
         "VCL-1" => 'CALL sp_new_veiculo(@access,@hash,x00,"x01");', // id_acervo,nome
         "VCL-2" => 'CALL sp_set_veiculo(@access,@hash,x00,x01,"x02","x03","x04","x05","x06","x07",x08,x09,"x10","x11","x11");', //id,id_acervo,nome,ano,modelo,marca,combustivel,configuracao,portas,lugares,porte,placa,procedencia
     );

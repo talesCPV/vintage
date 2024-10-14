@@ -240,3 +240,13 @@ function sendMail(subject,message,email){
         });
     }); 
 }
+
+
+/* OPEN FIELDS */
+
+function openFields(open=1){
+    const view = document.querySelectorAll('.only-view')
+    for(let i=0; i<view.length; i++){
+        view[i].disabled = !open
+    }
+}
