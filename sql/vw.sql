@@ -129,7 +129,7 @@ SELECT * FROM vw_vcl_consumo;
         DES.ace_0_100, DES.vel_max,
         MOT.aci_comando,MOT.alimentacao,MOT.aspiracao,MOT.cilindrada,MOT.cilindros,MOT.cod_motor,MOT.com_valvula,MOT.curso_pistao,
         MOT.diam_cilindro,MOT.disposicao,MOT.instalacao,MOT.peso_pot,MOT.pot_max,MOT.raz_compressao,MOT.rpm_max,MOT.rpm_pot_max,
-        MOT.rpm_torque_max,MOT.torque_esp,MOT.torque_max,MOT.tuchos,MOT.valv_cilindros,
+        MOT.rpm_torque_max,MOT.torque_esp,MOT.torque_max,MOT.tuchos,MOT.valvulas,
         TRM.acoplamento,TRM.cambio,TRM.cod_cambio,TRM.marchas,TRM.tracao,
         DIM.altura,DIM.bitola_diant,DIM.bitola_tras,DIM.carga_vol,DIM.carga_peso,DIM.comprimento,DIM.entre_eixos,DIM.largura,DIM.peso,DIM.tanque,
         PNU.alt_flanco,PNU.dianteiro,PNU.traseiro,PNU.estepe,

@@ -1,3 +1,22 @@
+/* IF NULL */
+
+	 DROP PROCEDURE IF EXISTS sp_teste;
+DELIMITER $$
+	CREATE PROCEDURE sp_teste(
+		IN Itext double
+    )
+	BEGIN    
+		SET Itext = (SELECT IF(Itext=0,NULL,Itext));
+        SELECT Itext AS saida;
+	END $$
+DELIMITER ;
+	
+
+    CALL sp_teste("");
+    
+    SELECT IF(1="",NULL,2) AS ok;
+
+/*  */
  DROP PROCEDURE IF EXISTS sp_getHash;
 DELIMITER $$
 	CREATE PROCEDURE sp_getHash(
@@ -564,7 +583,7 @@ DELIMITER $$
 		CALL sp_allow(Iallow,Ihash);        
 		IF(@allow)THEN
 			IF(Iace_0_100<=0)THEN
-				DELETE FROM tb_vcl_desempenho WHERE id=Iid;
+				DELETE FROM tb_vcl_desempenho WHERE id_vcl=Iid_vcl;
             ELSE
 				INSERT INTO tb_vcl_desempenho (id_vcl,ace_0_100,vel_max)
 				VALUES(Iid_vcl,Iace_0_100,Ivel_max)
@@ -601,25 +620,25 @@ DELIMITER $$
 		IN Itorque_esp varchar(20),
 		IN Itorque_max varchar(40),
 		IN Ituchos varchar(20),
-		IN Ivalv_cilindros int
+		IN Ivalvulas int
     )
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);        
 		IF(@allow)THEN
-			IF(Icilindros<=0)THEN
-				DELETE FROM tb_vcl_desempenho WHERE id=Iid;
-            ELSE
-				INSERT INTO tb_vcl_desempenho (id_vcl,aci_comando,alimentacao,aspiracao,cilindrada,cilindros,cod_motor,com_valvula,
+			IF(Icilindros<0)THEN
+				DELETE FROM tb_vcl_motor WHERE id_vcl=Iid_vcl;
+            ELSE            
+				INSERT INTO tb_vcl_motor (id_vcl,aci_comando,alimentacao,aspiracao,cilindrada,cilindros,cod_motor,com_valvula,
                 curso_pistao,diam_cilindro,disposicao,instalacao,peso_pot,pot_max,raz_compressao,rpm_max,rpm_pot_max,rpm_torque_max,
-                torque_esp,torque_max,tuchos,valv_cilindros)
+                torque_esp,torque_max,tuchos,valvulas)
 				VALUES(Iid_vcl,Iaci_comando,Ialimentacao,Iaspiracao,Icilindrada,Icilindros,Icod_motor,Icom_valvula,
                 Icurso_pistao,Idiam_cilindro,Idisposicao,Iinstalacao,Ipeso_pot,Ipot_max,Iraz_compressao,Irpm_max,Irpm_pot_max,Irpm_torque_max,
-                Itorque_esp,Itorque_max,Ituchos,Ivalv_cilindros)
+                Itorque_esp,Itorque_max,Ituchos,Ivalvulas)
 				ON DUPLICATE KEY UPDATE
 				aci_comando=Iaci_comando,alimentacao=Ialimentacao,aspiracao=Iaspiracao,cilindrada=Icilindrada,cilindros=Icilindros,
                 cod_motor=Icod_motor,com_valvula=Icom_valvula,curso_pistao=Icurso_pistao,diam_cilindro=Idiam_cilindro,disposicao=Idisposicao,
                 instalacao=Iinstalacao,peso_pot=Ipeso_pot,pot_max=Ipot_max,raz_compressao=Iraz_compressao,rpm_max=Irpm_max,rpm_pot_max=Irpm_pot_max,
-                rpm_torque_max=Irpm_torque_max,torque_esp=Itorque_esp,torque_max=Itorque_max,tuchos=Ituchos,valv_cilindros=Ivalv_cilindros;
+                rpm_torque_max=Irpm_torque_max,torque_esp=Itorque_esp,torque_max=Itorque_max,tuchos=Ituchos,valvulas=Ivalvulas;
             END IF;
         END IF;
 	END $$

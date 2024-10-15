@@ -2,47 +2,82 @@
     <style></style>
 
     <div class="inline">
-        <label for="edtAciona">Acionamento do Comando</label>
-        <input type="text" id="edtAciona" class="only-view" maxlength="20" disabled>
-        <label for="edtAli">Alimentação</label>
-        <input type="text" id="edtAli" class="only-view" maxlength="20" disabled>
+        <label for="cmbAciona">Acionamento do Comando</label>
+        <select id="cmbAciona" class="only-view" disabled>
+            <option value="CORREIA DENTADA">Correia Dentada</option>
+            <option value="CORRENTE DE COMANDO">Corrente de Comando</option>
+            <option value="ENGRENAGENS">Engrenagens</option>
+            <option value="ELETRONICA">Eletrônica</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>
+        <label for="cmbAli">Alimentação</label>
+        <select id="cmbAli" class="only-view" disabled>
+            <option value="INJ. ELETRONICA MULTIPONTO">Inj. Eletrônica Multiponto</option>
+            <option value="INJ. ELETRONICA MONOPONTO">Inj. Eletrônica Monoponto</option>
+            <option value="CARBURADOR">Carburador</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>
     </div>
     <div class="inline">
-        <label for="edtAsp">Aspiração</label>
-        <input type="text" id="edtAsp" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <label for="cmbAsp">Aspiração</label>
+        <select id="cmbAsp" class="only-view" disabled>
+            <option value="NATURAL">Natural</option>
+            <option value="TURBO">Turbo</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>
         <label for="edtCod">Cód. do Motor</label>
         <input type="text" id="edtCod" class="only-view" maxlength="20" disabled>
     </div>
     <div class="inline">
         <label for="edtCil">Cilindros</label>
         <input type="text" id="edtCil" class="only-view" onkeyup="return valint(this)" disabled>
-        <label for="edtCdd">Cilindradas</label>
+        <label for="edtCdd">Cilindradas (cm³)</label>
         <input type="text" id="edtCdd" class="only-view" onkeyup="return valint(this)" disabled>
     </div>
     <div class="inline">
-        <label for="edtCur">Curso do Pistão</label>
+        <label for="edtCur">Curso do Pistão (mm)</label>
         <input type="text" id="edtCur" class="only-view" onkeyup="return valFloat(this)" disabled>    
-        <label for="edtDiaCil">Diam. do Cilindro</label>
+        <label for="edtDiaCil">Diam. do Cilindro (mm)</label>
         <input type="text" id="edtDiaCil" class="only-view" onkeyup="return valFloat(this)" disabled>
     </div>
     <div class="inline">
-        <label for="edtComVal">Com. de Válvula</label>
-        <input type="text" id="edtComVal" class="only-view" maxlength="20" disabled>
-        <label for="edtDisp">Disposição</label>
-        <input type="text" id="edtDisp" class="only-view" maxlength="20" disabled>        
+        <label for="edtVal">Válvulas</label>
+        <input type="text" id="edtVal" class="only-view" onkeyup="return valint(this)" disabled>   
+        <label for="cmbtComVal">Com. de Válvula</label>
+        <select id="cmbtComVal" class="only-view" disabled>
+            <option value="SOHC - Simples no Cabeçote">SOHC – Simples no Cabeçote</option>
+            <option value="DOHC - Duplo no Cabeçote">DOHC – Duplo no Cabeçote</option>
+            <option value="OHV - Comando de Bloco">OHV – Comando de Bloco</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>
+        <label for="cmbTuchos">Tuchos</label>
+        <select id="cmbTuchos" class="only-view" disabled>
+            <option value="HIDRAULICOS">Hidráulicos</option>
+            <option value="MECANICOS">Mecânicos</option>
+        </select>   
     </div>    
     <div class="inline">
-        <label for="edtInst">Instalação</label>
-        <input type="text" id="edtInst" class="only-view" maxlength="20" disabled>
         <label for="edtPPot">Peso/Pot.</label>
         <input type="text" id="edtPPot" class="only-view" onkeyup="return valFloat(this)" disabled>
         <label for="edtPTor">Peso/Torque</label>
         <input type="text" id="edtPTor" class="only-view" onkeyup="return valFloat(this)" disabled>        
     </div>    
     <div class="inline">
-        <label for="edtPotEsp">Pot. Específica</label>
+        <label for="cmbInst">Instalação</label>
+        <select id="cmbInst" class="only-view" disabled>
+            <option value="DIANTEIRO">Dianteiro</option>
+            <option value="TRASEIRO">Traseiro</option>
+        </select>
+        <label for="cmbDisp">Disposição</label>
+        <select id="cmbDisp" class="only-view" disabled>
+            <option value="TRANSVERSAL">Transversal</option>
+            <option value="LONGITUDINAL">Longitudinal</option>
+        </select>     
+    </div>    
+    <div class="inline">
+        <label for="edtPotEsp">Pot. Espec. (cv/l)</label>
         <input type="text" id="edtPotEsp" class="only-view" onkeyup="return valFloat(this)" disabled>
-        <label for="edtPotMax">Pot Máx.</label>
+        <label for="edtPotMax">Pot Máx. (cv)</label>
         <input type="text" id="edtPotMax" class="only-view" onkeyup="return valFloat(this)" disabled>
         <label for="edtRazComp">Razão de Comp.</label>
         <input type="text" id="edtRazComp" class="only-view" onkeyup="return valFloat(this)" disabled>        
@@ -56,17 +91,11 @@
         <input type="text" id="edtRPMTorMax" class="only-view" onkeyup="return valint(this)" disabled>        
     </div>
     <div class="inline">
-        <label for="edtTorEsp">Torque Esp.</label>
+        <label for="edtTorEsp">Torque Esp. (kgf/l)</label>
         <input type="text" id="edtTorEsp" class="only-view" onkeyup="return valFloat(this)" disabled>
-        <label for="edtTorMax">Torque Max.</label>
+        <label for="edtTorMax">Torque Max. (kgf/l)</label>
         <input type="text" id="edtTorMax" class="only-view" onkeyup="return valFloat(this)" disabled>
     </div>
-    <div class="inline">
-        <label for="edtTuchos">Tuchos</label>
-        <input type="text" id="edtTuchos" class="only-view" maxlength="20" disabled>
-        <label for="edtValCil">Valv. p/ Cilindros</label>
-        <input type="text" id="edtValCil" class="only-view" onkeyup="return valint(this)" disabled>   
-    </div>       
     <div class="line">
         <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
         <button id="btnDel" disabled><span class="mdi mdi-delete"></span>Deletar</button>
@@ -81,17 +110,56 @@
     function pageStart(){
         openFields(0)
         pageScreen.querySelector('#btnEdit').disabled = 0
-//        pageScreen.querySelector('#edtAcel').value = pageData.ace_0_100
-//        pageScreen.querySelector('#edtVel').value = pageData.vel_max
-
+        pageScreen.querySelector('#cmbAciona').value = pageData.aci_comando
+        pageScreen.querySelector('#cmbAli').value = pageData.alimentacao
+        pageScreen.querySelector('#cmbAsp').value = pageData.aspiracao
+        pageScreen.querySelector('#edtCdd').value = pageData.cilindrada
+        pageScreen.querySelector('#edtCil').value = pageData.cilindros
+        pageScreen.querySelector('#edtCod').value = pageData.cod_motor
+        pageScreen.querySelector('#cmbtComVal').value = pageData.com_valvula
+        pageScreen.querySelector('#edtCur').value = pageData.curso_pistao
+        pageScreen.querySelector('#edtDiaCil').value = pageData.diam_cilindro
+        pageScreen.querySelector('#cmbDisp').value = pageData.disposicao
+        pageScreen.querySelector('#cmbInst').value = pageData.instalacao
+        pageScreen.querySelector('#edtPPot').value = pageData.peso_pot
+        pageScreen.querySelector('#edtPotMax').value = pageData.pot_max
+        pageScreen.querySelector('#edtRazComp').value = pageData.raz_compressao
+        pageScreen.querySelector('#edtRPMMax').value = pageData.rpm_max
+        pageScreen.querySelector('#edtRPMPotMax').value = pageData.rpm_pot_max
+        pageScreen.querySelector('#edtRPMTorMax').value = pageData.rpm_torque_max
+        pageScreen.querySelector('#edtTorEsp').value = pageData.torque_esp
+        pageScreen.querySelector('#edtTorMax').value = pageData.torque_max
+        pageScreen.querySelector('#cmbTuchos').value = pageData.tuchos
+        pageScreen.querySelector('#edtVal').value = pageData.valvulas
     }
 
-    pageFunc.setDesemp = (del=0)=>{
+    pageFunc.setMotor = (del=0)=>{
         const params = new Object
             params.id_vcl = pageData.id
-            params.ace_0_100 = del ? 0 : pageScreen.querySelector('#edtAcel').value
-            params.vel_max = pageScreen.querySelector('#edtVel').value
-        const myPromisse = queryDB(params,'VCL-3')
+            params.aci_comando = pageScreen.querySelector('#cmbAciona').value
+            params.alimentacao = pageScreen.querySelector('#cmbAli').value
+            params.aspiracao = pageScreen.querySelector('#cmbAsp').value
+            params.cilindrada = pageScreen.querySelector('#edtCdd').value
+            params.cilindros = del ? -1 : pageScreen.querySelector('#edtCil').value
+            params.cod_motor = pageScreen.querySelector('#edtCod').value.trim().toUpperCase()
+            params.com_valvula = pageScreen.querySelector('#cmbtComVal').value
+            params.curso_pistao = pageScreen.querySelector('#edtCur').value
+            params.diam_cilindro = pageScreen.querySelector('#edtDiaCil').value
+            params.disposicao = pageScreen.querySelector('#cmbDisp').value
+            params.instalacao = pageScreen.querySelector('#cmbInst').value
+            params.peso_pot = pageScreen.querySelector('#edtPPot').value
+            params.pot_max = pageScreen.querySelector('#edtPotMax').value
+            params.raz_compressao = pageScreen.querySelector('#edtRazComp').value.trim().toUpperCase()
+            params.rpm_max = pageScreen.querySelector('#edtRPMMax').value
+            params.rpm_pot_max = pageScreen.querySelector('#edtRPMPotMax').value
+            params.rpm_torque_max = pageScreen.querySelector('#edtRPMTorMax').value
+            params.torque_esp = pageScreen.querySelector('#edtTorEsp').value
+            params.torque_max = pageScreen.querySelector('#edtTorMax').value
+            params.tuchos = pageScreen.querySelector('#cmbTuchos').value
+            params.valvulas = pageScreen.querySelector('#edtVal').value
+
+
+        const myPromisse = queryDB(params,'VCL-4')
 
         myPromisse.then((resolve)=>{
             if(pageData.hasOwnProperty('callback')){
@@ -104,13 +172,13 @@
 
     pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
         if(checkField(['edtAcel']) ){
-            pageFunc.setDesemp()            
+            pageFunc.setMotor()            
         }
     })
 
     pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
-        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
-            pageFunc.setDesemp(1)
+        if (confirm('Deseja realmente eliminar os dados do motor deste veículo?')) {
+            pageFunc.setMotor(1)
         }
     })
 

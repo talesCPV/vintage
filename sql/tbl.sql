@@ -177,7 +177,7 @@ CREATE TABLE tb_vcl_motor(
     torque_esp varchar(20) DEFAULT NULL,
     torque_max varchar(40) DEFAULT NULL,
     tuchos varchar(20) DEFAULT NULL,
-    valv_cilindros int DEFAULT NULL,
+    valvulas int DEFAULT NULL,
 	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
     PRIMARY KEY (id_vcl)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
