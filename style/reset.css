@@ -271,7 +271,7 @@
         }
 
         .line {
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 0;
             margin-top: 10px;
         }

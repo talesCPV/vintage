@@ -3,15 +3,15 @@
 
     <div class="inline">
         <label for="edtAcel">Aceleração 0-100 km/h (seg)</label>
-        <input type="text" id="edtAcel" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <input type="text" id="edtAcel" class="only-view" onkeyup="return valUnid(this,'seg')" disabled>
     </div>
     <div class="inline">
         <label for="edtVel">Velocidade Máx (km/h)</label>
-        <input type="text" id="edtVel" class="only-view" onkeyup="return valFloat(this)" disabled>
+        <input type="text" id="edtVel" class="only-view" onkeyup="return valUnid(this,'km/h')" disabled>
     </div>
     <div class="line">
         <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
-        <button id="btnDel" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
         <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
     </div>
 </template>
@@ -21,18 +21,18 @@
     const pageScreen = document.querySelector('#desemp')
     
     function pageStart(){
-        openFields(0)
+        openFields(0,pageScreen)
         pageScreen.querySelector('#btnEdit').disabled = 0
-        pageScreen.querySelector('#edtAcel').value = pageData.ace_0_100
-        pageScreen.querySelector('#edtVel').value = pageData.vel_max
+        pageScreen.querySelector('#edtAcel').value = pageData.ace_0_100==null ? '' : getUnd(pageData.ace_0_100,'seg')
+        pageScreen.querySelector('#edtVel').value = pageData.vel_max==null ? '' : getUnd(pageData.vel_max,'km/h')
 
     }
 
     pageFunc.setDesemp = (del=0)=>{
         const params = new Object
             params.id_vcl = pageData.id
-            params.ace_0_100 = del ? 0 : pageScreen.querySelector('#edtAcel').value
-            params.vel_max = pageScreen.querySelector('#edtVel').value
+            params.ace_0_100 = del ? -1 : getFloat(pageScreen.querySelector('#edtAcel').value)
+            params.vel_max = getFloat(pageScreen.querySelector('#edtVel').value)
         const myPromisse = queryDB(params,'VCL-3')
 
         myPromisse.then((resolve)=>{
@@ -40,7 +40,10 @@
                 pageData.callback()
             }
 //            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
-            closeModal('adm_view_veiculo')
+//            closeModal('adm_view_veiculo')
+            openFields(0,pageScreen)
+            pageScreen.querySelector('#btnEdit').disabled = 0
+
         })
     }
 
@@ -57,7 +60,7 @@
     })
 
     pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
-        openFields()
+        openFields(1,pageScreen)
         pageScreen.querySelector('#btnDel').disabled = 0
         pageScreen.querySelector('#btnEdit').disabled = 1
     })

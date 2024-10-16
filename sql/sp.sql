@@ -582,9 +582,12 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);        
 		IF(@allow)THEN
-			IF(Iace_0_100<=0)THEN
+			IF(Iace_0_100<0)THEN
 				DELETE FROM tb_vcl_desempenho WHERE id_vcl=Iid_vcl;
             ELSE
+				SET Iace_0_100 = (SELECT IF(Iace_0_100=0,(SELECT NULL),Iace_0_100));
+				SET Ivel_max = (SELECT IF(Ivel_max=0,(SELECT NULL),Ivel_max));
+            
 				INSERT INTO tb_vcl_desempenho (id_vcl,ace_0_100,vel_max)
 				VALUES(Iid_vcl,Iace_0_100,Ivel_max)
 				ON DUPLICATE KEY UPDATE
@@ -602,7 +605,7 @@ DELIMITER $$
 		IN Iid_vcl int(11),
 		IN Iaci_comando varchar(20),
 		IN Ialimentacao varchar(20),
-		IN Iaspiracao double,
+		IN Iaspiracao varchar(20),
 		IN Icilindrada int,
 		IN Icilindros int,
 		IN Icod_motor varchar(20),
@@ -612,13 +615,15 @@ DELIMITER $$
 		IN Idisposicao varchar(20),
 		IN Iinstalacao varchar(20),
 		IN Ipeso_pot double,
+		IN Ipeso_tor double,
+		IN Ipot_esp double,
 		IN Ipot_max double,
 		IN Iraz_compressao varchar(20),
 		IN Irpm_max double,
 		IN Irpm_pot_max double,
 		IN Irpm_torque_max double,
-		IN Itorque_esp varchar(20),
-		IN Itorque_max varchar(40),
+		IN Itorque_esp double,
+		IN Itorque_max double,
 		IN Ituchos varchar(20),
 		IN Ivalvulas int
     )
@@ -627,18 +632,78 @@ DELIMITER $$
 		IF(@allow)THEN
 			IF(Icilindros<0)THEN
 				DELETE FROM tb_vcl_motor WHERE id_vcl=Iid_vcl;
-            ELSE            
+            ELSE
+				SET Iaci_comando = (SELECT IF(TRIM(Iaci_comando)="",(SELECT NULL),Iaci_comando));
+				SET Ialimentacao = (SELECT IF(TRIM(Ialimentacao)="",(SELECT NULL),Ialimentacao));
+				SET Iaspiracao = (SELECT IF(TRIM(Iaspiracao)="",(SELECT NULL),Iaspiracao));
+				SET Icod_motor = (SELECT IF(TRIM(Icod_motor)="",(SELECT NULL),Icod_motor));
+				SET Icom_valvula = (SELECT IF(TRIM(Icom_valvula)="",(SELECT NULL),Icom_valvula));
+				SET Idisposicao = (SELECT IF(TRIM(Idisposicao)="",(SELECT NULL),Idisposicao));
+				SET Iinstalacao = (SELECT IF(TRIM(Iinstalacao)="",(SELECT NULL),Iinstalacao));
+				SET Iraz_compressao = (SELECT IF(TRIM(Iraz_compressao)="",(SELECT NULL),Iraz_compressao));
+				SET Ituchos = (SELECT IF(TRIM(Ituchos)="",(SELECT NULL),Ituchos));
+
+				SET Icilindrada = (SELECT IF(Icilindrada=0,(SELECT NULL),Icilindrada));
+				SET Icilindros = (SELECT IF(Icilindros=0,(SELECT NULL),Icilindros));
+				SET Icurso_pistao = (SELECT IF(Icurso_pistao=0,(SELECT NULL),Icurso_pistao));
+				SET Idiam_cilindro = (SELECT IF(Idiam_cilindro=0,(SELECT NULL),Idiam_cilindro));
+				SET Ipeso_pot = (SELECT IF(Ipeso_pot=0,(SELECT NULL),Ipeso_pot));
+				SET Ipeso_tor = (SELECT IF(Ipeso_tor=0,(SELECT NULL),Ipeso_tor));
+				SET Ipot_esp = (SELECT IF(Ipot_esp=0,(SELECT NULL),Ipot_esp));
+				SET Ipot_max = (SELECT IF(Ipot_max=0,(SELECT NULL),Ipot_max));
+				SET Irpm_max = (SELECT IF(Irpm_max=0,(SELECT NULL),Irpm_max));
+				SET Irpm_pot_max = (SELECT IF(Irpm_pot_max=0,(SELECT NULL),Irpm_pot_max));
+				SET Irpm_torque_max = (SELECT IF(Irpm_torque_max=0,(SELECT NULL),Irpm_torque_max));
+				SET Itorque_esp = (SELECT IF(Itorque_esp=0,(SELECT NULL),Itorque_esp));
+				SET Itorque_max = (SELECT IF(Itorque_max=0,(SELECT NULL),Itorque_max));
+				SET Ivalvulas = (SELECT IF(Ivalvulas=0,(SELECT NULL),Ivalvulas));
+
 				INSERT INTO tb_vcl_motor (id_vcl,aci_comando,alimentacao,aspiracao,cilindrada,cilindros,cod_motor,com_valvula,
-                curso_pistao,diam_cilindro,disposicao,instalacao,peso_pot,pot_max,raz_compressao,rpm_max,rpm_pot_max,rpm_torque_max,
-                torque_esp,torque_max,tuchos,valvulas)
+                curso_pistao,diam_cilindro,disposicao,instalacao,peso_pot,peso_tor,pot_esp,pot_max,raz_compressao,rpm_max,rpm_pot_max,
+                rpm_torque_max,torque_esp,torque_max,tuchos,valvulas)
 				VALUES(Iid_vcl,Iaci_comando,Ialimentacao,Iaspiracao,Icilindrada,Icilindros,Icod_motor,Icom_valvula,
-                Icurso_pistao,Idiam_cilindro,Idisposicao,Iinstalacao,Ipeso_pot,Ipot_max,Iraz_compressao,Irpm_max,Irpm_pot_max,Irpm_torque_max,
-                Itorque_esp,Itorque_max,Ituchos,Ivalvulas)
+                Icurso_pistao,Idiam_cilindro,Idisposicao,Iinstalacao,Ipeso_pot,Ipeso_tor,Ipot_esp,Ipot_max,Iraz_compressao,
+                Irpm_max,Irpm_pot_max,Irpm_torque_max,Itorque_esp,Itorque_max,Ituchos,Ivalvulas)
 				ON DUPLICATE KEY UPDATE
 				aci_comando=Iaci_comando,alimentacao=Ialimentacao,aspiracao=Iaspiracao,cilindrada=Icilindrada,cilindros=Icilindros,
                 cod_motor=Icod_motor,com_valvula=Icom_valvula,curso_pistao=Icurso_pistao,diam_cilindro=Idiam_cilindro,disposicao=Idisposicao,
-                instalacao=Iinstalacao,peso_pot=Ipeso_pot,pot_max=Ipot_max,raz_compressao=Iraz_compressao,rpm_max=Irpm_max,rpm_pot_max=Irpm_pot_max,
+                instalacao=Iinstalacao,peso_pot=Ipeso_pot,peso_tor=Ipeso_tor,pot_esp=Ipot_esp,pot_max=Ipot_max,raz_compressao=Iraz_compressao,rpm_max=Irpm_max,rpm_pot_max=Irpm_pot_max,
                 rpm_torque_max=Irpm_torque_max,torque_esp=Itorque_esp,torque_max=Itorque_max,tuchos=Ituchos,valvulas=Ivalvulas;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_transmissao;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_transmissao(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Iacoplamento varchar(20),
+		IN Icambio varchar(20),
+		IN Icod_cambio varchar(20),
+		IN Imarchas int,
+		IN Itracao varchar(20),
+        IN Ireverso boolean
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);        
+		IF(@allow)THEN
+			IF(Imarchas<0)THEN
+				DELETE FROM tb_vcl_transmissao WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Imarchas = (SELECT IF(Imarchas=0,(SELECT NULL),Imarchas));
+
+				SET Iacoplamento = (SELECT IF(TRIM(Iacoplamento)="",(SELECT NULL),Iacoplamento));
+				SET Icambio = (SELECT IF(TRIM(Icambio)="",(SELECT NULL),Icambio));
+				SET Icod_cambio = (SELECT IF(TRIM(Icod_cambio)="",(SELECT NULL),Icod_cambio));
+				SET Itracao = (SELECT IF(TRIM(Itracao)="",(SELECT NULL),Itracao));
+            
+				INSERT INTO tb_vcl_transmissao (id_vcl,acoplamento,cambio,cod_cambio,marchas,tracao,reverso)
+				VALUES(Iid_vcl,Iacoplamento,Icambio,Icod_cambio,Imarchas,Itracao,Ireverso)
+				ON DUPLICATE KEY UPDATE
+				acoplamento=Iacoplamento,cambio=Icambio,cod_cambio=Icod_cambio,marchas=Imarchas,tracao=Itracao;
             END IF;
         END IF;
 	END $$

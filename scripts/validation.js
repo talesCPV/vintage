@@ -42,6 +42,12 @@ function checkRepass(fields){
     return true
 }
 
+
+function valUnid(edt,und,dec=2){    
+    const num = getFloat(edt.value,dec)
+    edt.value = getUnd(num,und)
+}
+
 function valInt(edt){    
     edt.value = getNum(edt.value)
 }
@@ -86,7 +92,9 @@ function valPlaca(edt){
     edt.value = getPlaca(edt.value)
 }
 
-
+function getUnd(txt,und){
+    return txt+' '+und
+}
 
 function getFloat(text,dec=2){
     const ok_chr = ['1','2','3','4','5','6','7','8','9','0']

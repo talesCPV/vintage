@@ -73,7 +73,7 @@
     const pageScreen = document.querySelector('#info')
 
     function pageStart(){
-        openFields(0)
+        openFields(0,pageScreen)
             pageScreen.querySelector('#edtNome').value = pageData.nome
             pageScreen.querySelector('#edtAno').value = pageData.ano
             pageScreen.querySelector('#edtMarca').value = pageData.marca
@@ -128,7 +128,7 @@
     })
 
     pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
-        openFields()
+        openFields(1,pageScreen)
         pageScreen.querySelector('#btnDel').disabled = 0
         pageScreen.querySelector('#btnEdit').disabled = 1
     })

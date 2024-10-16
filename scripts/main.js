@@ -244,8 +244,8 @@ function sendMail(subject,message,email){
 
 /* OPEN FIELDS */
 
-function openFields(open=1){
-    const view = document.querySelectorAll('.only-view')
+function openFields(open=1,context=document){
+    const view = context.querySelectorAll('.only-view')
     for(let i=0; i<view.length; i++){
         view[i].disabled = !open
     }

@@ -1,11 +1,103 @@
 <template>
     <style></style>
-
+    <div class="inline">
+        <label for="cmbAcop">Acoplamento</label>
+        <select id="cmbAcop" class="only-view" disabled>
+            <option value="EMBREAGEM SINCRONA" selected>Embreagem Sincrona</option>
+            <option value="EMBREAGEM ASSINCRONA">Embreagem Assincrona</option>
+            <option value="FIXO">Fixo</option>
+        </select>
+        <label for="cmbCambio">Câmbio</label>
+        <select id="cmbCambio" class="only-view" disabled>
+            <option value="MANUAL">MANUAL</option>
+            <option value="HIDRÁUICO">Hidráulico</option>
+            <option value="HIDRAMÁTICO">Hidramático</option>
+            <option value="PNEUMÁTICO">Pneumático</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>        
+    </div>
+    <div class="inline">
+        <label for="edtCod">Cod. do Câmbio</label>
+        <input type="text" id="edtCod" class="only-view" maxlength="20" disabled>
+        <label for="cmbTracao">Tração</label>
+        <select id="cmbTracao" class="only-view" disabled>
+            <option value="DIANTEIRA">Dianteira</option>
+            <option value="TRASEIRA">Traseira</option>
+            <option value="4X4">4x4</option>
+            <option value="ANIMAL">ANIMAL</option>
+            <option value="N/A">Não se Aplica</option>
+        </select> 
+    </div>
+    <div class="inline">
+        <label for="edtMarchas">Marchas</label>
+        <input type="text" id="edtMarchas" class="only-view" onkeyup="return valInt(this)" disabled>
+        <label for="cmbRe">Reverso (Ré)</label>
+        <select id="cmbRe" class="only-view" disabled>
+            <option value="1" selected>SIM</option>
+            <option value="0">NÂO</option>
+        </select>     </div>    
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
 
 
 </template>
 <script>
-
+    const pageData = main_data.vcl_transm.data
+    const pageFunc = main_data.vcl_transm.func
+    const pageScreen = document.querySelector('#transm')
     
+    function pageStart(){
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#cmbAcop').value = pageData.acoplamento==null ? '' : pageData.acoplamento
+        pageScreen.querySelector('#cmbCambio').value = pageData.cambio==null ? '' : pageData.cambio
+        pageScreen.querySelector('#edtCod').value = pageData.cod_cambio==null ? '' : pageData.cod_cambio
+        pageScreen.querySelector('#edtMarchas').value = pageData.marchas==null ? '' : pageData.marchas
+        pageScreen.querySelector('#cmbTracao').value = pageData.tracao==null ? '' : pageData.tracao
+        pageScreen.querySelector('#cmbRe').value = pageData.reverso==null ? '' : pageData.reverso
+    }
 
+    pageFunc.setTransm = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.acoplamento = pageScreen.querySelector('#cmbAcop').value
+            params.cambio = pageScreen.querySelector('#cmbCambio').value
+            params.cod_cambio = pageScreen.querySelector('#edtCod').value
+            params.marchas = del ? -1 : pageScreen.querySelector('#edtMarchas').value
+            params.tracao = pageScreen.querySelector('#cmbTracao').value
+            params.reverso = pageScreen.querySelector('#cmbRe').value
+
+        const myPromisse = queryDB(params,'VCL-5')
+
+        myPromisse.then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+            openFields(0,pageScreen)
+            pageScreen.querySelector('#btnEdit').disabled = 0
+        })
+    }
+
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        pageFunc.setTransm()            
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente limpar a transmissão deste veículo?')) {
+            pageFunc.setTransm(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>
