@@ -3,11 +3,11 @@
 
     <div class="inline">
         <label for="edtAcel">Aceleração 0-100 km/h (seg)</label>
-        <input type="text" id="edtAcel" class="only-view" onkeyup="return valUnid(this,'seg')" disabled>
+        <input type="text" id="edtAcel" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'seg')" disabled>
     </div>
     <div class="inline">
         <label for="edtVel">Velocidade Máx (km/h)</label>
-        <input type="text" id="edtVel" class="only-view" onkeyup="return valUnid(this,'km/h')" disabled>
+        <input type="text" id="edtVel" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'km/h')" disabled>
     </div>
     <div class="line">
         <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>

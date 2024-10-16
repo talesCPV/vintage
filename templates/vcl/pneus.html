@@ -1,11 +1,75 @@
 <template>
     <style></style>
 
-
-
+    <div class="inline">
+        <label for="edtDiant">Dianteiros</label>
+        <input type="text" id="edtDiant" class="only-view" onfocus="this.select();" placeholder="ex: 175/70 R14" disabled>
+        <label for="edtTras">Traseiros</label>
+        <input type="text" id="edtTras" class="only-view" onfocus="this.select();" placeholder="ex: 175/70 R14" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtEstepe">Estepe</label>
+        <input type="text" id="edtEstepe" class="only-view" onfocus="this.select();" placeholder="ex: 175/70 R14" disabled>
+        <label for="edtAlt">Alt. do Flanco</label>
+        <input type="text" id="edtAlt" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+    </div>
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
 </template>
 <script>
-
+    const pageData = main_data.vcl_pneus.data
+    const pageFunc = main_data.vcl_pneus.func
+    const pageScreen = document.querySelector('#pneus')
     
+    function pageStart(){
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#edtDiant').value = pageData.dianteiro
+        pageScreen.querySelector('#edtTras').value = pageData.traseiro
+        pageScreen.querySelector('#edtEstepe').value = pageData.estepe
+        pageScreen.querySelector('#edtAlt').value = pageData.alt_flanco==null ? '' : getUnd(pageData.alt_flanco,'mm')
 
+    }
+
+    pageFunc.setPneu = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.edtAlt = del ? -1 : getFloat(pageScreen.querySelector('#edtAlt').value)
+            params.dianteiro = pageScreen.querySelector('#edtDiant').value
+            params.traseiro = pageScreen.querySelector('#edtTras').value
+            params.estepe = pageScreen.querySelector('#edtEstepe').value
+        const myPromisse = queryDB(params,'VCL-7')
+
+        myPromisse.then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+//            closeModal('adm_view_veiculo')
+            openFields(0,pageScreen)
+            pageScreen.querySelector('#btnEdit').disabled = 0
+
+        })
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        pageFunc.setPneu()
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+            pageFunc.setPneu(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>

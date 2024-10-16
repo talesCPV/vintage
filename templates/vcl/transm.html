@@ -18,7 +18,7 @@
     </div>
     <div class="inline">
         <label for="edtCod">Cod. do Câmbio</label>
-        <input type="text" id="edtCod" class="only-view" maxlength="20" disabled>
+        <input type="text" id="edtCod" class="only-view" onfocus="this.select();" maxlength="20" disabled>
         <label for="cmbTracao">Tração</label>
         <select id="cmbTracao" class="only-view" disabled>
             <option value="DIANTEIRA">Dianteira</option>
@@ -30,7 +30,7 @@
     </div>
     <div class="inline">
         <label for="edtMarchas">Marchas</label>
-        <input type="text" id="edtMarchas" class="only-view" onkeyup="return valInt(this)" disabled>
+        <input type="text" id="edtMarchas" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valInt(this)" disabled>
         <label for="cmbRe">Reverso (Ré)</label>
         <select id="cmbRe" class="only-view" disabled>
             <option value="1" selected>SIM</option>

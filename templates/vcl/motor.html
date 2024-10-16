@@ -26,23 +26,23 @@
             <option value="N/A">Não se Aplica</option>
         </select>
         <label for="edtCod">Cód. do Motor</label>
-        <input type="text" id="edtCod" class="only-view" maxlength="20" disabled>
+        <input type="text" id="edtCod" class="only-view" onfocus="this.select();" maxlength="20" disabled>
     </div>
     <div class="inline">
         <label for="edtCil">Cilindros</label>
-        <input type="text" id="edtCil" class="only-view" onkeyup="return valInt(this)" disabled>
+        <input type="text" id="edtCil" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valInt(this)" disabled>
         <label for="edtCdd">Cilindradas</label>
-        <input type="text" id="edtCdd" class="only-view" onkeyup="return valUnid(this,'cm³')" disabled>
+        <input type="text" id="edtCdd" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'cm³')" disabled>
     </div>
     <div class="inline">
         <label for="edtCur">Curso do Pistão </label>
-        <input type="text" id="edtCur" class="only-view" onkeyup="return valUnid(this,'mm')" disabled>    
+        <input type="text" id="edtCur" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>    
         <label for="edtDiaCil">Diam. do Cilindro </label>
-        <input type="text" id="edtDiaCil" class="only-view" onkeyup="return valUnid(this,'mm')" disabled>
+        <input type="text" id="edtDiaCil" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
     </div>
     <div class="inline">
         <label for="edtVal">Válvulas</label>
-        <input type="text" id="edtVal" class="only-view" onkeyup="return valInt(this)" disabled>   
+        <input type="text" id="edtVal" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valInt(this)" disabled>   
         <label for="cmbtComVal">Com. de Válvula</label>
         <select id="cmbtComVal" class="only-view" disabled>
             <option value="SOHC - Simples">SOHC – Simples no Cabeçote</option>
@@ -58,9 +58,9 @@
     </div>    
     <div class="inline">
         <label for="edtPPot">Peso/Pot.</label>
-        <input type="text" id="edtPPot" class="only-view" onkeyup="return valUnid(this,'kg/cv')" disabled>
+        <input type="text" id="edtPPot" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'kg/cv')" disabled>
         <label for="edtPTor">Peso/Torque</label>
-        <input type="text" id="edtPTor" class="only-view" onkeyup="return valUnid(this,'kg/kgfm')" disabled>        
+        <input type="text" id="edtPTor" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'kg/kgfm')" disabled>        
     </div>    
     <div class="inline">
         <label for="cmbInst">Instalação</label>
@@ -76,25 +76,25 @@
     </div>    
     <div class="inline">
         <label for="edtPotEsp">Pot. Espec.</label>
-        <input type="text" id="edtPotEsp" class="only-view" onkeyup="return valUnid(this,'cv/l')" disabled>
+        <input type="text" id="edtPotEsp" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'cv/l')" disabled>
         <label for="edtPotMax">Pot Máx. </label>
-        <input type="text" id="edtPotMax" class="only-view" onkeyup="return valUnid(this,'cv')" disabled>
+        <input type="text" id="edtPotMax" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'cv')" disabled>
         <label for="edtRazComp">Razão de Comp.</label>
-        <input type="text" id="edtRazComp" class="only-view" disabled>        
+        <input type="text" id="edtRazComp" class="only-view" onfocus="this.select();" disabled>        
     </div>
     <div class="inline">
         <label for="edtRPMMax">RPM Máx.</label>
-        <input type="text" id="edtRPMMax" class="only-view" onkeyup="return valInt(this)" disabled>
+        <input type="text" id="edtRPMMax" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valInt(this)" disabled>
         <label for="edtRPMPotMax">RPM Pot. Max.</label>
-        <input type="text" id="edtRPMPotMax" class="only-view" onkeyup="return valInt(this)" disabled>
+        <input type="text" id="edtRPMPotMax" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valInt(this)" disabled>
         <label for="edtRPMTorMax">RPM Torque Max..</label>
-        <input type="text" id="edtRPMTorMax" class="only-view" onkeyup="return valInt(this)" disabled>        
+        <input type="text" id="edtRPMTorMax" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valInt(this)" disabled>        
     </div>
     <div class="inline">
         <label for="edtTorEsp">Torque Esp.</label>
-        <input type="text" id="edtTorEsp" class="only-view" onkeyup="return valUnid(this,'kgf/l')" disabled>
+        <input type="text" id="edtTorEsp" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'kgf/l')" disabled>
         <label for="edtTorMax">Torque Max.</label>
-        <input type="text" id="edtTorMax" class="only-view" onkeyup="return valUnid(this,'kgf/l')" disabled>
+        <input type="text" id="edtTorMax" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'kgf/l')" disabled>
     </div>
     <div class="line">
         <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>

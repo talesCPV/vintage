@@ -507,15 +507,24 @@ DELIMITER $$
 		IF(@allow)THEN
 			IF(Inome="")THEN
 				DELETE FROM tb_veiculo WHERE id=Iid;
-            ELSE			
-				IF(Iid=0)THEN
-					INSERT INTO tb_veiculo (id_acervo,nome,ano,modelo,marca,combustivel,configuracao,portas,lugares,porte,placa,procedencia)
-                    VALUES(Iid_acervo,Inome,Iano,Imodelo,Imarca,Icombustivel,Iconfiguracao,Iportas,Ilugares,Iporte,Iplaca,Iprocedencia);            
-                ELSE
-					UPDATE tb_veiculo SET nome=Inome,ano=Iano,modelo=Imodelo,marca=Imarca,combustivel=Icombustivel,
-                    configuracao=Iconfiguracao,portas=Iportas,lugares=Ilugares,porte=Iporte,placa=Iplaca,procedencia=Iprocedencia
-                    WHERE id=Iid;
-                END IF;
+            ELSE
+            
+				SET Inome = (SELECT IF(TRIM(Inome)="",(SELECT NULL),Inome));
+				SET Imodelo = (SELECT IF(TRIM(Imodelo)="",(SELECT NULL),Imodelo));
+				SET Imarca = (SELECT IF(TRIM(Imarca)="",(SELECT NULL),Imarca));
+				SET Icombustivel = (SELECT IF(TRIM(Icombustivel)="",(SELECT NULL),Icombustivel));
+				SET Iconfiguracao = (SELECT IF(TRIM(Iconfiguracao)="",(SELECT NULL),Iconfiguracao));
+				SET Iporte = (SELECT IF(TRIM(Iporte)="",(SELECT NULL),Iporte));
+				SET Iplaca = (SELECT IF(TRIM(Iplaca)="",(SELECT NULL),Iplaca));
+				SET Iprocedencia = (SELECT IF(TRIM(Iprocedencia)="",(SELECT NULL),Iprocedencia));
+
+				SET Iano = (SELECT IF(Iano=0,(SELECT NULL),Iano));
+				SET Iportas = (SELECT IF(Iportas=0,(SELECT NULL),Iportas));
+				SET Ilugares = (SELECT IF(Ilugares=0,(SELECT NULL),Ilugares));
+
+				UPDATE tb_veiculo SET nome=Inome,ano=Iano,modelo=Imodelo,marca=Imarca,combustivel=Icombustivel,
+				configuracao=Iconfiguracao,portas=Iportas,lugares=Ilugares,porte=Iporte,placa=Iplaca,procedencia=Iprocedencia
+				WHERE id=Iid;
             END IF;
         END IF;
 	END $$
@@ -704,6 +713,111 @@ DELIMITER $$
 				VALUES(Iid_vcl,Iacoplamento,Icambio,Icod_cambio,Imarchas,Itracao,Ireverso)
 				ON DUPLICATE KEY UPDATE
 				acoplamento=Iacoplamento,cambio=Icambio,cod_cambio=Icod_cambio,marchas=Imarchas,tracao=Itracao;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_dimensao;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_dimensao(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Ialtura double,
+		IN Ibitola_diant double,
+		IN Ibitola_tras double,
+		IN Icarga_vol double,
+		IN Icarga_peso double,
+		IN Icomprimento double,
+		IN Ientre_eixos double,
+		IN Ilargura double,
+		IN Ipeso double,
+		IN Itanque double
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Ialtura<0)THEN
+				DELETE FROM tb_vcl_dimensao WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Ialtura = (SELECT IF(Ialtura=0,(SELECT NULL),Ialtura));
+				SET Ibitola_diant = (SELECT IF(Ibitola_diant=0,(SELECT NULL),Ibitola_diant));
+				SET Ibitola_tras = (SELECT IF(Ibitola_tras=0,(SELECT NULL),Ibitola_tras));
+				SET Icarga_vol = (SELECT IF(Icarga_vol=0,(SELECT NULL),Icarga_vol));
+				SET Icarga_peso = (SELECT IF(Icarga_peso=0,(SELECT NULL),Icarga_peso));
+				SET Icomprimento = (SELECT IF(Icomprimento=0,(SELECT NULL),Icomprimento));
+				SET Ientre_eixos = (SELECT IF(Ientre_eixos=0,(SELECT NULL),Ientre_eixos));
+				SET Ilargura = (SELECT IF(Ilargura=0,(SELECT NULL),Ilargura));
+				SET Ipeso = (SELECT IF(Ipeso=0,(SELECT NULL),Ipeso));
+				SET Itanque = (SELECT IF(Itanque=0,(SELECT NULL),Itanque));
+
+				INSERT INTO tb_vcl_dimensao (id_vcl,altura,bitola_diant,bitola_tras,carga_vol,carga_peso,comprimento,entre_eixos,largura,peso,tanque)
+				VALUES(Iid_vcl,Ialtura,Ibitola_diant,Ibitola_tras,Icarga_vol,Icarga_peso,Icomprimento,Ientre_eixos,Ilargura,Ipeso,Itanque)
+				ON DUPLICATE KEY UPDATE
+				altura=Ialtura,bitola_diant=Ibitola_diant,bitola_tras=Ibitola_tras,carga_vol=Icarga_vol,carga_peso=Icarga_peso,
+                comprimento=Icomprimento,entre_eixos=Ientre_eixos,largura=Ilargura,peso=Ipeso,tanque=Itanque;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_pneu;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_pneu(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Ialt_flanco double,
+		IN Idianteiro varchar(20),
+		IN Itraseiro varchar(20),
+		IN Iestepe varchar(20)
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Ialt_flanco<0)THEN
+				DELETE FROM tb_vcl_pneus WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Ialt_flanco = (SELECT IF(Ialt_flanco=0,(SELECT NULL),Ialt_flanco));
+
+				SET Idianteiro = (SELECT IF(TRIM(Idianteiro)="",(SELECT NULL),Idianteiro));
+				SET Itraseiro = (SELECT IF(TRIM(Itraseiro)="",(SELECT NULL),Itraseiro));
+				SET Iestepe = (SELECT IF(TRIM(Iestepe)="",(SELECT NULL),Iestepe));
+                
+				INSERT INTO tb_vcl_pneus (id_vcl,alt_flanco,dianteiro,traseiro,estepe)
+				VALUES(Iid_vcl,Ialt_flanco,Idianteiro,Itraseiro,Iestepe)
+				ON DUPLICATE KEY UPDATE
+				alt_flanco=Ialt_flanco,dianteiro=Idianteiro,traseiro=Itraseiro,estepe=Iestepe;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_aero;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_aero(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Iarea_front double,
+		IN Iarea_front_corrig double,
+		IN Icoef_arrasto double
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Iarea_front<0)THEN
+				DELETE FROM tb_vcl_aerodinamica WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Iarea_front = (SELECT IF(Iarea_front=0,(SELECT NULL),Iarea_front));
+				SET Iarea_front_corrig = (SELECT IF(Iarea_front_corrig=0,(SELECT NULL),Iarea_front_corrig));
+				SET Icoef_arrasto = (SELECT IF(Icoef_arrasto=0,(SELECT NULL),Icoef_arrasto));
+
+				INSERT INTO tb_vcl_aerodinamica (id_vcl,area_front,area_front_corrig,coef_arrasto)
+				VALUES(Iid_vcl,Iarea_front,Iarea_front_corrig,Icoef_arrasto)
+				ON DUPLICATE KEY UPDATE
+				area_front=Iarea_front,area_front_corrig=Iarea_front_corrig,coef_arrasto=Icoef_arrasto;
             END IF;
         END IF;
 	END $$

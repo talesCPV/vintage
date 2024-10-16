@@ -1,11 +1,102 @@
 <template>
     <style></style>
-
+    <div class="inline">
+        <label for="edtAlt">Altura</label>
+        <input type="text" id="edtAlt" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+        <label for="edtLarg">Largura</label>
+        <input type="text" id="edtLarg" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+        <label for="edtComp">Comprimento</label>
+        <input type="text" id="edtComp" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+    </div>
+    <div class="inline">
+        <label for="edtBitDia">Bitola Diant.</label>
+        <input type="text" id="edtBitDia" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+        <label for="edtBitTras">Bitola Tras.</label>
+        <input type="text" id="edtBitTras" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+        <label for="edtEntreEixo">Entre-Eixo</label>
+        <input type="text" id="edtEntreEixo" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>        
+    </div>
+    <div class="inline">
+        <label for="edtCargaUtil">Carga Útil.</label>
+        <input type="text" id="edtCargaUtil" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'kg')" disabled>
+        <label for="edtPortaMalas">Porta Malas</label>
+        <input type="text" id="edtPortaMalas" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'l')" disabled>
+    </div>
+    <div class="line">
+        <label for="edtPeso">Peso</label>
+        <input type="text" id="edtPeso" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'kg')" disabled>
+        <label for="edtTanque">Cap. Tanque</label>
+        <input type="text" id="edtTanque" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'l')" disabled></div>
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
 
 
 </template>
 <script>
+    const pageData = main_data.vcl_dim.data
+    const pageFunc = main_data.vcl_dim.func
+    const pageScreen = document.querySelector('#dim')
 
-    
+    function pageStart(){
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#edtAlt').value = pageData.altura==null ? '' : getUnd(pageData.altura,'mm')
+        pageScreen.querySelector('#edtLarg').value = pageData.largura==null ? '' : getUnd(pageData.largura,'mm')
+        pageScreen.querySelector('#edtComp').value = pageData.comprimento==null ? '' : getUnd(pageData.comprimento,'mm')
+        pageScreen.querySelector('#edtBitDia').value = pageData.bitola_diant==null ? '' : getUnd(pageData.bitola_diant,'mm')
+        pageScreen.querySelector('#edtBitTras').value = pageData.bitola_tras==null ? '' : getUnd(pageData.bitola_tras,'mm')
+        pageScreen.querySelector('#edtEntreEixo').value = pageData.entre_eixos==null ? '' : getUnd(pageData.entre_eixos,'mm')
+        pageScreen.querySelector('#edtCargaUtil').value = pageData.carga_peso==null ? '' : getUnd(pageData.carga_peso,'kg')
+        pageScreen.querySelector('#edtPortaMalas').value = pageData.carga_vol==null ? '' : getUnd(pageData.carga_vol,'l')
+        pageScreen.querySelector('#edtPeso').value = pageData.peso==null ? '' : getUnd(pageData.peso,'kg')
+        pageScreen.querySelector('#edtTanque').value = pageData.tanque==null ? '' : getUnd(pageData.tanque,'l')    
+    }
 
+    pageFunc.setDimensao = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.altura = del ? -1 : getFloat(pageScreen.querySelector('#edtAlt').value)
+            params.bitola_diant = getFloat(pageScreen.querySelector('#edtBitDia').value)
+            params.bitola_tras = getFloat(pageScreen.querySelector('#edtBitTras').value)
+            params.carga_vol = getFloat(pageScreen.querySelector('#edtPortaMalas').value)
+            params.carga_peso = getFloat(pageScreen.querySelector('#edtCargaUtil').value)
+            params.comprimento = getFloat(pageScreen.querySelector('#edtComp').value)
+            params.entre_eixos = getFloat(pageScreen.querySelector('#edtEntreEixo').value)
+            params.largura = getFloat(pageScreen.querySelector('#edtLarg').value)
+            params.peso = getFloat(pageScreen.querySelector('#edtPeso').value)
+            params.tanque = getFloat(pageScreen.querySelector('#edtTanque').value)
+  
+        const myPromisse = queryDB(params,'VCL-6')
+
+        myPromisse.then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+            openFields(0,pageScreen)
+            pageScreen.querySelector('#btnEdit').disabled = 0
+        })
+    }
+
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        pageFunc.setDimensao()            
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente limpar a transmissão deste veículo?')) {
+            pageFunc.setDimensao(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>
