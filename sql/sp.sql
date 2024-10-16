@@ -822,3 +822,30 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_direcao;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_direcao(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Iassistencia varchar(20),
+		IN Idiam_giro double
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Idiam_giro<0)THEN
+				DELETE FROM tb_vcl_direcao WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Idiam_giro = (SELECT IF(Idiam_giro=0,(SELECT NULL),Idiam_giro));
+				SET Iassistencia = (SELECT IF(TRIM(Iassistencia)="",(SELECT NULL),Iassistencia));
+
+				INSERT INTO tb_vcl_direcao (id_vcl,assistencia,diam_giro)
+				VALUES(Iid_vcl,Iassistencia,Idiam_giro)
+				ON DUPLICATE KEY UPDATE
+				assistencia=Iassistencia,diam_giro=Idiam_giro;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;

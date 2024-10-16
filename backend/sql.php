@@ -57,6 +57,8 @@
         "VCL-6" => 'CALL sp_set_vcl_dimensao(@access,@hash,x00,"x01","x02","x03","x04","x05","x06","x07","x08","x09","x10");', // id_vcl,altura,bitola_diant,bitola_tras,carga_vol,carga_peso,comprimento,entre_eixos,largura,peso,tanque
         "VCL-7" => 'CALL sp_set_vcl_pneu(@access,@hash,x00,"x01","x02","x03","x04");', // id_vcl,alt_flanco,dianteiro,traseiro,estepe
         "VCL-8" => 'CALL sp_set_vcl_aero(@access,@hash,x00,"x01","x02","x03");', // id_vcl,area_front,area_front_corrig,coef_arrasto
+        "VCL-9" => 'CALL sp_set_vcl_direcao(@access,@hash,x00,"x01","x02");', // id_vcl,assistencia,diam_giro
+        
         
     );
 

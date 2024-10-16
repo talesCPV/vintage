@@ -1,12 +1,70 @@
 <template>
     <style></style>
 
-
-
-    
+    <div class="inline">
+        <label for="cmbAssis">Assistência</label>
+        <select id="cmbAssis" class="only-view" disabled>
+            <option value="MECANICA">Mecânica</option>
+            <option value="HIDRAULICA">Hidráulica</option>
+            <option value="ELETRICA">Elétrica</option>
+            <option value="AUTONOMA">Autônoma</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>       </div>
+    <div class="inline">
+        <label for="edtDGiro">Diâmetro de Giro</label>
+        <input type="text" id="edtDGiro" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'m')" disabled>
+    </div>
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
 </template>
 <script>
-
+    const pageData = main_data.vcl_direcao.data
+    const pageFunc = main_data.vcl_direcao.func
+    const pageScreen = document.querySelector('#dir')
     
+    function pageStart(){
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#cmbAssis').value = pageData.assistencia
+        pageScreen.querySelector('#edtDGiro').value = pageData.diam_giro==null ? '' : getUnd(pageData.diam_giro,'m')
+    }
 
+    pageFunc.setDirecao = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.assistencia = pageScreen.querySelector('#cmbAssis').value
+            params.diam_giro = del ? -1 : getFloat(pageScreen.querySelector('#edtDGiro').value)
+
+        queryDB(params,'VCL-9').then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+//            closeModal('adm_view_veiculo')
+            openFields(0,pageScreen)
+            pageScreen.querySelector('#btnEdit').disabled = 0
+
+        })
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        pageFunc.setDirecao()
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+            pageFunc.setDirecao(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>
