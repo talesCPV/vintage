@@ -137,7 +137,7 @@ SELECT * FROM vw_vcl_consumo;
         DIR.assistencia,DIR.diam_giro,
         SUS.susp_dia,SUS.susp_tras,SUS.elem_elast_dia,SUS.elem_elast_tras,SUS.curso_susp_diant,SUS.curso_susp_tras,
         FRE.freio_dia,FRE.freio_tras,FRE.freio_aciona,FRE.abs,FRE.regenerativo,
-        COM.autonomia_rod,COM.autonomia_urb,COM.consumo_rod,COM.consumo_urb
+        COM.autonomia_rod,COM.autonomia_urb
 		FROM tb_veiculo AS VCL
 		INNER JOIN vw_vcl_desempenho AS DES
 		INNER JOIN vw_vcl_motor AS MOT

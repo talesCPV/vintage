@@ -59,7 +59,10 @@
         "VCL-8"  => 'CALL sp_set_vcl_aero(@access,@hash,x00,"x01","x02","x03");', // id_vcl,area_front,area_front_corrig,coef_arrasto
         "VCL-9"  => 'CALL sp_set_vcl_direcao(@access,@hash,x00,"x01","x02");', // id_vcl,assistencia,diam_giro
         "VCL-10" => 'CALL sp_set_vcl_susp(@access,@hash,x00,"x01","x02","x03","x04","x05","x06");', // id_vcl,susp_dia,susp_tras,elem_elast_dia,elem_elast_tras,curso_susp_diant,curso_susp_tras
-        "VCL-11" => 'CALL sp_set_vcl_freio(@access,@hash,x00,"x01","x02","x03","x04","x05");', // id_vcl,freio_dia,freio_tras,freio_aciona,abs,regenerativo
+        "VCL-11" => 'CALL sp_set_vcl_freio(@access,@hash,x00,"x01","x02","x03","x04","x05");', // id_vcl,freio_dia,freio_tras,freio_aciona,abs,regenerativo      
+        "VCL-12" => 'CALL sp_set_vcl_consumo(@access,@hash,x00,"x01","x02");', // id_vcl,autonomia_rod,autonomia_urb
+        "VCL-13" => 'CALL sp_view_vcl_equip(@access,@hash,x00);', // id_vcl
+        "VCL-14" => 'CALL sp_set_vcl_equip(@access,@hash,x00,x01,x02);', // id_vcl,id_equip,ADD(0=DELETA, 1=ADICIONA)
         
     );
 

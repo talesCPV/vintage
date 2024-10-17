@@ -274,8 +274,15 @@ CREATE TABLE tb_vcl_consumo(
 	id_vcl int(11) unsigned NOT NULL,
 	autonomia_rod double DEFAULT NULL,
 	autonomia_urb double DEFAULT NULL,
-	consumo_rod double DEFAULT NULL,
-	consumo_urb double DEFAULT NULL,
 	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
     PRIMARY KEY (id_vcl)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+ DROP TABLE IF EXISTS tb_vcl_equip;
+CREATE TABLE tb_vcl_equip(
+	id_vcl int(11) unsigned NOT NULL,
+	id_equip int(11) unsigned NOT NULL,
+	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
+	FOREIGN KEY (id_equip) REFERENCES tb_equipamento(id),
+    PRIMARY KEY (id_vcl,id_equip)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-    const pageData = main_data.vcl_direcao.data
+    const pageData = main_data.adm_view_veiculo.data
     const pageFunc = main_data.vcl_direcao.func
     const pageScreen = document.querySelector('#dir')
     
@@ -55,7 +55,7 @@
     })
 
     pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
-        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+        if (confirm('Deseja realmente eliminar os dados de direção deste veículo?')) {
             pageFunc.setDirecao(1)
         }
     })

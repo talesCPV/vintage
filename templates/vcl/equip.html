@@ -1,28 +1,100 @@
 <template>
-    <style></style>
+    <style>
+        .combo{
+            width: 100%;
+        }
+
+    </style>
 
     <div class="panel">
 
         <fieldset>
-            <legend>Existentes</legend>
-            <select id="cmbForb" size="10"></select>
+            <legend>Todos</legend>
+            <select id="cmbAll" class="combo only-view" size="10" disabled></select>
         </fieldset>
         <div class="middle">
-            <button id="btnAllow" class="btn-round">>></button>
-            <button id="btnForbid" class="btn-round"><<</button>
+            <button id="btnAdd" class="btn-round only-view">>></button>
+            <button id="btnLess" class="btn-round only-view"><<</button>
         </div>
         <fieldset>
-            <legend>Opcionais</legend>
-            <select id="cmbAllow" size="10"></select>
+            <legend>Opcionais que possui</legend>
+            <select id="cmbHave" class="combo only-view" size="10" disabled></select>
         </fieldset>
     </div>
-
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+    </div>
 </template>
 <script>
-/*
-    const pageData = main_data.vcl_equip.data
-    const pageFunc = main_data.vcl_equip.func
-    const pageScreen = document.querySelector('#card-vcl_equip')
-*/    
 
+    const pageData = main_data.adm_view_veiculo.data
+    const pageFunc = main_data.vcl_equip.func
+    const pageScreen = document.querySelector('#equip')
+    const equip_nao = pageScreen.querySelector('#cmbAll')
+    const equip_tem = pageScreen.querySelector('#cmbHave')
+
+    function pageStart(){
+        fillEquip(pageData.id)
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+    }
+
+    function fillEquip(id_vcl){
+        const params = new Object
+        params.id_vcl = id_vcl
+
+        queryDB(params,'VCL-13').then((resolve)=>{
+            const json = JSON.parse(resolve)
+            for(let i=0; i<json.length;i++){
+                const opt = document.createElement('option')
+                opt.innerHTML = json[i].equip
+                opt.value = json[i].id
+                opt.data = json[i]
+                if(json[i].tem=='0'){
+                    equip_nao.appendChild(opt)
+                }else{
+                    equip_tem.appendChild(opt)
+                }
+            }    
+        })
+    }
+
+    pageFunc.setEquip = (id_equip,set=1)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.id_equip = id_equip
+            params.add = set
+
+        queryDB(params,'VCL-14').then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+//            closeModal('adm_view_veiculo')
+//            openFields(0,pageScreen)
+//            pageScreen.querySelector('#btnEdit').disabled = 0
+
+        })
+    }
+
+    pageScreen.querySelector('#btnAdd').addEventListener('click',()=>{
+        const index = equip_nao.selectedIndex
+        const id_equip = equip_nao.options[index].data.id
+        index>-1 ? equip_tem.appendChild(equip_nao.options[index]) : null
+        pageFunc.setEquip(id_equip,1)
+    })
+
+    pageScreen.querySelector('#btnLess').addEventListener('click',()=>{
+        const index = equip_tem.selectedIndex
+        const id_equip = equip_tem.options[index].data.id
+        index>-1 ? equip_nao.appendChild(equip_tem.options[index]) : null
+        pageFunc.setEquip(id_equip,0)
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>

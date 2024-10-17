@@ -920,3 +920,70 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_consumo;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_consumo(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Iautonomia_rod double,
+		IN Iautonomia_urb double
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Iautonomia_rod<0)THEN
+				DELETE FROM tb_vcl_consumo WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Iautonomia_rod = (SELECT IF(Iautonomia_rod=0,(SELECT NULL),Iautonomia_rod));
+				SET Iautonomia_urb = (SELECT IF(Iautonomia_urb=0,(SELECT NULL),Iautonomia_urb));
+
+				INSERT INTO tb_vcl_consumo (id_vcl,autonomia_rod,autonomia_urb)
+				VALUES(Iid_vcl,Iautonomia_rod,Iautonomia_urb)
+				ON DUPLICATE KEY UPDATE
+				autonomia_rod=Iautonomia_rod,autonomia_urb=Iautonomia_urb;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_view_vcl_equip;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_vcl_equip(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11)
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			SELECT EQP.*, IF(COALESCE(VCL.id_equip,0),1,0) AS tem
+			FROM tb_equipamento AS EQP
+			LEFT JOIN tb_vcl_equip AS VCL
+			ON VCL.id_equip = EQP.id
+			AND VCL.id_vcl = Iid_vcl;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_equip;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_equip(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+        IN Iid_equip int(11),
+        IN Iadd boolean
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Iadd)THEN
+				INSERT INTO tb_vcl_equip (id_vcl,id_equip) VALUES (Iid_vcl,Iid_equip);
+            ELSE
+				DELETE FROM tb_vcl_equip WHERE id_vcl=Iid_vcl AND id_equip=Iid_equip;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;

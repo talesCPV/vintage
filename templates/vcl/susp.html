@@ -60,7 +60,7 @@
     </div>
 </template>
 <script>
-    const pageData = main_data.vcl_susp.data
+    const pageData = main_data.adm_view_veiculo.data
     const pageFunc = main_data.vcl_susp.func
     const pageScreen = document.querySelector('#susp')
     
@@ -102,7 +102,7 @@
     })
 
     pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
-        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+        if (confirm('Deseja realmente eliminar os dados de suspensão deste veículo?')) {
             pageFunc.setSusp(1)
         }
     })

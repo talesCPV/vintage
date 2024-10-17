@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-    const pageData = main_data.vcl_aero.data
+    const pageData = main_data.adm_view_veiculo.data
     const pageFunc = main_data.vcl_aero.func
     const pageScreen = document.querySelector('#aero')
     
@@ -57,7 +57,7 @@
     })
 
     pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
-        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+        if (confirm('Deseja realmente eliminar os dados de aerodinâmica deste veículo?')) {
             pageFunc.setPneu(1)
         }
     })
