@@ -157,6 +157,7 @@ SELECT * FROM vw_vcl_consumo;
 		AND AER.id = VCL.id
 		AND DIR.id = VCL.id
 		AND FRE.id = VCL.id
- 		AND COM.id = VCL.id;
+ 		AND COM.id = VCL.id
+        GROUP BY VCL.id;
         
 SELECT * FROM vw_veiculos;
