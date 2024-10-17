@@ -1,19 +1,16 @@
 <template>
     <style>
 
-
-
-    .line{
+    .combo{
         width: 100%;
     }
-
     </style>
   
     <div class="panel">
 
         <fieldset>
             <legend>Bloqueados</legend>
-            <select id="cmbForb" size="10"></select>
+            <select id="cmbForb" class="combo" size="10"></select>
         </fieldset>
         <div class="middle">
             <button id="btnAllow" class="btn-round">>></button>
@@ -21,13 +18,13 @@
         </div>
         <fieldset>
             <legend>Liberados</legend>
-            <select id="cmbAllow" size="10"></select>
+            <select id="cmbAllow" class="combo" size="10"></select>
         </fieldset>
 
     </div>
-    <button id="btnSavePerm" class="btn line">Salvar Permissões</button>
-
-
+    <div class="line">
+        <button id="btnSavePerm" class="btn line">Salvar Permissões</button>
+    </div>
 
 </template>
 <script>
