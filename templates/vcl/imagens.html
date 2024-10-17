@@ -96,6 +96,13 @@
                 shadow.innerHTML = json[i].split('.')[0]
                 square.appendChild(shadow)
 
+                square.addEventListener('dblclick',()=>{
+                    if(confirm('Deseja remover esta foto?')){
+                        square.remove()
+                        delFile(`/../acervos/${pageData.id_acervo}/imagens/${json[i]}`)
+                    }
+                })
+
                 form.appendChild(square)
             }
         })
@@ -110,8 +117,6 @@
         })
 
     })
-
-
     
     pageStart()
 </script>
