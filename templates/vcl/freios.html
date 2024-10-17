@@ -1,11 +1,102 @@
 <template>
     <style></style>
 
+    <div class="inline">
+        <label for="cmbFreioDia">Roda Dianteira</label>
+        <select id="cmbFreioDia" class="only-view" disabled>
+            <option value="DISCO_VENTILADO">Disco Ventilado</option>
+            <option value="DISCO_SIMPLES">Disco Simples</option>
+            <option value="TAMBOR">Tambor</option>
+            <option value="N/A">Não se Aplica</option>
+        </select> 
+    </div>
+    <div class="inline">
+        <label for="cmbFreioTras">Roda Traseira</label>
+        <select id="cmbFreioTras" class="only-view" disabled>
+            <option value="DISCO_VENTILADO">Disco Ventilado</option>
+            <option value="DISCO_SIMPLES">Disco Simples</option>
+            <option value="TAMBOR">Tambor</option>
+            <option value="N/A">Não se Aplica</option>
+        </select> 
+    </div>
+    <div class="inline">
+        <label for="cmbAciona">Acionamento</label>
+        <select id="cmbAciona" class="only-view" disabled>
+            <option value="HIDRAULICO">Hidráulico</option>
+            <option value="MECANICO">Mecânico</option>
+            <option value="AR">Ar</option>
+            <option value="N/A">Não se Aplica</option>
+        </select> 
+    </div>    
+    <div class="inline">
+        <div class="line-ckb">
+            <label for="ckbABS">ABS</label>
+            <input type="checkbox" id="ckbABS" class="only-view" disabled>
+        </div>
+        <div class="line-ckb">
+            <label for="ckbReg">Regenerativo</label>
+            <input type="checkbox" id="ckbReg" class="only-view" disabled>
+        </div>
+    </div>
 
-
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
 </template>
 <script>
-
+    const pageData = main_data.vcl_freios.data
+    const pageFunc = main_data.vcl_freios.func
+    const pageScreen = document.querySelector('#freios')
     
+    function pageStart(){
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#cmbFreioDia').value = pageData.freio_dia
+        pageScreen.querySelector('#cmbFreioTras').value = pageData.freio_tras
+        pageScreen.querySelector('#cmbAciona').value = pageData.freio_aciona
+        pageScreen.querySelector('#ckbABS').checked = pageData.abs == '1'
+        pageScreen.querySelector('#ckbReg').checked = pageData.regenerativo == '1'
+    }
 
+    pageFunc.setFreio = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.freio_dia = del ? '#DEL' : pageScreen.querySelector('#cmbFreioDia').value
+            params.freio_tras = pageScreen.querySelector('#cmbFreioTras').value
+            params.freio_aciona = pageScreen.querySelector('#cmbAciona').value
+            params.abs = pageScreen.querySelector('#ckbABS').checked
+            params.regenerativo = pageScreen.querySelector('#ckbReg').checked
+        const myPromisse = queryDB(params,'VCL-11')
+
+        myPromisse.then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+//            closeModal('adm_view_veiculo')
+            openFields(0,pageScreen)
+            pageScreen.querySelector('#btnEdit').disabled = 0
+
+        })
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        pageFunc.setFreio()
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente eliminar os dados de freio deste veículo?')) {
+            pageFunc.setFreio(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
 </script>

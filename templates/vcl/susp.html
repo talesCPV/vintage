@@ -1,0 +1,117 @@
+<template>
+    <style></style>
+
+    <div class="inline">
+        <label for="cmbDiant">Dianteira</label>
+        <select id="cmbDiant" class="only-view" disabled>
+            <option value="MACPHERSON">MacPherson</option>
+            <option value="DOBRADICA">Dobradiça</option>
+            <option value="WISHBONE">Double WishBone</option>
+            <option value="MULTLINK">Multilink</option>
+            <option value="FEIXE_MOLAS">Feixe de Molas</option>
+            <option value="FIXA">Fixa</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>       
+    </div>
+    <div class="inline">
+        <label for="cmbTras">Traseira</label>
+        <select id="cmbTras" class="only-view" disabled>
+            <option value="MACPHERSON">MacPherson</option>
+            <option value="EIXO_TORCAO">Eixo Rígido</option>
+            <option value="WISHBONE">Independente</option>
+            <option value="MULTLINK">Multilink</option>
+            <option value="ATIVA">Suspensão Ativa</option>
+            <option value="FIXA">Fixa</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>       
+    </div>    
+    <div class="inline">
+        <label for="cmbElastDia">Elemento Elástico Dianteiro</label>
+        <select id="cmbElastDia" class="only-view" disabled>
+            <option value="FEIXE_MOLAS">Feixe de Molas</option>
+            <option value="HELICOIDAL">Mola Helicoidal</option>
+            <option value="AR">Ar</option>
+            <option value="ELASTOMERO">Elastômeros</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>       
+    </div> 
+    <div class="inline">
+        <label for="cmbElastTras">Elemento Elástico Dianteiro</label>
+        <select id="cmbElastTras" class="only-view" disabled>
+            <option value="FEIXE_MOLAS">Feixe de Molas</option>
+            <option value="HELICOIDAL">Mola Helicoidal</option>
+            <option value="AR">Ar</option>
+            <option value="ELASTOMERO">Elastômeros</option>
+            <option value="N/A">Não se Aplica</option>
+        </select>       
+    </div> 
+    <div class="inline">
+        <label for="edtCursoDia">Curso Dianteiro</label>
+        <input type="text" id="edtCursoDia" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+    </div> 
+    <div class="inline">
+        <label for="edtCursoTras">Curso Traseiro</label>
+        <input type="text" id="edtCursoTras" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'mm')" disabled>
+    </div>
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>
+</template>
+<script>
+    const pageData = main_data.vcl_susp.data
+    const pageFunc = main_data.vcl_susp.func
+    const pageScreen = document.querySelector('#susp')
+    
+    function pageStart(){
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#cmbDiant').value = pageData.susp_dia
+        pageScreen.querySelector('#cmbTras').value = pageData.susp_tras
+        pageScreen.querySelector('#cmbElastDia').value = pageData.elem_elast_dia
+        pageScreen.querySelector('#cmbElastTras').value = pageData.elem_elast_tras
+        pageScreen.querySelector('#edtCursoDia').value = pageData.curso_susp_diant==null ? '' : getUnd(pageData.curso_susp_diant,'m')
+        pageScreen.querySelector('#edtCursoTras').value = pageData.curso_susp_tras==null ? '' : getUnd(pageData.curso_susp_tras,'m')
+    }
+
+    pageFunc.setSusp = (del=0)=>{
+        const params = new Object
+            params.id_vcl = pageData.id
+            params.susp_dia = pageScreen.querySelector('#cmbDiant').value
+            params.susp_tras = pageScreen.querySelector('#cmbTras').value
+            params.elem_elast_dia = pageScreen.querySelector('#cmbElastDia').value
+            params.elem_elast_tras = pageScreen.querySelector('#cmbElastTras').value
+            params.curso_susp_diant = del ? -1 : getFloat(pageScreen.querySelector('#edtCursoDia').value)
+            params.curso_susp_tras = getFloat(pageScreen.querySelector('#edtCursoTras').value)
+
+        queryDB(params,'VCL-10').then((resolve)=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback()
+            }
+//            setLog(` ${del ? 'Deletado ' : 'Editado '} ${JSON.stringify(params)}`)
+//            closeModal('adm_view_veiculo')
+            openFields(0,pageScreen)
+            pageScreen.querySelector('#btnEdit').disabled = 0
+
+        })
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        pageFunc.setSusp()
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente limpar o desempenho deste veículo?')) {
+            pageFunc.setSusp(1)
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
+</script>

@@ -22,7 +22,7 @@
         <label for="edtPortaMalas">Porta Malas</label>
         <input type="text" id="edtPortaMalas" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'l')" disabled>
     </div>
-    <div class="line">
+    <div class="inline">
         <label for="edtPeso">Peso</label>
         <input type="text" id="edtPeso" class="only-view" onfocus="this.select();" inputmode="decimal" onkeyup="return valUnid(this,'kg')" disabled>
         <label for="edtTanque">Cap. Tanque</label>
@@ -87,7 +87,7 @@
     })
 
     pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
-        if (confirm('Deseja realmente limpar a transmissão deste veículo?')) {
+        if (confirm('Deseja realmente eliminar os dados de dimensão deste veículo?')) {
             pageFunc.setDimensao(1)
         }
     })

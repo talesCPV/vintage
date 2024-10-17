@@ -247,11 +247,12 @@ CREATE TABLE tb_vcl_direcao(
  DROP TABLE IF EXISTS tb_vcl_suspensao;
 CREATE TABLE tb_vcl_suspensao(
 	id_vcl int(11) unsigned NOT NULL,
-	dianteira varchar(20) DEFAULT NULL,
-	traseira varchar(20) DEFAULT NULL,
-	elem_elastico varchar(20) DEFAULT NULL,
-    curso_diant double DEFAULT NULL,
-    curso_tras double DEFAULT NULL,
+	susp_dia varchar(20) DEFAULT NULL,
+	susp_tras varchar(20) DEFAULT NULL,
+	elem_elast_dia varchar(20) DEFAULT NULL,
+	elem_elast_tras varchar(20) DEFAULT NULL,
+    curso_susp_diant double DEFAULT NULL,
+    curso_susp_tras double DEFAULT NULL,
 	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
     PRIMARY KEY (id_vcl)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
@@ -259,9 +260,11 @@ CREATE TABLE tb_vcl_suspensao(
  DROP TABLE IF EXISTS tb_vcl_freios;
 CREATE TABLE tb_vcl_freios(
 	id_vcl int(11) unsigned NOT NULL,
-	dianteira varchar(20) DEFAULT NULL,
-	traseira varchar(20) DEFAULT NULL,
+	freio_dia varchar(20) DEFAULT NULL,
+	freio_tras varchar(20) DEFAULT NULL,
+	freio_aciona varchar(20) DEFAULT NULL,
 	abs boolean DEFAULT NULL,
+	regenerativo boolean DEFAULT NULL,
 	FOREIGN KEY (id_vcl) REFERENCES tb_veiculo(id),
     PRIMARY KEY (id_vcl)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

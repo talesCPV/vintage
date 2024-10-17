@@ -135,7 +135,8 @@ SELECT * FROM vw_vcl_consumo;
         PNU.alt_flanco,PNU.dianteiro,PNU.traseiro,PNU.estepe,
         AER.area_front,AER.area_front_corrig,AER.coef_arrasto,
         DIR.assistencia,DIR.diam_giro,
-        FRE.dianteira,FRE.traseira,FRE.abs,
+        SUS.susp_dia,SUS.susp_tras,SUS.elem_elast_dia,SUS.elem_elast_tras,SUS.curso_susp_diant,SUS.curso_susp_tras,
+        FRE.freio_dia,FRE.freio_tras,FRE.freio_aciona,FRE.abs,FRE.regenerativo,
         COM.autonomia_rod,COM.autonomia_urb,COM.consumo_rod,COM.consumo_urb
 		FROM tb_veiculo AS VCL
 		INNER JOIN vw_vcl_desempenho AS DES
@@ -145,6 +146,7 @@ SELECT * FROM vw_vcl_consumo;
 		INNER JOIN vw_vcl_pneus AS PNU
 		INNER JOIN vw_vcl_aerodinamica AS AER
 		INNER JOIN vw_vcl_direcao AS DIR
+		INNER JOIN vw_vcl_suspensao AS SUS
 		INNER JOIN vw_vcl_freios AS FRE
  		INNER JOIN vw_vcl_consumo AS COM
 		ON DES.id = VCL.id

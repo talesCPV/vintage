@@ -849,3 +849,74 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_susp;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_susp(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Isusp_dia varchar(20),
+		IN Isusp_tras varchar(20),
+		IN Ielem_elast_dia varchar(20),
+		IN Ielem_elast_tras varchar(20),
+		IN Icurso_susp_diant double,
+		IN Icurso_susp_tras double
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Icurso_susp_diant<0)THEN
+				DELETE FROM tb_vcl_suspensao WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Icurso_susp_diant = (SELECT IF(Icurso_susp_diant=0,(SELECT NULL),Icurso_susp_diant));
+				SET Icurso_susp_tras = (SELECT IF(Icurso_susp_tras=0,(SELECT NULL),Icurso_susp_tras));
+            
+				SET Isusp_dia = (SELECT IF(TRIM(Isusp_dia)="",(SELECT NULL),Isusp_dia));
+				SET Isusp_tras = (SELECT IF(TRIM(Isusp_tras)="",(SELECT NULL),Isusp_tras));
+				SET Ielem_elast_dia = (SELECT IF(TRIM(Ielem_elast_dia)="",(SELECT NULL),Ielem_elast_dia));
+				SET Ielem_elast_tras = (SELECT IF(TRIM(Ielem_elast_tras)="",(SELECT NULL),Ielem_elast_tras));
+
+				INSERT INTO tb_vcl_suspensao (id_vcl,susp_dia,susp_tras,elem_elast_dia,elem_elast_tras,curso_susp_diant,curso_susp_tras)
+				VALUES(Iid_vcl,Isusp_dia,Isusp_tras,Ielem_elast_dia,Ielem_elast_tras,Icurso_susp_diant,Icurso_susp_tras)
+				ON DUPLICATE KEY UPDATE
+				susp_dia=Isusp_dia,susp_tras=Isusp_tras,elem_elast_dia=Ielem_elast_dia,elem_elast_tras=Ielem_elast_tras,
+                curso_susp_diant=Icurso_susp_diant,curso_susp_tras=Icurso_susp_tras;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
+
+  DROP PROCEDURE IF EXISTS sp_set_vcl_freio;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_vcl_freio(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid_vcl int(11),
+		IN Ifreio_dia varchar(20),
+		IN Ifreio_tras varchar(20),
+		IN Ifreio_aciona varchar(20),
+		IN Iabs boolean,
+		IN Iregenerativo boolean
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Ifreio_dia="#DEL")THEN
+				DELETE FROM tb_vcl_freios WHERE id_vcl=Iid_vcl;
+            ELSE
+				SET Iabs = (SELECT IF(Iabs=0,(SELECT NULL),Iabs));
+				SET Iregenerativo = (SELECT IF(Iregenerativo=0,(SELECT NULL),Iregenerativo));
+
+				SET Ifreio_dia = (SELECT IF(TRIM(Ifreio_dia)="",(SELECT NULL),Ifreio_dia));
+				SET Ifreio_tras = (SELECT IF(TRIM(Ifreio_tras)="",(SELECT NULL),Ifreio_tras));
+				SET Ifreio_aciona = (SELECT IF(TRIM(Ifreio_aciona)="",(SELECT NULL),Ifreio_aciona));
+
+				INSERT INTO tb_vcl_freios (id_vcl,freio_dia,freio_tras,freio_aciona,abs,regenerativo)
+				VALUES(Iid_vcl,Ifreio_dia,Ifreio_tras,Ifreio_aciona,Iabs,Iregenerativo)
+				ON DUPLICATE KEY UPDATE
+				freio_dia=Ifreio_dia,freio_tras=Ifreio_tras,freio_aciona=Ifreio_aciona,abs=Iabs,regenerativo=Iregenerativo;
+            END IF;
+        END IF;
+	END $$
+DELIMITER ;
