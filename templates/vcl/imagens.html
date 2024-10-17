@@ -1,11 +1,117 @@
 <template>
-    <style></style>
+    <style>
+        .img-form{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
 
+        .square{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            background-color: rgb(247, 187, 187);
+            font-size: 2.5em;
+            cursor: pointer;
+        }
 
+        .square:hover{
+            color: rgb(249, 249, 250);
+        }
+
+        .img-pic{
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .img-name{
+            display: none;
+            font-size: 0.5em;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-color: #00000040;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .square:hover .img-name{
+            display: flex;
+        }
+
+        #up_file{
+            display: none;
+        }
+
+    </style>
+    <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg" class="only-view"> 
+
+    <div class="img-form">
+        <label for="up_file">
+            <div id="btnAdd" class="square">
+                <span class="mdi mdi-plus-circle-outline"></span>
+            </div>    
+        </label>
+    </div>
 
 </template>
 <script>
 
-    
+    const pageData = main_data.adm_view_veiculo.data
+    const pageFunc = main_data.vcl_imagens.func
+    const pageScreen = document.querySelector('#imagens')
 
+    function pageStart(){
+        showImg()
+    }
+
+    function showImg(){
+        showFiles(`acervos/${pageData.id_acervo}/imagens/`,'jpg')
+        .then((resolve)=>{
+            const json = JSON.parse(resolve)
+            const old = pageScreen.querySelectorAll('.img-vcl')
+            for(let i=0; i<old.length; i++){
+                old[i].remove()
+            }
+            const form = pageScreen.querySelector('.img-form')
+            for(let i=2; i<json.length; i++){
+
+                const square = document.createElement('div')
+                square.className = 'square img-vcl'
+                
+                const img = document.createElement('img')
+                img.src = `acervos/${pageData.id_acervo}/imagens/${json[i]}`
+                img.className = 'img-pic'
+                square.appendChild(img)
+
+                const shadow = document.createElement('div')
+                shadow.className = 'img-name'
+                shadow.innerHTML = json[i].split('.')[0]
+                square.appendChild(shadow)
+
+                form.appendChild(square)
+            }
+        })
+
+    }
+
+    pageScreen.querySelector('#up_file').addEventListener('change',()=>{
+        const filename = prompt('Nome do Arquivo:',pageScreen.querySelector('#up_file').value.split('\\')[2])
+        const up = uploadImage('up_file',`acervos/${pageData.id_acervo}/imagens/`,filename)
+        up.then((resp)=>{
+            showImg()
+        })
+
+    })
+
+
+    
+    pageStart()
 </script>

@@ -125,7 +125,7 @@ function uploadImage(fileID,path,filename){
     return myPromisse
 }
 
-function listNF(path,ext='txt'){
+function showFiles(path,ext='txt'){
 
     const data = new URLSearchParams()
         data.append("dir",path)
@@ -144,6 +144,8 @@ function listNF(path,ext='txt'){
             }
         })
     })
+    return myPromisse
+/*    
     myPromisse.then((txt)=>{
         const list = JSON.parse(txt)
         const sel = document.querySelector(`#${ext}Files`)
@@ -152,6 +154,7 @@ function listNF(path,ext='txt'){
             sel.innerHTML += `<option value="${list[i]}">${list[i]}</option>`
         }
     })
+*/        
 }
 
 function getFile(path){
