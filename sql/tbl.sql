@@ -108,10 +108,13 @@ CREATE TABLE tb_acervo(
 	id int(11) unsigned NOT NULL AUTO_INCREMENT,
     id_owner int(11) NOT NULL,
     nome varchar(30) NOT NULL,
+    url varchar(30) DEFAULT NULL,
     UNIQUE KEY (nome),
     FOREIGN KEY (id_owner) REFERENCES tb_usuario(id),
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+-- ALTER TABLE tb_acervo ADD COLUMN url varchar(30) DEFAULT NULL;
 
 /* FIM ACERVOS */
 /* VEÍCULO */

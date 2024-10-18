@@ -45,7 +45,7 @@
 
         /* ACERVO */
         "ACV-0" => 'CALL sp_view_acervo(@access,@hash,"x00");', // NOME
-        "ACV-1" => 'CALL sp_set_acervo(@access,@hash,x00,x01,"x02");', // ID,ID_OWNER,NOME
+        "ACV-1" => 'CALL sp_set_acervo(@access,@hash,x00,x01,"x02","x03");', // ID,ID_OWNER,NOME,URL
 
         /* VEÍCULOS */
         "VCL-0"  => 'CALL sp_view_veiculo(@access,@hash,x00,"x01","x02","x03");', // ID_ACERVO, FIELD, SIGNAL, VALUE

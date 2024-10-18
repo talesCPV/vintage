@@ -42,6 +42,18 @@ function checkRepass(fields){
     return true
 }
 
+function valURL(edt,bef='/',aft=''){
+    const ok_chr = ['1','2','3','4','5','6','7','8','9','0','_','-',
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','X','Y','W','Z',
+        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','w','z'];
+
+    let val = edt.value.substring(0,bef.length) != bef ? edt.value : edt.value.substring(bef.length,edt.value.length)
+    const last = edt.value.substring(edt.value.length-1,edt.value.length)
+    
+    val = ok_chr.includes(last) ? val : val.substring(0,val.length-1)
+
+    edt.value = bef+val+aft
+}
 
 function valUnid(edt,und,dec=2){    
     const num = getFloat(edt.value,dec)

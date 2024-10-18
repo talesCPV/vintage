@@ -22,6 +22,8 @@ DROP VIEW IF EXISTS vw_acervo;
         INNER JOIN tb_usuario AS OWN
         ON ACV.id_owner = OWN.id;
         
+	SELECT * FROM vw_acervo;
+
 /* VCL DESEMPENHO */
  DROP VIEW IF EXISTS vw_vcl_desempenho;
  	CREATE VIEW vw_vcl_desempenho AS
@@ -156,8 +158,10 @@ SELECT * FROM vw_vcl_consumo;
 		AND PNU.id = VCL.id
 		AND AER.id = VCL.id
 		AND DIR.id = VCL.id
+		AND SUS.id = VCL.id
 		AND FRE.id = VCL.id
  		AND COM.id = VCL.id
         GROUP BY VCL.id;
         
 SELECT * FROM vw_veiculos;
+SELECT * FROM vw_veiculos WHERE id_acervo=1;

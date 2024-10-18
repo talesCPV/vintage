@@ -54,7 +54,8 @@
         const params = new Object
         params.id = newReg ? 0 : pageData.id
         params.id_owner = newReg ? 0 : pageData.id_owner
-        params.nome = nome
+        params.nome = nome.trim()
+        params.url = params.nome.split(' ')[0]
 
         queryDB(params,'ACV-1').then(()=>{
             viewAcervo()

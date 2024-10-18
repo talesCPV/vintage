@@ -73,21 +73,24 @@
     }
 
     function showImg(){
-        showFiles(`acervos/${pageData.id_acervo}/imagens/`,'jpg')
+        const folder = `acervos/${pageData.id_acervo}/${pageData.id}/imagens/`
+        showFiles(folder,'jpg')
         .then((resolve)=>{
             const json = JSON.parse(resolve)
+
             const old = pageScreen.querySelectorAll('.img-vcl')
             for(let i=0; i<old.length; i++){
                 old[i].remove()
             }
             const form = pageScreen.querySelector('.img-form')
             for(let i=2; i<json.length; i++){
-
+                const url = `${folder}${json[i]}`
+                
                 const square = document.createElement('div')
                 square.className = 'square img-vcl'
                 
                 const img = document.createElement('img')
-                img.src = `acervos/${pageData.id_acervo}/imagens/${json[i]}`
+                img.src = url
                 img.className = 'img-pic'
                 square.appendChild(img)
 
@@ -99,7 +102,7 @@
                 square.addEventListener('dblclick',()=>{
                     if(confirm('Deseja remover esta foto?')){
                         square.remove()
-                        delFile(`/../acervos/${pageData.id_acervo}/imagens/${json[i]}`)
+                        delFile('/../'+url)
                     }
                 })
 
@@ -111,7 +114,7 @@
 
     pageScreen.querySelector('#up_file').addEventListener('change',()=>{
         const filename = prompt('Nome do Arquivo:',pageScreen.querySelector('#up_file').value.split('\\')[2])
-        const up = uploadImage('up_file',`acervos/${pageData.id_acervo}/imagens/`,filename)
+        const up = uploadImage('up_file',`acervos/${pageData.id_acervo}/${pageData.id}/imagens/`,filename)
         up.then((resp)=>{
             showImg()
         })

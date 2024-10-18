@@ -1,0 +1,73 @@
+<template>
+    <style></style>
+
+    <fieldset>
+        <legend>Acervo</legend>
+        <div class="inline">
+            <label for="edtNome">Nome</label>
+            <input type="text" id="edtNome" class="only-view" maxlength="30" disabled>
+        </div>
+        <div class="inline">
+            <label for="edtURL">URL</label>
+            <input type="text" id="edtURL" class="only-view" onfocus="this.select();" maxlength="30" onkeyup="return valURL(this,'')" disabled>
+        </div>
+        <div class="line">
+            <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+            <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+            <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+        </div>        
+    </fieldset>
+
+
+</template>
+<script>
+    const pageData = main_data.adm_edt_acervo.data
+    const pageFunc = main_data.adm_edt_acervo.func
+    const pageScreen = document.querySelector('#card-adm_edt_acervo')
+    
+    function pageStart(){
+        openFields(0,pageScreen)
+        pageScreen.querySelector('#btnEdit').disabled = 0
+        pageScreen.querySelector('#edtNome').value = pageData.nome
+        pageScreen.querySelector('#edtURL').value = pageData.url
+    }
+
+
+    function setAcervo(del=0){
+        const params = new Object
+        params.id =  pageData.id
+        params.id_owner = pageData.id_owner
+        params.nome = del ? '' : pageScreen.querySelector('#edtNome').value
+        params.url = pageScreen.querySelector('#edtURL').value
+
+        pageData.nome = params.nome
+        pageData.url = params.url
+
+        queryDB(params,'ACV-1').then(()=>{
+            if(pageData.hasOwnProperty('callback')){
+                pageData.callback(pageData)
+            }
+            closeModal('adm_edt_acervo')
+        })
+    }
+
+    pageScreen.querySelector('#btnSave').addEventListener('click',()=>{
+        setAcervo()
+    })
+
+    pageScreen.querySelector('#btnDel').addEventListener('click',()=>{
+        if (confirm('Deseja realmente eliminar este Acervo e todos seus Veículos?')) {
+            if(confirm('Tem certeza? uma vez deletado os dados não poderão ser recuperados.')){
+                setAcervo(1)
+            }
+        }
+    })
+
+    pageScreen.querySelector('#btnEdit').addEventListener('click',()=>{
+        openFields(1,pageScreen)
+        pageScreen.querySelector('#btnDel').disabled = 0
+        pageScreen.querySelector('#btnEdit').disabled = 1
+    })
+
+    pageStart()
+</script>

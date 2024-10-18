@@ -8,7 +8,7 @@
     <div>
 
         <fieldset class="fds-busca veiculo">
-            <legend>Filtro</legend>
+            <legend>Veículos</legend>
             <div class="inline">
                 <select id="cmbBusca">
                     <option value="id" signal="LIKE">Código</option>
@@ -42,10 +42,10 @@
     const pageFunc = main_data.adm_view_acervo.func
     const pageScreen = document.querySelector('#card-adm_view_acervo')
 
-    function pageStart(){
+    function pageStart(data){
         const tbl = pageScreen.querySelector('#tblAcervo')
         tbl.head('Cod.|min-width,Acervo,Dono')
-        tbl.plot(pageData,'id|min-width,nome,owner_name','str,Upp,Upp')
+        tbl.plot(data,'id|min-width,nome,owner_name','str,Upp,Upp')
 
         pageFunc.fillVeiculo()
     }
@@ -94,7 +94,13 @@
        openHTML('adm_view_veiculo.html','pop-up',`Veículo - ${data.nome}`,data)
     })
 
-    pageStart()
+    pageScreen.querySelector('#tblAcervo').addEventListener('click',(e)=>{
+        data = e.target.parentNode.data
+        data.callback = pageStart
+        openHTML('adm_edt_acervo.html','pop-up',`Acervo - ${data.nome}`,data)
+    })
+
+    pageStart(pageData)
 
 
 </script>
