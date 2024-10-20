@@ -23,13 +23,13 @@
         getFile('/../config/settings.json').then((response)=>{
             pageData = JSON.parse(response)
             pageScreen.querySelector('#edtUrlFotos').value = pageData.pastas.save_img
-            console.log(pageData)
         })
     }
 
     pageScreen.querySelector('#btnSavePastas').addEventListener('click',()=>{
         pageData.pastas.save_img = pageScreen.querySelector('#edtUrlFotos').value
         saveFile(pageData,'/../config/settings.json')
+        closeModal('conf_settings')
     })
 
 

@@ -70,11 +70,15 @@
 
     function pageStart(){
         showImg()
+        getFile('/../config/settings.json').then((response)=>{
+            json = JSON.parse(response)
+            pageData.img_url = `${json.pastas.save_img}/${pageData.id_acervo}/${pageData.id}/imagens/`          
+        })        
     }
 
     function showImg(){
         const folder = `acervos/${pageData.id_acervo}/${pageData.id}/imagens/`
-        showFiles(folder,'jpg')
+        showFiles(pageData.img_url,'jpg')
         .then((resolve)=>{
             const json = JSON.parse(resolve)
 
@@ -84,7 +88,7 @@
             }
             const form = pageScreen.querySelector('.img-form')
             for(let i=2; i<json.length; i++){
-                const url = `${folder}${json[i]}`
+                const url = `${pageData.img_url}${json[i]}`
                 
                 const square = document.createElement('div')
                 square.className = 'square img-vcl'
@@ -114,7 +118,7 @@
 
     pageScreen.querySelector('#up_file').addEventListener('change',()=>{
         const filename = prompt('Nome do Arquivo:',pageScreen.querySelector('#up_file').value.split('\\')[2])
-        const up = uploadImage('up_file',`acervos/${pageData.id_acervo}/${pageData.id}/imagens/`,filename)
+        const up = uploadImage('up_file',pageData.img_url,filename)
         up.then((resp)=>{
             showImg()
         })
