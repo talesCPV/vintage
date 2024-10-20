@@ -1,0 +1,37 @@
+<template>
+    <style></style>
+
+    <fieldset>
+        <legend>Pastas</legend>
+        <div class="inline">
+            <label for="edtUrlFotos">Fotos dos Acervos</label>
+            <input type="text" id="edtUrlFotos">
+        </div>
+        <div class="line">
+            <button id="btnSavePastas">Salvar</button>
+        </div>
+    </fieldset>
+
+
+</template>
+<script>
+    let pageData = main_data.conf_settings.data
+    const pageFunc = main_data.conf_settings.func
+    const pageScreen = document.querySelector('#card-conf_settings')
+    
+    function pageStart(){
+        getFile('/../config/settings.json').then((response)=>{
+            pageData = JSON.parse(response)
+            pageScreen.querySelector('#edtUrlFotos').value = pageData.pastas.save_img
+            console.log(pageData)
+        })
+    }
+
+    pageScreen.querySelector('#btnSavePastas').addEventListener('click',()=>{
+        pageData.pastas.save_img = pageScreen.querySelector('#edtUrlFotos').value
+        saveFile(pageData,'/../config/settings.json')
+    })
+
+
+    pageStart()
+</script>
