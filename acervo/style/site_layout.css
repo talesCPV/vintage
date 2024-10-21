@@ -19306,7 +19306,8 @@ body.modal-open {
     font-family: 'din-b2';
     font-weight: normal;
     z-index: 2;
-    position: relative
+    position: relative;
+    min-height: 26px;
 }
 
 .worldwide-inventory-item .model {
@@ -19345,7 +19346,8 @@ body.modal-open {
 
 .worldwide-inventory-item .price-stock {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    min-height: 40px;
 }
 
 .worldwide-inventory-item .price {
