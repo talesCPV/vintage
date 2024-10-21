@@ -11,6 +11,7 @@ then
 
     git init
 
+    git add acervo/
     git add assets/
     git add backend/
     git add config/

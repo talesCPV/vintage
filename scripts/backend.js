@@ -145,16 +145,7 @@ function showFiles(path,ext='txt'){
         })
     })
     return myPromisse
-/*    
-    myPromisse.then((txt)=>{
-        const list = JSON.parse(txt)
-        const sel = document.querySelector(`#${ext}Files`)
-        sel.innerHTML=''
-        for(let i=list.length-1; i>1;  i--){
-            sel.innerHTML += `<option value="${list[i]}">${list[i]}</option>`
-        }
-    })
-*/        
+      
 }
 
 function getFile(path){
@@ -217,15 +208,6 @@ function delFile(path){
     }); 
 }
 
-function NFeConf(file){
-    file = JSON.stringify(file)
-    saveFile(file,path='/../../NF/NFe/json/NFe.json')
-}
-
-function NFsConf(file){
-    saveFile(file,path='/../../NF/NFe/json/NFs.json')
-}
-
 function saveFile(file,path){
     const data = new URLSearchParams();
         data.append("file", JSON.stringify(file));
@@ -247,43 +229,6 @@ function saveFile(file,path){
         });
     }); 
 
-}
-
-function uploadNFe(txt, filename){
-
-    saveFile(txt,path=`/../../NF/NFe/txt/${filename}.txt`).then(()=>{
-        alert('NFe exportada com sucesso!!')
-        listNF('../NF/NFe/txt')
-        if (confirm(`Deseja lançar od boletos?`)) {
-            const data = main_data.fisc_nfe.data.config
-            for(let i=0; i<data.Y07.length; i++){
-                const pgto = new Object            
-                pgto.sac = data.E.xNome.split(' ')[0]
-                pgto.nf = data.B.nNF
-                pgto.ref =  (i+1).toString().padStart(2,"0") +'/'+ (data.Y07.length).toString().padStart(2,"0")
-                pgto.venc = data.Y07[i].Y07.date
-                pgto.val = data.Y07[i].Y07.valor
-                addBoleto(pgto)
-            }
-        }
-        document.querySelector('#tab-export').click()
-    })    
-}
-
-function uploadNFs(txt, filename){
-
-    saveFile(txt,path=`/../../NF/NFs/txt/${filename}.txt`).then(()=>{
-        alert('NFs exportada com sucesso!!')
-        listNF('../NF/NFs/txt')
-        if (confirm(`Deseja lançar od boletos?`)) {
-/*
-            for(let i=0; i<pageData.NFs.fatura.length; i++){
-                addBoleto(pageData.NFs.fatura[i])
-            }
-*/
-        }
-        document.querySelector('#tab-export').click()
-    })
 }
 
 function uploadFile(file,path,filename){
