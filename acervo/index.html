@@ -233,8 +233,8 @@
                 <!-- Imagem de Fundo -->
                 <div class='home-inv-heading' style='background-image:url(https://dealeraccelerate-dev.s3.amazonaws.com/worldwide/marketing_assets/1/wwva-hero-img.jpg)'>
                     <div class='heading'>
-                        <h1 class='white'>VintageClub</h1>
-                        <h4 class='white'>Seu acervo na rede</h4>
+                        <h1 id="head-name" class='white'>VintageClub</h1>
+                        <h4 id="head-frase" class='white'>Seu acervo na rede</h4>
                     </div>
                     <div class='inv-cta-btn'>Browse 295 Vehicle Inventory Below</div>
                 </div>
@@ -561,6 +561,7 @@ teste
 
         const id_acervo = Number(json.id)
         const main_screen = document.querySelector('.vlp-grid')
+        document.querySelector('#head-name').innerHTML = json.nome
         main_screen.innerHTML = ''
         if (id_acervo) {
             const params = new Object
@@ -570,7 +571,9 @@ teste
                 const json = JSON.parse(response)
                 getFile('/../config/settings.json').then((response)=>{
                     const url = JSON.parse(response).pastas.save_img
-
+                    const logo = window.location+'/../../'+url+'/'+params.id_acervo+'/imagens/logo.jpg'
+                    const cover = window.location+'/../../'+url+'/'+params.id_acervo+'/imagens/cover.jpg'
+                    document.querySelector('.home-inv-heading').style['background-image'] = `url(${cover})`
                     for(let i=0; i<json.length; i++){
                         const a =document.createElement('a')
                         a.title = json[i].nome
@@ -612,7 +615,7 @@ teste
 
                         const desc = document.createElement('div')
                         desc.className = 'default-header'
-                        desc.innerHTML = 'Pequena descrição do veículo, ainda tenho q fazer este campo'
+                        desc.innerHTML = not_null(json[i].descricao)
                         card.appendChild(desc)
 
                         const price = document.createElement('div')

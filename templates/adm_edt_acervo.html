@@ -1,22 +1,50 @@
 <template>
-    <style></style>
+    <style>
+        .pic{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-    <fieldset>
-        <legend>Acervo</legend>
-        <div class="inline">
-            <label for="edtNome">Nome</label>
-            <input type="text" id="edtNome" class="only-view" maxlength="30" disabled>
-        </div>
-        <div class="inline">
-            <label for="edtURL">URL</label>
-            <input type="text" id="edtURL" class="only-view" onfocus="this.select();" maxlength="30" onkeyup="return valURL(this,'')" disabled>
-        </div>
-        <div class="line">
-            <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
-            <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
-            <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+
+    </style>
+
+    <div class="tab-bar">
+        <div class="tab-item" id="tab-sobre" onclick="pictab(this)">Informações</div>        
+        <div class="tab-item" id="tab-logo" onclick="pictab(this)">Logotipo</div>
+        <div class="tab-item" id="tab-fundo" onclick="pictab(this)">Fundo</div>
+    </div>
+    <div class="tab-screen">
+        <div id="sobre" class="tab">
+            <div class="inline">
+                <label for="edtNome">Nome</label>
+                <input type="text" id="edtNome" class="only-view" maxlength="30" disabled>
+            </div>
+            <div class="inline">
+                <label for="edtURL">URL</label>
+                <input type="text" id="edtURL" class="only-view" onfocus="this.select();" maxlength="30" onkeyup="return valURL(this,'')" disabled>
+            </div>
         </div>        
-    </fieldset>
+        <div id="logo" class="tab">
+            <div class="pic">
+                <canvas id="cnvLogo"></canvas>
+                <input  name="up_file_logo" id="up_file_logo" type="file" accept=".jpg,.jpeg" class="only-view">            
+            </div>
+        </div>
+        <div id="fundo" class="tab">
+            <div class="pic">
+                <canvas id="cnvFundo"></canvas>
+                <input  name="up_file_fundo" id="up_file_fundo" type="file" accept=".jpg,.jpeg" class="only-view">            
+            </div>
+
+        </div>
+    </div>
+    <div class="line">
+        <button id="btnEdit" disabled><span class="mdi mdi-note-edit"></span>Editar</button>
+        <button id="btnDel" class="only-view" disabled><span class="mdi mdi-delete"></span>Deletar</button>
+        <button id="btnSave" class="only-view" disabled><span class="mdi mdi-content-save"></span>Salvar</button>
+    </div>  
 
 
 </template>
@@ -27,9 +55,25 @@
     
     function pageStart(){
         openFields(0,pageScreen)
+        pictab(pageScreen.querySelector('#tab-sobre'))
         pageScreen.querySelector('#btnEdit').disabled = 0
         pageScreen.querySelector('#edtNome').value = pageData.nome
         pageScreen.querySelector('#edtURL').value = pageData.url
+        getFile('/../config/settings.json').then((response)=>{
+            json = JSON.parse(response)         
+            pageData.img_url = `${json.pastas.save_img}/${pageData.id}/imagens/`
+            backFunc({'filename':pageData.img_url+'logo.jpg'},2).then((resp)=>{
+                if(JSON.parse(resp)){
+                    loadImg(pageData.img_url+'logo.jpg','cnvLogo')
+                }
+            }) 
+            backFunc({'filename':pageData.img_url+'cover.jpg'},2).then((resp)=>{
+                if(JSON.parse(resp)){
+                    loadImg(pageData.img_url+'cover.jpg','cnvFundo')
+                }
+            }) 
+        })  
+
     }
 
 
@@ -68,6 +112,21 @@
         pageScreen.querySelector('#btnDel').disabled = 0
         pageScreen.querySelector('#btnEdit').disabled = 1
     })
+
+    pageScreen.querySelector('#up_file_logo').addEventListener('change',()=>{
+        const up = uploadImage('up_file_logo',pageData.img_url,'logo.jpg')
+        up.then((resp)=>{
+            loadImg(pageData.img_url+'logo.jpg','cnvLogo')
+        })
+    })
+
+    pageScreen.querySelector('#up_file_fundo').addEventListener('change',()=>{
+        const up = uploadImage('up_file_fundo',pageData.img_url,'cover.jpg')
+        up.then((resp)=>{
+            loadImg(pageData.img_url+'cover.jpg','cnvFundo')
+        })
+    })
+
 
     pageStart()
 </script>

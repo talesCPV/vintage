@@ -134,10 +134,13 @@ CREATE TABLE tb_veiculo(
     porte varchar(15) DEFAULT NULL,
 	placa varchar(15) DEFAULT NULL,
     procedencia varchar(25) DEFAULT NULL,
+    descricao varchar(256) DEFAULT NULL,
     UNIQUE KEY (nome),
     FOREIGN KEY (id_acervo) REFERENCES tb_acervo(id),
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+-- ALTER TABLE tb_veiculo ADD COLUMN descricao varchar(256) DEFAULT NULL;
 
  DROP TABLE IF EXISTS tb_equipamento;
 CREATE TABLE tb_equipamento(

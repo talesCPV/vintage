@@ -429,10 +429,12 @@ DELIMITER $$
 		SET @id_user =  (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
 		IF(@allow AND @id_user>0)THEN
 			IF(Inome="")THEN
-				DELETE FROM tb_vcl_desempenho WHERE
+-- 				DELETE FROM tb_vcl_desempenho WHERE
 				DELETE FROM tb_veiculo WHERE id_acervo=Iid;
 				DELETE FROM tb_acervo WHERE id=Iid;                
-            ELSE			
+            ELSE
+				SET Iurl = (SELECT IF(TRIM(Iurl)="",(SELECT NULL),Iurl));
+            
 				IF(Iid=0)THEN
 					INSERT INTO tb_acervo (id_owner,nome,url)
                     VALUES(@id_user,Inome,Iurl);            
@@ -530,7 +532,8 @@ DELIMITER $$
 		IN Ilugares int,
 		IN Iporte varchar(15),
 		IN Iplaca varchar(15),
-		IN Iprocedencia varchar(25)
+		IN Iprocedencia varchar(25),
+		IN Idescricao varchar(256)
     )
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
@@ -547,13 +550,15 @@ DELIMITER $$
 				SET Iporte = (SELECT IF(TRIM(Iporte)="",(SELECT NULL),Iporte));
 				SET Iplaca = (SELECT IF(TRIM(Iplaca)="",(SELECT NULL),Iplaca));
 				SET Iprocedencia = (SELECT IF(TRIM(Iprocedencia)="",(SELECT NULL),Iprocedencia));
+				SET Idescricao = (SELECT IF(TRIM(Idescricao)="",(SELECT NULL),Idescricao));
 
 				SET Iano = (SELECT IF(Iano=0,(SELECT NULL),Iano));
 				SET Iportas = (SELECT IF(Iportas=0,(SELECT NULL),Iportas));
 				SET Ilugares = (SELECT IF(Ilugares=0,(SELECT NULL),Ilugares));
 
 				UPDATE tb_veiculo SET nome=Inome,ano=Iano,modelo=Imodelo,marca=Imarca,combustivel=Icombustivel,
-				configuracao=Iconfiguracao,portas=Iportas,lugares=Ilugares,porte=Iporte,placa=Iplaca,procedencia=Iprocedencia
+				configuracao=Iconfiguracao,portas=Iportas,lugares=Ilugares,porte=Iporte,placa=Iplaca,
+                procedencia=Iprocedencia,descricao=Idescricao
 				WHERE id=Iid;
             END IF;
         END IF;

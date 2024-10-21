@@ -69,15 +69,15 @@
     const pageScreen = document.querySelector('#imagens')
 
     function pageStart(){
-        showImg()
         getFile('/../config/settings.json').then((response)=>{
-            json = JSON.parse(response)
-            pageData.img_url = `${json.pastas.save_img}/${pageData.id_acervo}/${pageData.id}/imagens/`          
+            json = JSON.parse(response)         
+            pageData.img_url = `${json.pastas.save_img}/${pageData.id_acervo}/${pageData.id}/imagens/`
+            showImg()     
         })        
     }
 
     function showImg(){
-        const folder = `acervos/${pageData.id_acervo}/${pageData.id}/imagens/`
+
         showFiles(pageData.img_url,'jpg')
         .then((resolve)=>{
             const json = JSON.parse(resolve)
@@ -103,10 +103,23 @@
                 shadow.innerHTML = json[i].split('.')[0]
                 square.appendChild(shadow)
 
-                square.addEventListener('dblclick',()=>{
+                square.addEventListener('contextmenu',(e)=>{
+                    e.preventDefault();                 
                     if(confirm('Deseja remover esta foto?')){
                         square.remove()
                         delFile('/../'+url)
+                    }
+                })
+
+                square.addEventListener('click',()=>{
+                    const nome = prompt('Renomear arquivo:',json[i])
+                    if(nome != null){
+                        renameFile('/../'+url,nome).then((resolve)=>{
+                            const json = JSON.parse(resolve)
+                            if(!json.ok){
+                                alert('Já existe uma imagem com este nome, favor escolher outro.')
+                            }
+                        })
                     }
                 })
 

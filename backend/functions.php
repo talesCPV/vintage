@@ -10,11 +10,19 @@ if (IsSet($_POST["cod"]) && IsSet($_POST["params"])){
     switch($cod){
         case 1: // File Exist
             if(file_exists($params['filename'])){
-                print "true";
+                print 1;
             }else{
-                print "false";
+                print 0;
             }
-            break;        
+            break;
+        case 2:
+            $url = getcwd()."/../".$params['filename'];
+            if(file_exists($url)){
+                print 1;
+            }else{
+                print 0;
+            }
+            break;
     }
 
 
