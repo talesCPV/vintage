@@ -17,7 +17,7 @@ CREATE VIEW vw_post AS
 /* ACERVO */ 
 DROP VIEW IF EXISTS vw_acervo;
 	CREATE VIEW vw_acervo AS
-        SELECT ACV.*, OWN.nome AS owner_name, OWN.sobrenome AS owner_surname, OWN.email
+        SELECT ACV.*, OWN.nome AS owner_name, OWN.sobrenome AS owner_surname, OWN.email as owner_mail
         FROM tb_acervo AS ACV
         INNER JOIN tb_usuario AS OWN
         ON ACV.id_owner = OWN.id;

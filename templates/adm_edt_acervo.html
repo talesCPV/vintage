@@ -22,9 +22,37 @@
                 <input type="text" id="edtNome" class="only-view" maxlength="30" disabled>
             </div>
             <div class="inline">
-                <label for="edtURL">URL</label>
-                <input type="text" id="edtURL" class="only-view" onfocus="this.select();" maxlength="30" onkeyup="return valURL(this,'')" disabled>
+                <label for="edtFrase">Frase</label>
+                <input type="text" id="edtFrase" class="only-view" onfocus="this.select();" maxlength="255" disabled>
             </div>
+            <div class="inline">
+                <label for="edtURL">URL</label>
+                <input type="text" id="edtURL" class="only-view" onfocus="this.select();" maxlength="30" disabled>
+            </div>
+            <div class="inline">
+                <label for="edtEmail">Email</label>
+                <input type="text" id="edtEmail" class="only-view" onfocus="this.select();" maxlength="100" onkeyup="validaEmail(this)" disabled>
+            </div>
+            <div class="inline">
+                <label for="edtFace">Facebook</label>
+                <input type="text" id="edtFace" class="only-view" onfocus="this.select();" maxlength="100" disabled>
+            </div>
+            <div class="inline">
+                <label for="edtYoutube">Youtube</label>
+                <input type="text" id="edtYoutube" class="only-view" onfocus="this.select();" maxlength="100" disabled>
+            </div>
+            <div class="inline">
+                <label for="edtInsta">Instagram</label>
+                <input type="text" id="edtInsta" class="only-view" onfocus="this.select();" maxlength="100" disabled>
+            </div>
+            <div class="inline">
+                <label for="edtWhats">Whatsapp</label>
+                <input type="text" id="edtWhats" class="only-view" onfocus="this.select();" maxlength="15" onkeyup="phone(this)" disabled>
+            </div>                                                                        
+            <div class="inline">
+                <label for="edtFone">Telefone</label>
+                <input type="text" id="edtFone" class="only-view" onfocus="this.select();" maxlength="15" onkeyup="phone(this)" disabled>
+            </div>                                                                        
         </div>        
         <div id="logo" class="tab">
             <div class="pic">
@@ -59,6 +87,14 @@
         pageScreen.querySelector('#btnEdit').disabled = 0
         pageScreen.querySelector('#edtNome').value = pageData.nome
         pageScreen.querySelector('#edtURL').value = pageData.url
+        pageScreen.querySelector('#edtFrase').value = pageData.frase
+        pageScreen.querySelector('#edtFone').value = pageData.telefone
+        pageScreen.querySelector('#edtEmail').value = pageData.email
+        pageScreen.querySelector('#edtFace').value = pageData.facebook
+        pageScreen.querySelector('#edtYoutube').value = pageData.youtube
+        pageScreen.querySelector('#edtInsta').value = pageData.instagram
+        pageScreen.querySelector('#edtWhats').value = pageData.whatsapp
+
         getFile('/../config/settings.json').then((response)=>{
             json = JSON.parse(response)         
             pageData.img_url = `${json.pastas.save_img}/${pageData.id}/imagens/`
@@ -83,6 +119,13 @@
         params.id_owner = pageData.id_owner
         params.nome = del ? '' : pageScreen.querySelector('#edtNome').value
         params.url = pageScreen.querySelector('#edtURL').value
+        params.frase = pageScreen.querySelector('#edtFrase').value
+        params.telefone = pageScreen.querySelector('#edtFone').value
+        params.email = pageScreen.querySelector('#edtEmail').value
+        params.facebook = pageScreen.querySelector('#edtFace').value
+        params.youtube = pageScreen.querySelector('#edtYoutube').value
+        params.instagram = pageScreen.querySelector('#edtInsta').value
+        params.whatsapp = pageScreen.querySelector('#edtWhats').value
 
         pageData.nome = params.nome
         pageData.url = params.url

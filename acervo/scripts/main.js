@@ -110,3 +110,20 @@ function showFiles(path,ext='txt'){
     return myPromisse
       
 }
+
+function not_null(field){
+    return field == null ? '' : field
+}
+
+function getNum(V){
+    let out = ''
+    if(V != null){
+        for(let i=0; i< V.length; i++){
+            const ascii = V[i].charCodeAt()
+            if(ascii>=48 && ascii<=57){        
+                out+=V[i]
+            }
+        }
+    }
+    return out
+}

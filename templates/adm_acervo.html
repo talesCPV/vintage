@@ -50,12 +50,12 @@
         })
     }
 
-    function setAcervo(nome){
+    function newAcervo(nome){
         const params = new Object
         params.id = newReg ? 0 : pageData.id
         params.id_owner = newReg ? 0 : pageData.id_owner
         params.nome = nome.trim()
-        params.url = params.nome.split(' ')[0]
+        params.url = params.nome.toLowerCase().replaceAll(' ','_')
 
         queryDB(params,'ACV-1').then(()=>{
             viewAcervo()
@@ -67,7 +67,7 @@
     })
 
     pageScreen.querySelector('#btnNovo-acervo').addEventListener('click',()=>{
-        setAcervo(prompt('Digite o nome no acervo.'))
+        newAcervo(prompt('Digite o nome no acervo.'))
     })
 
     pageScreen.querySelector('#tblAcervo').addEventListener('click',(e)=>{

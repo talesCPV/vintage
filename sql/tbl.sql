@@ -109,13 +109,22 @@ CREATE TABLE tb_acervo(
     id_owner int(11) NOT NULL,
     nome varchar(30) NOT NULL,
     url varchar(30) DEFAULT NULL,
+    frase varchar(255) DEFAULT NULL,
+    telefone varchar(15) DEFAULT NULL,
+    email varchar(100) DEFAULT NULL,
+    facebook varchar(100) DEFAULT NULL,
+    youtube varchar(100) DEFAULT NULL,
+    instagram varchar(100) DEFAULT NULL,
+    whatsapp varchar(15) DEFAULT NULL,
     UNIQUE KEY (nome),
+    UNIQUE KEY (url),
     FOREIGN KEY (id_owner) REFERENCES tb_usuario(id),
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
--- ALTER TABLE tb_acervo ADD COLUMN url varchar(30) DEFAULT NULL;
-
+ -- ALTER TABLE tb_acervo ADD COLUMN whatsapp varchar(100) DEFAULT NULL;
+ -- ALTER TABLE tb_acervo ADD UNIQUE KEY (url);
+ 
 /* FIM ACERVOS */
 /* VEÍCULO */
 

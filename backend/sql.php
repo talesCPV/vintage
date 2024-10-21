@@ -45,7 +45,7 @@
 
         /* ACERVO */
         "ACV-0" => 'CALL sp_view_acervo(@access,@hash,"x00");', // NOME
-        "ACV-1" => 'CALL sp_set_acervo(@access,@hash,x00,x01,"x02","x03");', // ID,ID_OWNER,NOME,URL
+        "ACV-1" => 'CALL sp_set_acervo(@access,@hash,x00,x01,"x02","x03","x04","x05","x06","x07","x08","x09","x10");', // ID,ID_OWNER,NOME,URL,frase,telefone,email,facebook,youtube,instagram,whatsapp
 
         /* VEÍCULOS */
         "VCL-0"  => 'CALL sp_view_veiculo(@access,@hash,x00,"x01","x02","x03");', // ID_ACERVO, FIELD, SIGNAL, VALUE

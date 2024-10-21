@@ -414,6 +414,22 @@ DELIMITER $$
 	END $$
 DELIMITER ;
 
+ DROP PROCEDURE IF EXISTS sp_new_acervo;
+DELIMITER $$
+	CREATE PROCEDURE sp_new_acervo(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Inome varchar(30)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		SET @id_user =  (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@allow AND @id_user>0)THEN
+			INSERT INTO tb_acervo (id_owner,nome) VALUES (@id_user,Inome);
+        END IF;
+	END $$
+DELIMITER ;
+
  DROP PROCEDURE IF EXISTS sp_set_acervo;
 DELIMITER $$
 	CREATE PROCEDURE sp_set_acervo(
@@ -422,7 +438,14 @@ DELIMITER $$
 		IN Iid int(11),
 		IN Iid_owner int(11),
 		IN Inome varchar(30),
-		IN Iurl varchar(30)
+		IN Iurl varchar(30),
+        IN Ifrase varchar(255),
+		IN Itelefone varchar(15),
+		IN Iemail varchar(100),
+		IN Ifacebook varchar(100),
+		IN Iyoutube varchar(100),
+		IN Iinstagram varchar(100),
+		IN Iwhatsapp varchar(15)
     )
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
@@ -434,12 +457,22 @@ DELIMITER $$
 				DELETE FROM tb_acervo WHERE id=Iid;                
             ELSE
 				SET Iurl = (SELECT IF(TRIM(Iurl)="",(SELECT NULL),Iurl));
-            
+				SET Ifrase = (SELECT IF(TRIM(Ifrase)="",(SELECT NULL),Ifrase));
+				SET Itelefone = (SELECT IF(TRIM(Itelefone)="",(SELECT NULL),Itelefone));
+				SET Iemail = (SELECT IF(TRIM(Iemail)="",(SELECT NULL),Iemail));
+				SET Ifacebook = (SELECT IF(TRIM(Ifacebook)="",(SELECT NULL),Ifacebook));
+				SET Iyoutube = (SELECT IF(TRIM(Iyoutube)="",(SELECT NULL),Iyoutube));
+				SET Iinstagram = (SELECT IF(TRIM(Iinstagram)="",(SELECT NULL),Iinstagram));
+				SET Iwhatsapp = (SELECT IF(TRIM(Iwhatsapp)="",(SELECT NULL),Iwhatsapp));
+
 				IF(Iid=0)THEN
 					INSERT INTO tb_acervo (id_owner,nome,url)
                     VALUES(@id_user,Inome,Iurl);            
                 ELSE
-					UPDATE tb_acervo SET nome=Inome, id_owner=Iid_owner, url=Iurl WHERE id=Iid;
+					UPDATE tb_acervo 
+                    SET nome=Inome,id_owner=Iid_owner,url=Iurl,frase=Ifrase,telefone=Itelefone,email=Iemail,
+						facebook=Ifacebook,youtube=Iyoutube,instagram=Iinstagram,whatsapp=Iwhatsapp
+                    WHERE id=Iid;
                 END IF;
             END IF;
         END IF;
