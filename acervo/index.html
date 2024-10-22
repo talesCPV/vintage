@@ -290,20 +290,25 @@ teste
             <span class="close">×</span>
 
 
-            <form id="frm-img">
+            <form class="frm-carousel">
 
-                <input type="radio" name="fancy" autofocus value="clubs" id="clubs" />
-                <input type="radio" name="fancy" value="hearts" id="hearts" />
-                <label for="clubs"></label>
-                <label for="hearts"></label>
+                <div class="go-left">\276D</div>
+                <div class="go-rigth">\276C</div>
+
+                <div for="A" class="item-vcl">A</div>
+                <div for="B" class="item-vcl">B</div>
+                <div for="C" class="item-vcl">C</div>                
             
-                <div class="keys">Use left and right keys to navigate</div>
+<!--                <div class="keys">Use left and right keys to navigate</div> -->
             </form>
                 
             <div class="about-vcl">
 
-
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet tristique felis. Etiam ut ipsum at sem pharetra eleifend. Praesent egestas diam mollis
+                <div class="inline"><label id="vcl-nome"></label></div>
+                <div class="inline"><label id="vcl-ano"></label></div>
+                <div class="inline"><label id="vcl-marca"></label></div>
+                <div class="inline"><label id="vcl-modelo"></label></div>
+                <div class="inline"><label id="vcl-descricao"></label></div>
 
 
             </div>
@@ -344,8 +349,6 @@ teste
         document.querySelector('#fone_1').href = 'tel:'+json.telefone
         document.querySelector('#fone_2').href = 'tel:'+json.telefone
         document.querySelector('#whats_1').href = 'https://wa.me/55'+getNum(json.whatsapp)
-
-// https://wa.me/5512997113793
 
         main_screen.innerHTML = ''
         if (id_acervo) {
@@ -423,6 +426,44 @@ teste
                             if(i<10){
                                 document.querySelector('.pop-up').style.display = 'flex'
                                 console.log(div.data)
+
+                                document.querySelector('#vcl-nome').innerHTML = div.data.nome
+                                document.querySelector('#vcl-ano').innerHTML = div.data.ano
+                                document.querySelector('#vcl-marca').innerHTML = div.data.marca
+                                document.querySelector('#vcl-modelo').innerHTML = div.data.modelo
+                                document.querySelector('#vcl-descricao').innerHTML = div.data.descricao
+/*
+                                showFiles(div.data.path,'jpg').then((resolve)=>{
+                                    const files = JSON.parse(resolve)
+                                    const form = document.querySelector('.frm-carrousel')
+                                    for(let i=2; i<files.length; i++){
+                                        console.log(div.data.path+files[i])
+                                        const rdo = document.createElement('input')
+                                        rdo.type = 'radio'
+                                        rdo.className = 'rdo-carrousel'
+                                        rdo.name = 'carrousel'
+                                        rdo.id = files[i]
+                                        form.appendChild(rdo)
+
+                                        const label = document.createElement('label')
+                                        label.for = files[i]
+                                        label.className = 'lbl-carrousel'
+                                        label.innerHTML = files[i]
+                                        form.appendChild(label)
+
+console.log(files[i])
+                                    }
+/*
+                <input type="radio" class="rdo-carrousel" name="carrousel" autofocus  id="clubs" />
+                <input type="radio" class="rdo-carrousel" name="carrousel"  id="hearts" />
+                <label for="clubs" class="lbl-carrousel"></label>
+                <label for="hearts" class="lbl-carrousel"></label>
+*/
+
+
+//                                })
+
+
                                 // abrir página do carro
                             }
 

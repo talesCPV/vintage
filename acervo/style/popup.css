@@ -9,12 +9,6 @@
         z-index: 999;
     }
 
-    .pop-up_screen{
-        min-width: 80%;
-        min-height: 30%;
-        background-color: #f0f0f0;
-        border-radius: 15px;
-    }
 
     .close:hover, .close:focus {
         color: #a1a1a1;
@@ -31,13 +25,13 @@
         color: #fff;
     }
 
-    label {
+    .item-vcl {
         background: #444;
         color: #fff;
         transition: transform 400ms ease-out;
         display: inline-block;
         min-height: 100%;
-        width: 100vw;
+        width: 50vw;
         height: 100vh;
         position: relative;
         z-index: 1;
@@ -45,7 +39,7 @@
         line-height: 100vh;
     }
 
-    form {
+    .frm-carousel {
     position: absolute;
     top: 0;
     left: 0;
@@ -54,8 +48,18 @@
     white-space: nowrap;
     }
 
-    input {
+    .go-left{
         position: absolute;
+        left: 0;
+        top: 50%;
+        z-index: 2;
+    }
+
+    .go-rigth{
+        position: absolute;
+        right: 0;
+        top: 50%;
+        z-index: 2;
     }
 
     .keys {
@@ -71,31 +75,29 @@
         opacity: 0;
     }
 
-    input:focus ~ .keys {
-        opacity: 0.8;
-    }
 
-    input:nth-of-type(1):checked ~ label:nth-of-type(1), 
-    input:nth-of-type(2):checked ~ label:nth-of-type(2){
-        z-index: 0;
-    }
-
-    input:nth-of-type(1):checked ~ label {
+/*
+    .lbl-carrousel:has(input:checked) {
         transform: translate3d(0, 0, 0);
+        z-index: 1;
+        background-color: aqua;
     }
 
-    input:nth-of-type(2):checked ~ label {
+    .frm-carrousel:has(input:checked){
         transform: translate3d(-100%, 0, 0);
+        background-color: red;
+
     }
 
-    label {
+
+    .item-vcl {
         background: #444;
         background-size: cover;
         font-size: 3rem;
     }
 
-    label:before,
-    label:after {
+    .lbl-carrousel:before,
+    .lbl-carrousel:after {
         color: white;
         display: block;
         background: rgba(255,255,255,0.2);
@@ -110,20 +112,20 @@
         cursor: pointer;
     }
 
-    label:before {
+    .lbl-carrousel:before {
         content: "\276D";
         right: 100%;
         border-top-left-radius: 50%;
         border-bottom-left-radius: 50%;
     }
 
-    label:after {
+    .lbl-carrousel:after {
         content: "\276C";
         left: 100%;
         border-top-right-radius: 50%;
         border-bottom-right-radius: 50%;
     }
-
+*/
     .about-vcl{
         padding: 50px 15px;
         position: absolute;
@@ -133,17 +135,18 @@
         right: 0;
         white-space: nowrap;
         z-index: 1;
-        background-color: black;    
+        background-color: black;
+/*        display: none;*/
     }
 
     @media (max-width: 992px) {
 
-        form, .keys{
+        .frm-carousel, .keys{
             right: 0;
             bottom: 50%;
         }
 
-        label{
+        .item-vcl{
             height: unset;
         }
         .about-vcl{
