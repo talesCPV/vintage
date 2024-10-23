@@ -67,11 +67,6 @@ function currentImageSrc() {
 }
 
 
-
-
-
-
-
 function navHideShow() {
     worldwidePageContent.currentScrollPos = window.pageYOffset, window.scrollY > 70 && allowScroll && (worldwidePageContent.prevScrollpos >= worldwidePageContent.currentScrollPos ? ($("header").removeClass("compress-nav"), $("#worldwide-menu-toggle").removeClass("compressed")) : ($("header").addClass("compress-nav"), $("#worldwide-menu-toggle").addClass("compressed")), window.scrollY > 300 && allowScroll ? worldwidePageContent.prevScrollpos >= worldwidePageContent.currentScrollPos ? $(".home-filters").addClass("nav-open") : ($(".home-filters").removeClass("nav-open"), $(".home-filters").addClass("sticky-home-filters")) : $(".home-filters").removeClass("sticky-home-filters")), worldwidePageContent.prevScrollpos = worldwidePageContent.currentScrollPos
 }
@@ -106,11 +101,6 @@ function fullWidth() {
         })
     })
 }
-
-
-
-/* */
-
 
 var lastScrollTop = 0,
     delta = 100,

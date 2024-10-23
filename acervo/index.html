@@ -28,7 +28,7 @@
 
 
     <script src="scripts/site.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="scripts/before.js"></script>
 
 
 </head>
@@ -295,23 +295,119 @@ teste
                 <div class="go-left"><span class="mdi mdi-arrow-left-circle-outline"></span></div>
                 <div class="go-rigth"><span class="mdi mdi-arrow-right-circle-outline"></span></div>
 
-                <div class="carousel">
-                    <div for="A" class="item-vcl">A</div>
-                    <div for="B" class="item-vcl">B</div>
-                    <div for="C" class="item-vcl">C</div>                
-                </div>
+                <div class="carousel"></div>
             
-<!--                <div class="keys">Use left and right keys to navigate</div> -->
+                <div class="keys">Use left and right keys to navigate</div> 
             </form>
                 
             <div class="about-vcl">
 
-                <div class="inline"><label id="vcl-nome"></label></div>
-                <div class="inline"><label id="vcl-ano"></label></div>
-                <div class="inline"><label id="vcl-marca"></label></div>
-                <div class="inline"><label id="vcl-modelo"></label></div>
-                <div class="inline"><label id="vcl-descricao"></label></div>
-
+                <fieldset>
+                    <legend>Informações</legend>
+                    <div class="inline"><label>Nome:</label><p class="vcl-text" id="vcl-nome"></p></div>
+                    <div class="inline"><label>Ano:</label><p class="vcl-text" id="vcl-ano"></p></div>
+                    <div class="inline"><label>Descrição:</label><p class="vcl-text" id="vcl-descricao"></p></div>
+                    <div class="inline"><label>Marca:</label><p class="vcl-text" id="vcl-marca"></p></div>
+                    <div class="inline"><label>Modelo:</label><p class="vcl-text" id="vcl-modelo"></p></div>
+                    <div class="inline"><label>Tipo:</label><p class="vcl-text" id="vcl-tipo"></p></div>
+                    <div class="inline"><label>Combustível:</label><p class="vcl-text" id="vcl-combustivel"></p></div>
+                    <div class="inline"><label>Lugares:</label><p class="vcl-text" id="vcl-lugares"></p></div>
+                    <div class="inline"><label>Porte:</label><p class="vcl-text" id="vcl-porte"></p></div>
+                    <div class="inline"><label>País:</label><p class="vcl-text" id="vcl-procedencia"></p></div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Desempenho</legend>
+                    <div class="inline"><label>0-100 km/h:</label><p class="vcl-text" id="vcl-ace_0_100"></p>s</div>
+                    <div class="inline"><label>Vel. Max.:</label><p class="vcl-text" id="vcl-vel_max"></p>km/h</div>
+                </fieldset>
+                <fieldset>
+                    <legend>Motor</legend>
+                    <div class="inline"><label>Cilindros:</label><p class="vcl-text" id="vcl-cilindros"></p></div>                    
+                    <div class="inline"><label>Cilindradas:</label><p class="vcl-text" id="vcl-cilindrada"></p>cm³</div>                    
+                    <div class="inline"><label>Curso do Pistão:</label><p class="vcl-text" id="vcl-curso_pistao"></p>mm</div>                    
+                    <div class="inline"><label>Diam. do Cilindro:</label><p class="vcl-text" id="vcl-diam_cilindro"></p>mm</div>                    
+                    <div class="inline"><label>Válvulas:</label><p class="vcl-text" id="vcl-valvulas"></p></div>                    
+                    <div class="inline"><label>Comando de Válvula:</label><p class="vcl-text" id="vcl-com_valvula"></p></div>                    
+                    <div class="inline"><label>Tuchos:</label><p class="vcl-text" id="vcl-tuchos"></p></div>                    
+                    <div class="inline"><label>Peso/Pot.:</label><p class="vcl-text" id="vcl-peso_pot"></p>kg/cv</div>                    
+                    <div class="inline"><label>Peso/Torque:</label><p class="vcl-text" id="vcl-peso_tor"></p>kg/kgfm</div>                    
+                    <div class="inline"><label>Instalação:</label><p class="vcl-text" id="vcl-instalacao"></p></div>                    
+                    <div class="inline"><label>Disposição:</label><p class="vcl-text" id="vcl-disposicao"></p></div>                    
+                    <div class="inline"><label>Pot. Específica:</label><p class="vcl-text" id="vcl-pot_esp"></p>cv/l</div>                    
+                    <div class="inline"><label>Pot. Max.:</label><p class="vcl-text" id="vcl-pot_max"></p>cv</div>                    
+                    <div class="inline"><label>Razão de Compressão:</label><p class="vcl-text" id="vcl-raz_compressao"></p></div>                    
+                    <div class="inline"><label>RPM Max.:</label><p class="vcl-text" id="vcl-rpm_max"></p></div>                    
+                    <div class="inline"><label>RPM Pot. Max.:</label><p class="vcl-text" id="vcl-rpm_pot_max"></p></div>                    
+                    <div class="inline"><label>RPM Torque Max.:</label><p class="vcl-text" id="vcl-rpm_torque_max"></p></div>                    
+                    <div class="inline"><label>Torque Específico:</label><p class="vcl-text" id="vcl-torque_esp"></p>kgf/l</div>                    
+                    <div class="inline"><label>Torque Max.:</label><p class="vcl-text" id="vcl-torque_max"></p>kgf/l</div>                    
+                    <div class="inline"><label>Acionamento de Comando:</label><p class="vcl-text" id="vcl-aci_comando"></p></div>                    
+                    <div class="inline"><label>Alimentação:</label><p class="vcl-text" id="vcl-alimentacao"></p></div>                    
+                    <div class="inline"><label>Aspiração:</label><p class="vcl-text" id="vcl-aspiracao"></p></div>                    
+                    <div class="inline"><label>Cod. Motor:</label><p class="vcl-text" id="vcl-cod_motor"></p></div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Transmissão</legend>
+                    <div class="inline"><label>Acoplamento:</label><p class="vcl-text" id="vcl-acoplamento"></p></div>                    
+                    <div class="inline"><label>Câmbio:</label><p class="vcl-text" id="vcl-cambio"></p></div>                    
+                    <div class="inline"><label>Cód. do Câmbio:</label><p class="vcl-text" id="vcl-cod_cambio"></p></div>                    
+                    <div class="inline"><label>Tração:</label><p class="vcl-text" id="vcl-tracao"></p></div>                    
+                    <div class="inline"><label>Marchas:</label><p class="vcl-text" id="vcl-marchas"></p></div>                    
+                    <div class="inline"><label>Ré:</label><p class="vcl-text" id="vcl-reverso"></p></div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Dimensões</legend>
+                    <div class="inline"><label>Altura:</label><p class="vcl-text" id="vcl-altura"></p>mm</div>                    
+                    <div class="inline"><label>Largura:</label><p class="vcl-text" id="vcl-largura"></p>mm</div>                    
+                    <div class="inline"><label>Comprimento:</label><p class="vcl-text" id="vcl-comprimento"></p>mm</div>                    
+                    <div class="inline"><label>Bitola Diant.:</label><p class="vcl-text" id="vcl-bitola_diant"></p>mm</div>                    
+                    <div class="inline"><label>Bitola Tras.:</label><p class="vcl-text" id="vcl-bitola_tras"></p>mm</div>                    
+                    <div class="inline"><label>Entre-Eixo:</label><p class="vcl-text" id="vcl-entre_eixos"></p>mm</div>                    
+                    <div class="inline"><label>Carga Útil:</label><p class="vcl-text" id="vcl-carga_peso"></p>kg</div>                    
+                    <div class="inline"><label>Porta Malas:</label><p class="vcl-text" id="vcl-carga_vol"></p>litros</div>                    
+                    <div class="inline"><label>Peso:</label><p class="vcl-text" id="vcl-peso"></p>kg</div>                    
+                    <div class="inline"><label>Cap. do Tanque:</label><p class="vcl-text" id="vcl-tanque"></p>litros</div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Pneus</legend>
+                    <div class="inline"><label>Dianteiros:</label><p class="vcl-text" id="vcl-dianteiro"></p></div>                    
+                    <div class="inline"><label>Traseiros:</label><p class="vcl-text" id="vcl-traseiro"></p></div>                    
+                    <div class="inline"><label>Estepe:</label><p class="vcl-text" id="vcl-estepe"></p></div>                    
+                    <div class="inline"><label>Alt. do Flanco:</label><p class="vcl-text" id="vcl-alt_flanco"></p>mm</div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Aerodinâmica</legend>
+                    <div class="inline"><label>Área Frontal:</label><p class="vcl-text" id="vcl-area_front"></p>m²</div>                    
+                    <div class="inline"><label>Área Frontal Corrigida:</label><p class="vcl-text" id="vcl-area_front_corrig"></p>m²</div>                    
+                    <div class="inline"><label>Coeficiente de Arrasto:</label><p class="vcl-text" id="vcl-coef_arrasto"></p></div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Direção</legend>
+                    <div class="inline"><label>Assistência:</label><p class="vcl-text" id="vcl-assistencia"></p></div>                    
+                    <div class="inline"><label>Diâmetro de Giro:</label><p class="vcl-text" id="vcl-diam_giro"></p>m</div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Suspensão</legend>
+                    <div class="inline"><label>Dianteira:</label><p class="vcl-text" id="vcl-susp_dia"></p></div>                    
+                    <div class="inline"><label>Traseira:</label><p class="vcl-text" id="vcl-susp_tras"></p></div>                    
+                    <div class="inline"><label>Elemento Elástico Dianteiro:</label><p class="vcl-text" id="vcl-elem_elast_dia"></p></div>                    
+                    <div class="inline"><label>Elemento Elástico Traseiro:</label><p class="vcl-text" id="vcl-elem_elast_tras"></p></div>                    
+                    <div class="inline"><label>Curso Dianteiro:</label><p class="vcl-text" id="vcl-curso_susp_diant"></p>mm</div>                    
+                    <div class="inline"><label>Curso Traseiro:</label><p class="vcl-text" id="vcl-curso_susp_tras"></p>mm</div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Freios</legend>
+                    <div class="inline"><label>Roda Dianteira:</label><p class="vcl-text" id="vcl-freio_dia"></p></div>                    
+                    <div class="inline"><label>Roda Traseira:</label><p class="vcl-text" id="vcl-freio_tras"></p></div>                    
+                    <div class="inline"><label>Acionamento:</label><p class="vcl-text" id="vcl-freio_aciona"></p></div>                    
+                    <div class="inline"><label>ABS:</label><p class="vcl-text" id="vcl-abs"></p></div>                    
+                    <div class="inline"><label>Regenerativo:</label><p class="vcl-text" id="vcl-regenerativo"></p></div>                    
+                </fieldset>
+                <fieldset>
+                    <legend>Consumo</legend>
+                    <div class="inline"><label>Rodoviário:</label><p class="vcl-text" id="vcl-autonomia_rod"></p>km/l</div>                    
+                    <div class="inline"><label>Urbano:</label><p class="vcl-text" id="vcl-autonomia_urb"></p>km/l</div>                    
+                </fieldset>
 
             </div>
      
@@ -319,202 +415,7 @@ teste
     </div>
 
 </body>
-<script>
-/*
-                        <a title="Nome do Veículo" alt="Nome d0 Veículo" class="worldwide-inventory-item vlp-item" href="#">
-                            <div class='vehicle-image lazy' data-src='' style='background-image: url(fotos/saveiro.jpg)'></div>
-                            <div class='card-bottom'>
-                                <div class='year-mk'> Ano e Marca </div>
-                                <div class='model'> Modelo </div>
-                                <div class='default-header'> Pequena descrição do veículo </div>
-                                <div class='price-stock'>
-                                    <span class='price'>$PREÇO</span>
-                                    <span class='stock'>COD.</span>
-                                </div>
-                            </div>
-                        </a>
-*/
 
-
-
-    real().then((response) => {
-
-        const json = JSON.parse(response)
-
-        const id_acervo = Number(json.id)
-        const main_screen = document.querySelector('.vlp-grid')
-//console.log(json)        
-        document.querySelector('#head-name').innerHTML = json.nome
-        document.querySelector('#head-frase').innerHTML = json.frase
-        document.querySelector('#fone_1').innerHTML = json.telefone
-        document.querySelector('#fone_2').innerHTML = json.telefone
-        document.querySelector('#fone_1').href = 'tel:'+json.telefone
-        document.querySelector('#fone_2').href = 'tel:'+json.telefone
-        document.querySelector('#whats_1').href = 'https://wa.me/55'+getNum(json.whatsapp)
-
-        main_screen.innerHTML = ''
-        if (id_acervo) {
-            const params = new Object
-            params.id_acervo = id_acervo
-
-            queryDB(params, 'VCL-0').then((response) => {
-                const json = JSON.parse(response)
-                getFile('/../config/settings.json').then((response)=>{
-                    const url = JSON.parse(response).pastas.save_img
-                    const logo = window.location+'/../../'+url+'/'+params.id_acervo+'/imagens/logo.jpg'
-                    const cover = window.location+'/../../'+url+'/'+params.id_acervo+'/imagens/cover.jpg'
-                    document.querySelector('.home-inv-heading').style['background-image'] = `url(${cover})`
-                    document.querySelector('#head-logo').src = logo
-                    for(let i=0; i<json.length; i++){
-                        const a =document.createElement('a')
-                        a.title = json[i].nome
-                        a.alt = json[i].nome
-                        a.className = 'worldwide-inventory-item vlp-item'
-
-                        const img = document.createElement('div')
-                        img.className = 'vehicle-image lazy'
-                        img.style = "background-image: url(assets/pic/no_foto.png)"
-                        a.appendChild(img)
-
-                        json[i].path = `${url}/${json[i].id_acervo}/${json[i].id}/imagens/`
-                        showFiles(json[i].path,ext='jpg').then((resolve)=>{
-                            let has_cover = 0
-                            try{
-                                has_cover = JSON.parse(resolve).includes('cover.jpg')
-                            } catch{
-                                null
-                            }
-                       
-                            if(has_cover){
-                                img.style = `background-image: url(${window.location}/../../${json[i].path}cover.jpg)`
-                            }
-
-                        })
-
-                        const card = document.createElement('div')
-                        card.className = 'card-bottom'
-
-                        const ano = document.createElement('div')
-                        ano.className = 'year-mk'
-                        ano.innerHTML = `${not_null(json[i].ano)} ${not_null(json[i].marca)}`
-                        card.appendChild(ano)
-
-                        const modelo = document.createElement('div')
-                        modelo.className = 'model'
-                        modelo.innerHTML = json[i].nome 
-                        card.appendChild(modelo)
-
-                        const desc = document.createElement('div')
-                        desc.className = 'default-header'
-                        desc.innerHTML = not_null(json[i].descricao)
-                        card.appendChild(desc)
-
-                        const price = document.createElement('div')
-                        price.className = 'price-stock'
-                        price.innerHTML = `<span class='price'>${not_null(json[i].configuracao)} </span>
-                                            <span class='stock'>${not_null(json[i].combustivel)} </span>`
-                        card.appendChild(price)
-
-                        a.appendChild(card)
-                        a.data = json[i]
-                        a.addEventListener('click',(e)=>{
-
-                            let div = e.target
-                            let i=0
-                            while(!div.classList.contains('vlp-item') && i<10){
-                                div = div.parentNode
-                                i++
-                            }
-                            if(i<10){
-                                document.querySelector('.pop-up').style.display = 'flex'
-                                console.log(div.data)
-
-                                document.querySelector('#vcl-nome').innerHTML = div.data.nome
-                                document.querySelector('#vcl-ano').innerHTML = div.data.ano
-                                document.querySelector('#vcl-marca').innerHTML = div.data.marca
-                                document.querySelector('#vcl-modelo').innerHTML = div.data.modelo
-                                document.querySelector('#vcl-descricao').innerHTML = div.data.descricao
-/*
-                                showFiles(div.data.path,'jpg').then((resolve)=>{
-                                    const files = JSON.parse(resolve)
-                                    const form = document.querySelector('.frm-carrousel')
-                                    for(let i=2; i<files.length; i++){
-                                        console.log(div.data.path+files[i])
-                                        const rdo = document.createElement('input')
-                                        rdo.type = 'radio'
-                                        rdo.className = 'rdo-carrousel'
-                                        rdo.name = 'carrousel'
-                                        rdo.id = files[i]
-                                        form.appendChild(rdo)
-
-                                        const label = document.createElement('label')
-                                        label.for = files[i]
-                                        label.className = 'lbl-carrousel'
-                                        label.innerHTML = files[i]
-                                        form.appendChild(label)
-
-console.log(files[i])
-                                    }
-/*
-                <input type="radio" class="rdo-carrousel" name="carrousel" autofocus  id="clubs" />
-                <input type="radio" class="rdo-carrousel" name="carrousel"  id="hearts" />
-                <label for="clubs" class="lbl-carrousel"></label>
-                <label for="hearts" class="lbl-carrousel"></label>
-*/
-
-
-//                                })
-
-
-                                // abrir página do carro
-                            }
-
-                        })
-                        main_screen.appendChild(a)
-                    }
-
-                })
-
-            })
-        } else {
-            main_screen.innerHTML = 'Página não Encontrada'
-        }
-
-    })
-
-    document.querySelector('.close').addEventListener('click',()=>{
-        document.querySelector('.pop-up').style.display = 'none'
-    })
-
-    function go(dir=0){
-
-        const carousel = document.querySelector('.carousel')
-        const width = carousel.offsetWidth
-        const tot = carousel.querySelectorAll('.item-vcl').length
-
-        var style = window.getComputedStyle(carousel);
-        var matrix = new WebKitCSSMatrix(style.transform);
-//        console.log('translateX: ', matrix);
-
-        let pos = matrix.m41 +(width * (dir ? 1 : -1))
-        console.log(matrix.m41,width,pos,tot)
-
-        if(pos <= 0 && pos > width * tot * -1){
-            carousel.style.transform = `translate3d(${pos}px, 0, 0)`;
-        }
-
-//        carousel.style.transform = 'translate3d(-100%, 0, 0)';
-    }
-
-    document.querySelector('.go-left').addEventListener('click',()=>{
-        go(1)
-    })
-
-    document.querySelector('.go-rigth').addEventListener('click',()=>{
-        go(0)
-    })
-
-
-</script>
+<script src="scripts/after.js"></script>
 
 </html>
