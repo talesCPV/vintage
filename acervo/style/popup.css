@@ -27,8 +27,7 @@
 
     .item-vcl {
         background: #444;
-        color: #fff;
-        transition: transform 400ms ease-out;
+        color: #fff;        
         display: inline-block;
         min-height: 100%;
         width: 50vw;
@@ -48,18 +47,22 @@
     white-space: nowrap;
     }
 
-    .go-left{
+
+    .go-left, .go-rigth{
         position: absolute;
+        z-index: 2;
+        font-size: 3em;
+        cursor: pointer;
+    }
+
+    .go-left{
         left: 0;
         top: 50%;
-        z-index: 2;
     }
 
     .go-rigth{
-        position: absolute;
         right: 0;
         top: 50%;
-        z-index: 2;
     }
 
     .keys {
@@ -75,6 +78,9 @@
         opacity: 0;
     }
 
+    .carousel{
+        transition: transform 400ms ease-out;
+    }
 
 /*
     .lbl-carrousel:has(input:checked) {

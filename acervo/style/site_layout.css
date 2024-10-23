@@ -13120,7 +13120,7 @@ a,
 .alert p {
     color: #000
 }
-
+/*
 .carousel {
     height: 500px;
     margin-top: -50px;
@@ -13152,7 +13152,7 @@ a,
     background-size: cover;
     background-position: center
 }
-/*
+
 .carousel-slide-1 {
     background-image: url(/assets/v3/slide-1-2d6551dcfff7b8020d03b64d364001ee.jpg)
 }

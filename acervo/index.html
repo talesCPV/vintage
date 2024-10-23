@@ -292,12 +292,14 @@ teste
 
             <form class="frm-carousel">
 
-                <div class="go-left">\276D</div>
-                <div class="go-rigth">\276C</div>
+                <div class="go-left"><span class="mdi mdi-arrow-left-circle-outline"></span></div>
+                <div class="go-rigth"><span class="mdi mdi-arrow-right-circle-outline"></span></div>
 
-                <div for="A" class="item-vcl">A</div>
-                <div for="B" class="item-vcl">B</div>
-                <div for="C" class="item-vcl">C</div>                
+                <div class="carousel">
+                    <div for="A" class="item-vcl">A</div>
+                    <div for="B" class="item-vcl">B</div>
+                    <div for="C" class="item-vcl">C</div>                
+                </div>
             
 <!--                <div class="keys">Use left and right keys to navigate</div> -->
             </form>
@@ -483,6 +485,35 @@ console.log(files[i])
     document.querySelector('.close').addEventListener('click',()=>{
         document.querySelector('.pop-up').style.display = 'none'
     })
+
+    function go(dir=0){
+
+        const carousel = document.querySelector('.carousel')
+        const width = carousel.offsetWidth
+        const tot = carousel.querySelectorAll('.item-vcl').length
+
+        var style = window.getComputedStyle(carousel);
+        var matrix = new WebKitCSSMatrix(style.transform);
+//        console.log('translateX: ', matrix);
+
+        let pos = matrix.m41 +(width * (dir ? 1 : -1))
+        console.log(matrix.m41,width,pos,tot)
+
+        if(pos <= 0 && pos > width * tot * -1){
+            carousel.style.transform = `translate3d(${pos}px, 0, 0)`;
+        }
+
+//        carousel.style.transform = 'translate3d(-100%, 0, 0)';
+    }
+
+    document.querySelector('.go-left').addEventListener('click',()=>{
+        go(1)
+    })
+
+    document.querySelector('.go-rigth').addEventListener('click',()=>{
+        go(0)
+    })
+
 
 </script>
 
