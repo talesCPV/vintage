@@ -1034,19 +1034,14 @@ DELIMITER ;
   DROP PROCEDURE IF EXISTS sp_view_vcl_equip;
 DELIMITER $$
 	CREATE PROCEDURE sp_view_vcl_equip(
-		IN Iallow varchar(80),
-		IN Ihash varchar(64),
 		IN Iid_vcl int(11)
     )
 	BEGIN
-		CALL sp_allow(Iallow,Ihash);
-		IF(@allow)THEN
-			SELECT EQP.*, IF(COALESCE(VCL.id_equip,0),1,0) AS tem
-			FROM tb_equipamento AS EQP
-			LEFT JOIN tb_vcl_equip AS VCL
-			ON VCL.id_equip = EQP.id
-			AND VCL.id_vcl = Iid_vcl;
-        END IF;
+		SELECT EQP.*, IF(COALESCE(VCL.id_equip,0),1,0) AS tem
+		FROM tb_equipamento AS EQP
+		LEFT JOIN tb_vcl_equip AS VCL
+		ON VCL.id_equip = EQP.id
+		AND VCL.id_vcl = Iid_vcl;
 	END $$
 DELIMITER ;
 

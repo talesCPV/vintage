@@ -19205,7 +19205,7 @@ label {
     letter-spacing: 0.5px;
     margin-bottom: 6px
 }
-
+/*
 @media (max-width: 991px) {
 
     .filter-label,
@@ -19214,7 +19214,7 @@ label {
         margin-top: 10px
     }
 }
-
+*/
 .worldwide-filter-button {
     float: left;
     padding-left: 20px;

@@ -87,16 +87,46 @@ real().then((response) => {
                             i++
                         }
                         if(i<10){
+                            document.querySelector('.pop-up').style.display = 'flex'
 
                             for (var key in div.data) {
                                 if (!div.data.hasOwnProperty(key)) continue;
                                 const obj = document.querySelector('.about-vcl').querySelector('#vcl-'+key)
                                 if(obj != null){
-                                    obj.innerHTML = div.data[key]
+                                    if( ![null,''].includes(div.data[key])){
+                                        obj.innerHTML = div.data[key].replaceAll('_',' ')
+                                        obj.parentNode.style.display = 'flex'
+                                    }else{
+                                        obj.parentNode.style.display = 'none'
+                                    }
+                                    const fds = obj.parentNode.parentNode
+                                    const none = fds.querySelectorAll(
+                                    'div:not([style*="display:none"]):not([style*="display: none"])'
+                                    ).length
+                                    fds.style.display = none==0 ? 'none' : 'block'
                                 }
                             }
 
-                            document.querySelector('.pop-up').style.display = 'flex'
+                            queryDB({ id_vcl: div.data.id }, 'VCL-1').then((response) => {
+                                const json = JSON.parse(response)
+                                const opt = document.querySelector('#vcl-opt')
+                                opt.innerHTML = '<legend>Opcionais</legend>'
+                                opt.style.display = 'none'
+                                for(let i=0; i<json.length;i++){
+                                    if(Number(json[i].tem)){
+                                        const line = document.createElement('div')
+                                        line.className = 'inline'
+
+                                        const txt =  document.createElement('p')
+                                        txt.className = 'vcl-text'
+                                        txt.innerHTML = json[i].equip
+                                        line.appendChild(txt)
+
+                                        opt.appendChild(line)
+                                        opt.style.display = 'block'
+                                    }
+                                }
+                            })
 
                             showFiles(div.data.path,'jpg').then((resolve)=>{
                                 const files = JSON.parse(resolve)
