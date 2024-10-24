@@ -23,3 +23,4 @@
 20/10/2024 17:33 admin@planet3.com.br : Menu Incluido (Settings)
 20/10/2024 17:34 admin@planet3.com.br : Menu Alterado (Settings, conf_settings.html, pop-up, Settings)
 20/10/2024 17:35 admin@planet3.com.br : Menu Alterado (Config, menu, pop-up, )
+24/10/2024 21:18 admin@planet3.com.br : Menu Alterado (Novo Post, pst_post.html, post, Novo Post)

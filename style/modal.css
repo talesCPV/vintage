@@ -40,6 +40,12 @@
 /*    opacity: 95%;    */
   }
   
+  .web-window{
+    display: block;
+    background: aliceblue;
+    border-radius: 15px;
+  }
+
   .modal-title{
       display: flex;
       font-weight: 600;
@@ -65,6 +71,8 @@
     color: #acacac;
     font-size: 28px;
     font-weight: bold;
+    position: absolute;
+    right: 5px;    
   }
   
   .close:hover, .close:focus{
@@ -98,6 +106,10 @@
   @media all and (max-width : 768px) {
     .modal-content {
       width: auto !important;
+    }
+
+    .web-window{
+      width: 95% !important;
     }
 
     .fullscreen{

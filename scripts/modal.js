@@ -29,7 +29,7 @@ async function openHTML(template='',where="content-screen",label="", data="",wid
                 if(where == "pop-up"){
                     newModal(label,body.innerHTML,width,page_name)
                 }else if(where == 'post'){
-                    newModal(label,body.innerHTML,width,page_name,'post')
+                    newModal(label,body.innerHTML,width,page_name,'web-window')
                 }else{
                     const cont = body.innerHTML.replace('<h1>', `<span id="close-screen" onclick="document.querySelector('#imgLogo').click()">&times;</span><h1>`)                    
                     document.getElementById(where).innerHTML = cont;                    
@@ -73,25 +73,36 @@ function newModal(title, content, width, id,type='pop-up'){
     upper_page.left = 100 + (document.querySelector('body').offsetWidth - 100 - parseInt(width))/2 + upper_page.zIndex*offset
 
     const mod_card = document.createElement('div')
-        mod_card.classList = 'modal-content'
-        mod_card.id = 'card-'+id        
-        mod_card.style.position = 'absolute'
-        mod_card.style.zIndex = upper_page.zIndex+1
-        mod_card.style.margin = '0 auto'
-        mod_card.style.width = width
-        mod_card.style.top = upper_page.top+'px'
-        mod_card.style.left = upper_page.left+'px'
-        mod_card.style.overflow = 'auto'
-        mod_card.addEventListener('mousedown',(e)=>{
-            queueModal(id)
-        })
-        try{
-            main_data.dashboard.up_page = mod_card.id
-        }catch{
+    mod_card.classList = type=='pop-up' ? 'modal-content' : 'web-window'
+    mod_card.id = 'card-'+id        
+    mod_card.style.position = type=='web-window' ? 'fixed' :'absolute'
+    mod_card.style.zIndex = upper_page.zIndex+1
+    mod_card.style.margin = '0 auto'
+    mod_card.style.width = width
+    mod_card.style.top = type=='web-window' ? '50%' : upper_page.top+'px' 
+    mod_card.style.left = type=='web-window' ? '50%' : upper_page.left+'px'
+    mod_card.style.overflow = 'auto'
+    mod_card.style.transform =  type=='web-window' ? 'translate(-50%, -50%)' : ''
+    mod_card.addEventListener('mousedown',(e)=>{
+        queueModal(id)
+    })
+    try{
+        main_data.dashboard.up_page = mod_card.id
+    }catch{null}
 
-        }
+    const span = document.createElement('span')
+    span.classList = 'close'
+    span.innerHTML = '&times;'
+    span.addEventListener('click',()=>{
+        closeModal(id)
+    })
 
-    const resize = document.createElement('div')
+    span.style.zIndex = upper_page.zIndex+1
+    mod_card.appendChild(span)
+
+    if(type=='pop-up'){
+
+        const resize = document.createElement('div')
         resize.className = 'modal-resize'
         resize.addEventListener('mousedown',(e)=>{
             document.onmousemove = (e)=>{
@@ -105,52 +116,50 @@ function newModal(title, content, width, id,type='pop-up'){
                 document.onmousemove = null;
             }
         })
+        mod_card.appendChild(resize)
 
-    mod_card.appendChild(resize)
+        const mod_title = document.createElement('div')
+        mod_title.className = 'modal-title'    
+        mod_title.id = 'head-'+id
+    
+        mod_title.addEventListener('dblclick',()=>{
+            if(mod_card.classList.contains('fullscreen')){
+                mod_card.classList.remove('fullscreen')
+            }else{
+                mod_card.classList.add('fullscreen')
+            }
+        })
+    
+        mod_title.addEventListener('mousedown',(e)=>{
+            const x = parseInt(mod_card.style.left)
+            const y = parseInt(mod_card.style.top)
+            const pos = [(x - e.clientX),(y - e.clientY)]
+    
+            document.onmousemove = (e,p=pos)=>{
+                e.preventDefault();
+                const left = p[0]+e.clientX
+                const top = p[1]+e.clientY
+                left >= 82 ? mod_card.style.left =  left+'px' : null
+                top >= 0 ? mod_card.style.top = top +'px' : null
+            }
+    
+            document.onmouseup = ()=>{
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        })
+    
+        const p = document.createElement('p')
+        p.innerHTML = title
+        mod_title.appendChild(p)
+//        mod_title.appendChild(span)
+        mod_card.appendChild(mod_title)
 
-    const mod_title = document.createElement('div')
-    mod_title.className = 'modal-title'    
-    mod_title.id = 'head-'+id
+    }else if (type=='web-window'){
 
-    mod_title.addEventListener('dblclick',()=>{
-        if(mod_card.classList.contains('fullscreen')){
-            mod_card.classList.remove('fullscreen')
-        }else{
-            mod_card.classList.add('fullscreen')
-        }
-    })
 
-    mod_title.addEventListener('mousedown',(e)=>{
-        const x = parseInt(mod_card.style.left)
-        const y = parseInt(mod_card.style.top)
-        const pos = [(x - e.clientX),(y - e.clientY)]
 
-        document.onmousemove = (e,p=pos)=>{
-            e.preventDefault();
-            const left = p[0]+e.clientX
-            const top = p[1]+e.clientY
-            left >= 82 ? mod_card.style.left =  left+'px' : null
-            top >= 0 ? mod_card.style.top = top +'px' : null
-        }
-
-        document.onmouseup = ()=>{
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
-    })
-
-    const p = document.createElement('p')
-    p.innerHTML = title
-    mod_title.appendChild(p)
-
-    const span = document.createElement('span')
-    span.classList = 'close'
-    span.innerHTML = '&times;'
-    span.addEventListener('click',()=>{
-        closeModal(id)
-    })
-    mod_title.appendChild(span)
-    mod_card.appendChild(mod_title)
+    }
 
     const mod_content = document.createElement('div')
     mod_content.classList = 'modal-text'

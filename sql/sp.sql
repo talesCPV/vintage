@@ -359,7 +359,7 @@ DELIMITER $$
 	BEGIN
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SELECT * FROM vw_post WHERE data_hora >= Idate ORDER BY data_hora LIMIT Istart,Iend;
+			SELECT * FROM vw_post WHERE data_hora >= Idate ORDER BY data_hora ASC LIMIT Istart,Iend;
 		END IF;
 	END $$
 DELIMITER ;

@@ -1,12 +1,18 @@
 
-function viewPost(start,end,date=0){
+function viewPost(start=0,end=0,date=0){
 
+    if(start==end){
+        start = main_data.dashboard.data.pos_post
+        end = start+10
+    }
+console.log(start,end)
     const params = new Object;                
     params.date = date ? date : today.getFormatDate()
     params.start = start
     params.end = end
     queryDB(params,'PST-0').then((resolve)=>{
         const json = JSON.parse(resolve)
+        main_data.dashboard.data.pos_post += json.length
         console.log(json)
         getPost(json)
     })
@@ -16,10 +22,10 @@ function setPost(id,txt){
     const params = new Object;                
     params.id = id
     params.texto = txt
-console.log(params)    
     queryDB(params,'PST-1').then((resolve)=>{
         console.log(resolve)
         closeModal('pst_post')
+        viewPost()
     })
 }
 
@@ -102,7 +108,10 @@ function getPost(json){
 
         post.appendChild(post_social)
 
-        screen.appendChild(post)
+        
+
+
+        screen.prepend(post)
     }
 
 

@@ -28,6 +28,7 @@
             <select id="cmbJanela">
                 <option value="content-screen">Principal</option>
                 <option value="pop-up" selected>Pop-Up</option>
+                <option value="post" selected>Web Window</option>
             </select>
         </div>
 
@@ -63,11 +64,15 @@
         closeModal('sys_new_menu')
     }
 
-    pageScreen.querySelector('#edtMod').value = pageData.innerHTML
-    pageScreen.querySelector('#edtLink').value = pageData.link
-    pageScreen.querySelector('#edtLabel').value = pageData.label
-    pageScreen.querySelector('#edtLargura').value = pageData.width 
-    pageScreen.querySelector('#edtIcon').value = pageData.icone 
+    function pageStart(){
+        pageScreen.querySelector('#edtMod').value = pageData.innerHTML
+        pageScreen.querySelector('#edtLink').value = pageData.link
+        pageScreen.querySelector('#edtLabel').value = pageData.label
+        pageScreen.querySelector('#edtLargura').value = pageData.width 
+        pageScreen.querySelector('#edtIcon').value = pageData.icone 
+        pageScreen.querySelector('#cmbJanela').value = pageData.janela
+    }
+
 
     pageScreen.querySelector('#btnAddItem').addEventListener('click',()=>{
         const menu = new Object
@@ -145,4 +150,5 @@
         openHTML('sys_icons.html','pop-up','Busca de Icones',{},600)
     })
 
+    pageStart()
 </script>
