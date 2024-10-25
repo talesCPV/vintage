@@ -135,10 +135,21 @@ real().then((response) => {
                                 for(let i=2; i<files.length; i++){
                                     const pic = document.createElement('div')
                                     pic.className = 'item-vcl'
+
                                     const img =  document.createElement('img')
                                     img.className = 'vcl-img'
                                     img.src = window.location+'/../../'+div.data.path+files[i]
                                     pic.appendChild(img)
+
+                                    const shadow = document.createElement('div')
+                                    shadow.className = 'vcl-shadow'
+                                    pic.appendChild(shadow)
+
+                                    metadata('/../../'+div.data.path+files[i]).then((resolve)=>{
+                                        shadow.innerHTML = resolve
+                                        console.log(resolve)
+                                    })
+
                                     carousel.appendChild(pic)
                                 }
                                 carousel.style.transform = `translate3d(0, 0, 0)`

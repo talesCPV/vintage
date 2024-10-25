@@ -127,3 +127,27 @@ function getNum(V){
     }
     return out
 }
+
+function metadata(path,set=0,value=''){
+
+    const data = new URLSearchParams()
+        data.append("path",path)
+        data.append("value",value)
+        data.append("set",set)
+        
+    const myRequest = new Request("backend/metadata.php",{
+        method : "POST",
+        body : data
+    })
+    const myPromisse = new Promise((resolve,reject) =>{
+        fetch(myRequest)
+        .then(function (response){
+            if (response.status === 200) {
+                resolve(response.text())
+            } else {
+                reject(new Error("Houve algum erro na comunicação com o servidor"))
+            }
+        })
+    })
+    return myPromisse
+}

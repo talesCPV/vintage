@@ -40,6 +40,8 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            border-radius: 15px;
+            text-align: center;
         }
 
         .square:hover .img-name{
@@ -100,27 +102,55 @@
 
                 const shadow = document.createElement('div')
                 shadow.className = 'img-name'
-                shadow.innerHTML = json[i].split('.')[0]
                 square.appendChild(shadow)
 
-                square.addEventListener('contextmenu',(e)=>{
-                    e.preventDefault();                 
-                    if(confirm('Deseja remover esta foto?')){
-                        square.remove()
-                        delFile('/../'+url)
-                    }
+                metadata('/../'+url).then((resolve)=>{
+                    shadow.innerHTML = resolve
                 })
 
-                square.addEventListener('click',()=>{
-                    const nome = prompt('Renomear arquivo:',json[i])
-                    if(nome != null){
-                        renameFile('/../'+url,nome).then((resolve)=>{
-                            const json = JSON.parse(resolve)
-                            if(!json.ok){
-                                alert('Já existe uma imagem com este nome, favor escolher outro.')
-                            }
-                        })
-                    }
+                square.addEventListener('click',(e)=>{
+
+
+                    const tbl = []
+
+                    const rename = new Object
+                    rename.label = 'Renomear'
+                    rename.link = ()=>{
+                        const nome = prompt('Renomear arquivo:',json[i])
+                        if(nome != null){
+                            renameFile('/../'+url,nome).then((resolve)=>{
+                                const json = JSON.parse(resolve)
+                                if(!json.ok){
+                                    alert('Já existe uma imagem com este nome, favor escolher outro.')
+                                }
+                            })
+                        }
+                    }            
+                    tbl.push(rename)
+
+                    const del = new Object
+                    del.label = 'Deletar'
+                    del.link = ()=>{
+                        if(confirm('Deseja remover esta foto?')){
+                            square.remove()
+                            delFile('/../'+url)
+                        }
+                    }            
+                    tbl.push(del)
+
+                    const txt = new Object
+                    txt.label = 'Adicionar Texto'
+                    txt.link = ()=>{
+                        const nome = prompt('Texto no arquivo:',json[i])
+                        if(nome != null){
+                            metadata('/../'+url,1,nome).then((resolve)=>{
+                                shadow.innerHTML = resolve
+                            })
+                        }
+                    }            
+                    tbl.push(txt)
+
+                    menuContext(tbl,e)
                 })
 
                 form.appendChild(square)
