@@ -88,7 +88,6 @@ real().then((response) => {
                         }
                         if(i<10){
                             document.querySelector('.pop-up').style.display = 'flex'
-
                             for (var key in div.data) {
                                 if (!div.data.hasOwnProperty(key)) continue;
                                 const obj = document.querySelector('.about-vcl').querySelector('#vcl-'+key)
@@ -147,7 +146,6 @@ real().then((response) => {
 
                                     metadata('/../../'+div.data.path+files[i]).then((resolve)=>{
                                         shadow.innerHTML = resolve
-                                        console.log(resolve)
                                     })
 
                                     carousel.appendChild(pic)
