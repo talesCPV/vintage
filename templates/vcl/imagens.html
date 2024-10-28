@@ -141,12 +141,14 @@
                     const txt = new Object
                     txt.label = 'Adicionar Texto'
                     txt.link = ()=>{
-                        const nome = prompt('Texto no arquivo:',json[i])
-                        if(nome != null){
-                            metadata('/../'+url,1,nome).then((resolve)=>{
-                                shadow.innerHTML = resolve
-                            })
-                        }
+                        metadata('/../'+url).then((old)=>{
+                            const nome = prompt('Descrição da Foto:',old)
+                            if(nome != null){
+                                metadata('/../'+url,1,nome).then((resolve)=>{
+                                    shadow.innerHTML = resolve
+                                })
+                            }
+                        })
                     }            
                     tbl.push(txt)
 

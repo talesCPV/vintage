@@ -452,10 +452,9 @@ DELIMITER $$
 		SET @id_user =  (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
 		IF(@allow AND @id_user>0)THEN
 			IF(Inome="")THEN
-				CALL sp_del_acervo(Iallow,Ihash,Iid);
 -- 				DELETE FROM tb_vcl_desempenho WHERE
--- 				DELETE FROM tb_veiculo WHERE id_acervo=Iid;
--- 				DELETE FROM tb_acervo WHERE id=Iid;                
+				DELETE FROM tb_veiculo WHERE id_acervo=Iid;
+				DELETE FROM tb_acervo WHERE id=Iid;                
             ELSE
 				SET Iurl = (SELECT IF(TRIM(Iurl)="",(SELECT NULL),Iurl));
 				SET Ifrase = (SELECT IF(TRIM(Ifrase)="",(SELECT NULL),Ifrase));
@@ -480,32 +479,6 @@ DELIMITER $$
 	END $$
 DELIMITER ;
 
-  DROP PROCEDURE IF EXISTS sp_del_acervo;
-DELIMITER $$
-	CREATE PROCEDURE sp_del_acervo(
-		IN Iallow varchar(80),
-		IN Ihash varchar(64),
-		IN Iid_acervo int(11)
-    )
-	BEGIN    
-		CALL sp_allow(Iallow,Ihash);
-		IF(@allow)THEN
-			DELETE tb_vcl_desempenho FROM tb_vcl_desempenho INNER JOIN tb_veiculo ON tb_vcl_desempenho.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_motor FROM tb_vcl_motor INNER JOIN tb_veiculo ON tb_vcl_motor.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_transmissao FROM tb_vcl_transmissao INNER JOIN tb_veiculo ON tb_vcl_transmissao.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_dimensao FROM tb_vcl_dimensao INNER JOIN tb_veiculo ON tb_vcl_dimensao.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_pneus FROM tb_vcl_pneus INNER JOIN tb_veiculo ON tb_vcl_pneus.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_direcao FROM tb_vcl_direcao INNER JOIN tb_veiculo ON tb_vcl_direcao.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_suspensao FROM tb_vcl_suspensao INNER JOIN tb_veiculo ON tb_vcl_suspensao.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_freios FROM tb_vcl_freios INNER JOIN tb_veiculo ON tb_vcl_freios.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_consumo FROM tb_vcl_consumo INNER JOIN tb_veiculo ON tb_vcl_consumo.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE tb_vcl_equip FROM tb_vcl_equip  INNER JOIN tb_veiculo ON tb_vcl_equip.id_vcl = tb_veiculo.id WHERE tb_veiculo.id_acervo = Iid_acervo;
-            DELETE FROM tb_veiculo WHERE id_acervo = Iid_acervo;
-            DELETE FROM tb_acervo WHERE id = Iid_acervo;
-        END IF;
-	END $$
-DELIMITER ;
-
 /* VEÍCULO */
  
   DROP PROCEDURE IF EXISTS sp_del_veiculo;
@@ -518,18 +491,33 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			DELETE FROM tb_vcl_desempenho WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_motor WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_transmissao WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_dimensao WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_pneus WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_aerodinamica WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_direcao WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_suspensao WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_freios WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_consumo WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_vcl_equip WHERE id_vcl = Iid_veiculo;
-            DELETE FROM tb_veiculo WHERE id = Iid_veiculo;
+			
+            DELETE tb_veiculo,tb_vcl_desempenho,tb_vcl_motor,tb_vcl_transmissao,tb_vcl_dimensao,tb_vcl_pneus,tb_vcl_aerodinamica,
+            tb_vcl_direcao,tb_vcl_suspensao,tb_vcl_freios,tb_vcl_consumo,tb_vcl_equip
+            FROM tb_veiculo
+            INNER JOIN tb_vcl_desempenho
+            INNER JOIN tb_vcl_motor
+            INNER JOIN tb_vcl_transmissao
+            INNER JOIN tb_vcl_dimensao
+            INNER JOIN tb_vcl_pneus
+            INNER JOIN tb_vcl_aerodinamica
+            INNER JOIN tb_vcl_direcao
+            INNER JOIN tb_vcl_suspensao
+            INNER JOIN tb_vcl_freios
+            INNER JOIN tb_vcl_consumo
+            INNER JOIN tb_vcl_equip
+			ON tb_vcl_desempenho.id_vcl = tb_veiculo.id
+			AND tb_vcl_motor.id_vcl = tb_veiculo.id
+			AND tb_vcl_transmissao.id_vcl = tb_veiculo.id
+			AND tb_vcl_dimensao.id_vcl = tb_veiculo.id
+			AND tb_vcl_pneus.id_vcl = tb_veiculo.id
+			AND tb_vcl_aerodinamica.id_vcl = tb_veiculo.id
+			AND tb_vcl_direcao.id_vcl = tb_veiculo.id
+			AND tb_vcl_suspensao.id_vcl = tb_veiculo.id
+			AND tb_vcl_freios.id_vcl = tb_veiculo.id
+			AND tb_vcl_consumo.id_vcl = tb_veiculo.id
+			AND tb_vcl_equip.id_vcl = tb_veiculo.id
+			WHERE tb_veiculo.id = Iid_veiculo;
         END IF;
 	END $$
 DELIMITER ;
@@ -598,9 +586,9 @@ DELIMITER $$
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
 			IF(Inome="")THEN
-				CALL sp_del_veiculo(Iallow,Ihash,Iid);
--- 				DELETE FROM tb_veiculo WHERE id=Iid;
+				DELETE FROM tb_veiculo WHERE id=Iid;
             ELSE
+            
 				SET Inome = (SELECT IF(TRIM(Inome)="",(SELECT NULL),Inome));
 				SET Imodelo = (SELECT IF(TRIM(Imodelo)="",(SELECT NULL),Imodelo));
 				SET Imarca = (SELECT IF(TRIM(Imarca)="",(SELECT NULL),Imarca));

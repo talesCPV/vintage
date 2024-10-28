@@ -122,10 +122,10 @@
 
     if (IsSet($_POST["path"]) && IsSet($_POST["value"]) && IsSet($_POST["set"])){
         $path = getcwd().$_POST["path"];       
+//echo $path;        
         if (file_exists($path)) {
-
             $objIPTC = new IPTC($path);
-        
+//echo 'entrou';
             if($_POST["set"]){
                 $objIPTC->setValue(IPTC_CAPTION, $_POST["value"]);
 //              $objIPTC->setValue(IPTC_HEADLINE, $_POST["field"]);

@@ -1,15 +1,12 @@
 <template>
     <style></style>
     <div class="inline">
-        <label for="cmbAcop">Acoplamento</label>
-        <select id="cmbAcop" class="only-view" disabled>
-            <option value="EMBREAGEM SINCRONA" selected>Embreagem Sincrona</option>
-            <option value="EMBREAGEM ASSINCRONA">Embreagem Assincrona</option>
-            <option value="FIXO">Fixo</option>
-        </select>
+        <label for="edtAcop">Acoplamento</label>
+        <input type="text" id="edtAcop" maxlength="20" onfocus="this.select();" class="only-view" disabled>
         <label for="cmbCambio">Câmbio</label>
         <select id="cmbCambio" class="only-view" disabled>
-            <option value="MANUAL">MANUAL</option>
+            <option value="MANUAL">Manual</option>
+            <option value="AUTOMATICO">Automático</option>
             <option value="HIDRÁUICO">Hidráulico</option>
             <option value="HIDRAMÁTICO">Hidramático</option>
             <option value="PNEUMÁTICO">Pneumático</option>
@@ -52,7 +49,7 @@
     function pageStart(){
         openFields(0,pageScreen)
         pageScreen.querySelector('#btnEdit').disabled = 0
-        pageScreen.querySelector('#cmbAcop').value = pageData.acoplamento==null ? '' : pageData.acoplamento
+        pageScreen.querySelector('#edtAcop').value = pageData.acoplamento==null ? '' : pageData.acoplamento
         pageScreen.querySelector('#cmbCambio').value = pageData.cambio==null ? '' : pageData.cambio
         pageScreen.querySelector('#edtCod').value = pageData.cod_cambio==null ? '' : pageData.cod_cambio
         pageScreen.querySelector('#edtMarchas').value = pageData.marchas==null ? '' : pageData.marchas
@@ -63,7 +60,7 @@
     pageFunc.setTransm = (del=0)=>{
         const params = new Object
             params.id_vcl = pageData.id
-            params.acoplamento = pageScreen.querySelector('#cmbAcop').value
+            params.acoplamento = pageScreen.querySelector('#edtAcop').value
             params.cambio = pageScreen.querySelector('#cmbCambio').value
             params.cod_cambio = pageScreen.querySelector('#edtCod').value
             params.marchas = del ? -1 : pageScreen.querySelector('#edtMarchas').value

@@ -27,24 +27,12 @@
         </select>       
     </div>    
     <div class="inline">
-        <label for="cmbElastDia">Elemento Elástico Dianteiro</label>
-        <select id="cmbElastDia" class="only-view" disabled>
-            <option value="FEIXE_MOLAS">Feixe de Molas</option>
-            <option value="HELICOIDAL">Mola Helicoidal</option>
-            <option value="AR">Ar</option>
-            <option value="ELASTOMERO">Elastômeros</option>
-            <option value="N/A">Não se Aplica</option>
-        </select>       
+        <label for="edtElastDia">Elemento Elástico Dianteiro</label>
+        <input type="text" id="edtElastDia" maxlength="20" onfocus="this.select();" class="only-view" disabled>    
     </div> 
     <div class="inline">
-        <label for="cmbElastTras">Elemento Elástico Traseiro</label>
-        <select id="cmbElastTras" class="only-view" disabled>
-            <option value="FEIXE_MOLAS">Feixe de Molas</option>
-            <option value="HELICOIDAL">Mola Helicoidal</option>
-            <option value="AR">Ar</option>
-            <option value="ELASTOMERO">Elastômeros</option>
-            <option value="N/A">Não se Aplica</option>
-        </select>       
+        <label for="edtElastTras">Elemento Elástico Traseiro</label>
+        <input type="text" id="edtElastTras" maxlength="20" onfocus="this.select();" class="only-view" disabled>     
     </div> 
     <div class="inline">
         <label for="edtCursoDia">Curso Dianteiro</label>
@@ -70,8 +58,8 @@
         pageScreen.querySelector('#btnEdit').disabled = 0
         pageScreen.querySelector('#cmbDiant').value = pageData.susp_dia
         pageScreen.querySelector('#cmbTras').value = pageData.susp_tras
-        pageScreen.querySelector('#cmbElastDia').value = pageData.elem_elast_dia
-        pageScreen.querySelector('#cmbElastTras').value = pageData.elem_elast_tras
+        pageScreen.querySelector('#edtElastDia').value = pageData.elem_elast_dia
+        pageScreen.querySelector('#edtElastTras').value = pageData.elem_elast_tras
         pageScreen.querySelector('#edtCursoDia').value = pageData.curso_susp_diant==null ? '' : getUnd(pageData.curso_susp_diant,'m')
         pageScreen.querySelector('#edtCursoTras').value = pageData.curso_susp_tras==null ? '' : getUnd(pageData.curso_susp_tras,'m')
     }
@@ -81,8 +69,8 @@
             params.id_vcl = pageData.id
             params.susp_dia = pageScreen.querySelector('#cmbDiant').value
             params.susp_tras = pageScreen.querySelector('#cmbTras').value
-            params.elem_elast_dia = pageScreen.querySelector('#cmbElastDia').value
-            params.elem_elast_tras = pageScreen.querySelector('#cmbElastTras').value
+            params.elem_elast_dia = pageScreen.querySelector('#edtElastDia').value
+            params.elem_elast_tras = pageScreen.querySelector('#edtElastTras').value
             params.curso_susp_diant = del ? -1 : getFloat(pageScreen.querySelector('#edtCursoDia').value)
             params.curso_susp_tras = getFloat(pageScreen.querySelector('#edtCursoTras').value)
 
