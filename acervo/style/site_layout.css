@@ -21741,8 +21741,11 @@ body {
 }
 
 .worldwide-container img{
-    width: 80px;
+    width: 78px;
     height: fit-content;
+    aspect-ratio: auto !important;
+    max-height: 78px;
+    border-radius: 10px;
 }
 
 .worldwide-container.of-auto {
